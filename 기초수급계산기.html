@@ -1301,6 +1301,29 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
+      /* 자활/취업(국취) · 한부모가족 탭 체크리스트 */
+      .gw-check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: var(--surface2);
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .gw-check-item input[type="checkbox"] {
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+      .gw-check-item.checked {
+        border-color: #4ade80;
+        background: rgba(74, 222, 128, 0.08);
+      }
     </style>
   </head>
   <body>
@@ -1358,6 +1381,16 @@
       </button>
       <button class="main-tab" onclick="switchMain('plan')" id="mtab-plan">
         📋 수급 준비 플랜
+      </button>
+      <button class="main-tab" onclick="switchMain('gwork')" id="mtab-gwork">
+        💼 자활/취업(국취)
+      </button>
+      <button
+        class="main-tab"
+        onclick="switchMain('hanbumo')"
+        id="mtab-hanbumo"
+      >
+        👨‍👩‍👧 한부모가족
       </button>
     </div>
 
@@ -6651,6 +6684,1465 @@
     </div>
     <!-- /main-medical -->
 
+    <!-- ─── 자활/취업(국취) 탭 ─── -->
+    <div id="main-gwork" style="display: none">
+      <div class="container">
+        <!-- 소분류 탭 -->
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px"
+        >
+          <button
+            class="step-btn active"
+            onclick="gwTab('overview')"
+            id="gwtab-overview"
+          >
+            📋 제도 개요
+          </button>
+          <button
+            class="step-btn"
+            onclick="gwTab('checklist')"
+            id="gwtab-checklist"
+          >
+            ✅ 유형별 자격 체크
+          </button>
+          <button
+            class="step-btn"
+            onclick="gwTab('criteria')"
+            id="gwtab-criteria"
+          >
+            💰 소득·재산 기준
+          </button>
+          <button
+            class="step-btn"
+            onclick="gwTab('jahwal')"
+            id="gwtab-jahwal"
+          >
+            🛠️ 자활사업 안내
+          </button>
+          <button class="step-btn" onclick="gwTab('apply')" id="gwtab-apply">
+            📝 신청 방법
+          </button>
+        </div>
+
+        <!-- ① 제도 개요 -->
+        <div id="gw-overview">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">💼</span> 국민취업지원제도(국취)란?
+            </div>
+            <div
+              style="
+                background: rgba(96, 165, 250, 0.08);
+                border: 1px solid rgba(96, 165, 250, 0.2);
+                border-radius: 10px;
+                padding: 14px;
+                margin-bottom: 14px;
+                font-size: 12px;
+                line-height: 1.9;
+              "
+            >
+              고용보험 밖에 있는
+              <strong style="color: #60a5fa">저소득·취업취약계층</strong>에게
+              구직촉진수당 등 생계 지원과 함께 1:1 취업지원서비스를 제공하는
+              <strong style="color: var(--text)">한국형 실업부조</strong>
+              입니다.<br />
+              고용보험 가입 이력이 없어도 신청할 수 있고, 기초수급자·차상위계층뿐
+              아니라 청년·경력단절여성·중장년 구직자도 대상이 됩니다.<br />
+              <strong style="color: #fbbf24"
+                >Ⅰ유형(구직촉진수당형)</strong
+              >과
+              <strong style="color: #4ade80">Ⅱ유형(취업활동비용형)</strong>으로
+              나뉘며, 유형에 따라 심사 방식과 지원 내용이 크게 다릅니다.
+            </div>
+            <div style="display: grid; gap: 12px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 14px;
+                  border-left: 4px solid #fbbf24;
+                "
+              >
+                <div
+                  style="font-weight: 700; color: #fbbf24; margin-bottom: 8px"
+                >
+                  🅰️ Ⅰ유형 — 구직촉진수당형 (소득·재산 심사 O)
+                </div>
+                <div style="color: var(--text2); line-height: 1.9">
+                  • 요건심사형 / 선발형(청년특례 포함) 두 갈래로 구분<br />
+                  • 구직촉진수당 <strong style="color: #fbbf24">월 60만원</strong>
+                  × 최대 6개월(총 최대 360만원) 지급<br />
+                  • 부양가족(18세 이하·70세 이상·중증장애인) 1인당 월 10만원
+                  가산, 최대 월 100만원까지<br />
+                  • 취업 성공 시 근속에 따라 최대 150만원 취업성공수당 별도
+                  지급
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 14px;
+                  border-left: 4px solid #4ade80;
+                "
+              >
+                <div
+                  style="font-weight: 700; color: #4ade80; margin-bottom: 8px"
+                >
+                  🅱️ Ⅱ유형 — 취업활동비용형 (소득·재산 무관 대상 포함)
+                </div>
+                <div style="color: var(--text2); line-height: 1.9">
+                  • 결혼이민자·위기청소년·특수형태근로종사자 등
+                  <strong style="color: #4ade80">특정계층</strong>은
+                  소득·재산과 무관하게 신청 가능<br />
+                  • 그 외 일반(중장년 등)은 가구 중위소득 기준 심사<br />
+                  • 현금성 구직촉진수당은 없지만 직업훈련 참여수당·취업활동비용
+                  등을 지원<br />
+                  • 자활사업 참여자·조건부수급자도 상담을 통해 연계 가능
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                background: rgba(239, 68, 68, 0.08);
+                border: 1px solid rgba(239, 68, 68, 0.25);
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-top: 12px;
+                font-size: 11px;
+                color: var(--text2);
+                line-height: 1.8;
+              "
+            >
+              ⚠️ <strong style="color: #f87171">중복 수급 제한</strong> —
+              실업급여와 국취 수당은 동시에 받을 수 없습니다. Ⅰ유형은 실업급여
+              수급 종료일 다음날부터 6개월 경과 후 참여 가능, Ⅱ유형은 실업급여
+              종료 후 참여 가능합니다.<br />
+              ⚠️ 원칙적으로 <strong>취업지원 종료일로부터 3년</strong>이 지나야
+              재참여할 수 있습니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- ② 유형별 자격 체크리스트 -->
+        <div id="gw-checklist" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">✅</span> 유형별 자격 요건 체크리스트
+            </div>
+            <div
+              style="font-size: 12px; color: var(--text2); margin-bottom: 16px"
+            >
+              해당하는 항목을 체크해보면서 내가 어느 유형에 가까운지 한눈에
+              확인해보세요. (참고용 자가진단이며, 최종 자격은 고용24 또는
+              고용센터 상담으로 확인해야 합니다)
+            </div>
+
+            <div style="display: grid; gap: 14px">
+              <!-- Ⅰ유형 요건심사형 -->
+              <div
+                data-gwgroup
+                style="
+                  background: var(--surface2);
+                  border: 1px solid var(--border);
+                  border-radius: 12px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div style="font-weight: 800; font-size: 13px; color: #fbbf24">
+                    🅰️-1. Ⅰ유형 · 요건심사형
+                  </div>
+                  <div
+                    class="gw-counter"
+                    style="
+                      font-size: 11px;
+                      font-weight: 700;
+                      color: var(--text3);
+                      background: var(--surface);
+                      border-radius: 20px;
+                      padding: 3px 10px;
+                    "
+                  >
+                    0/4 항목 해당
+                  </div>
+                </div>
+                <div style="display: grid; gap: 8px">
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        만 15세 ~ 69세 구직자다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        가구 기준 중위소득 60% 이하다
+                      </div>
+                      <div
+                        style="font-size: 11px; color: var(--text3); margin-top: 2px"
+                      >
+                        정확한 금액은 아래 [소득·재산 기준] 탭에서 확인
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        가구원 합산 재산이 4억원 이하다
+                      </div>
+                      <div
+                        style="font-size: 11px; color: var(--text3); margin-top: 2px"
+                      >
+                        만 15~34세 청년은 5억원 이하 적용
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        최근 2년 이내 취업경험 100일 또는 800시간 이상이다
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  style="
+                    margin-top: 10px;
+                    font-size: 11px;
+                    color: var(--text3);
+                    line-height: 1.7;
+                  "
+                >
+                  ※ 4가지 모두 충족해야 요건심사형으로 신청할 수 있습니다.
+                </div>
+              </div>
+
+              <!-- Ⅰ유형 선발형 -->
+              <div
+                data-gwgroup
+                style="
+                  background: var(--surface2);
+                  border: 1px solid var(--border);
+                  border-radius: 12px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div style="font-weight: 800; font-size: 13px; color: #fbbf24">
+                    🅰️-2. Ⅰ유형 · 선발형 (청년특례 포함)
+                  </div>
+                  <div
+                    class="gw-counter"
+                    style="
+                      font-size: 11px;
+                      font-weight: 700;
+                      color: var(--text3);
+                      background: var(--surface);
+                      border-radius: 20px;
+                      padding: 3px 10px;
+                    "
+                  >
+                    0/3 항목 해당
+                  </div>
+                </div>
+                <div style="display: grid; gap: 8px">
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        요건심사형 조건 중 취업경험 요건만 충족하지 못했다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        (청년특례) 만 18세 ~ 34세이고 가구 중위소득 120% 이하다
+                      </div>
+                      <div
+                        style="font-size: 11px; color: var(--text3); margin-top: 2px"
+                      >
+                        청년특례는 취업경험이 전혀 없어도 신청 가능
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        (청년특례) 재산이 5억원 이하다
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  style="
+                    margin-top: 10px;
+                    font-size: 11px;
+                    color: var(--text3);
+                    line-height: 1.7;
+                  "
+                >
+                  ※ 2026년부터 취업경험 없는 저소득 청년 대상 추가모집이 진행된
+                  바 있습니다. 예산 소진 시 조기 마감될 수 있어 서두르는 것이
+                  좋습니다.
+                </div>
+              </div>
+
+              <!-- Ⅱ유형 특정계층 -->
+              <div
+                data-gwgroup
+                style="
+                  background: var(--surface2);
+                  border: 1px solid var(--border);
+                  border-radius: 12px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div style="font-weight: 800; font-size: 13px; color: #4ade80">
+                    🅱️-1. Ⅱ유형 · 특정계층 (소득·재산 무관)
+                  </div>
+                  <div
+                    class="gw-counter"
+                    style="
+                      font-size: 11px;
+                      font-weight: 700;
+                      color: var(--text3);
+                      background: var(--surface);
+                      border-radius: 20px;
+                      padding: 3px 10px;
+                    "
+                  >
+                    0/6 항목 해당
+                  </div>
+                </div>
+                <div style="display: grid; gap: 8px">
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        결혼이민자다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        위기청소년(만 9~24세)이다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        연매출 1,250만원 미만 특수형태근로종사자다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        영세 자영업자(폐업 예정 포함)다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        미혼모·부, 노숙인, 북한이탈주민 등에 해당한다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        신용회복지원 확정자다
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  style="
+                    margin-top: 10px;
+                    font-size: 11px;
+                    color: var(--text3);
+                    line-height: 1.7;
+                  "
+                >
+                  ※ 1개 항목만 해당해도 소득·재산과 무관하게 신청할 수
+                  있습니다.
+                </div>
+              </div>
+
+              <!-- Ⅱ유형 일반 -->
+              <div
+                data-gwgroup
+                style="
+                  background: var(--surface2);
+                  border: 1px solid var(--border);
+                  border-radius: 12px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div style="font-weight: 800; font-size: 13px; color: #4ade80">
+                    🅱️-2. Ⅱ유형 · 일반(청년 / 중장년)
+                  </div>
+                  <div
+                    class="gw-counter"
+                    style="
+                      font-size: 11px;
+                      font-weight: 700;
+                      color: var(--text3);
+                      background: var(--surface);
+                      border-radius: 20px;
+                      padding: 3px 10px;
+                    "
+                  >
+                    0/3 항목 해당
+                  </div>
+                </div>
+                <div style="display: grid; gap: 8px">
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        Ⅰ유형 심사에서 탈락했거나 해당하지 않는다
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        가구 중위소득이 대략 100% 이하로 예상된다
+                      </div>
+                      <div
+                        style="font-size: 11px; color: var(--text3); margin-top: 2px"
+                      >
+                        연령대·지자체 공고에 따라 기준이 달라질 수 있음
+                      </div>
+                    </div>
+                  </label>
+                  <label class="gw-check-item" onclick="gwCheckItem(this)">
+                    <input type="checkbox" />
+                    <div>
+                      <div style="font-weight: 700; font-size: 12px">
+                        근로능력과 구직 의사가 있다
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 제외 대상 -->
+              <div
+                style="
+                  background: rgba(239, 68, 68, 0.08);
+                  border: 1px solid rgba(239, 68, 68, 0.25);
+                  border-radius: 12px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="font-weight: 800; font-size: 13px; color: #f87171; margin-bottom: 8px"
+                >
+                  🚫 참여 제외 대상 (하나라도 해당하면 참여 어려움)
+                </div>
+                <div
+                  style="font-size: 12px; color: var(--text2); line-height: 1.9"
+                >
+                  • 근로능력·취업 및 구직 의사가 없는 사람<br />
+                  • 상급학교 진학·전문자격증 취득을 위해 학교 재학 또는 학원
+                  수강 중인 사람<br />
+                  • 군 복무 등으로 즉시 취업이 어려운 사람 (단, 전역 2개월
+                  이내인 경우는 제외 아님)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ③ 소득·재산 기준표 -->
+        <div id="gw-criteria" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">💰</span> 2026년 가구원별 소득 기준 (월액)
+            </div>
+            <div
+              style="font-size: 12px; color: var(--text2); margin-bottom: 14px"
+            >
+              보건복지부 고시 기준 중위소득을 기준으로 자동 계산한 참고
+              금액입니다. 실제 소득 인정액 산정 방식은 기초수급 계산기와
+              동일합니다.
+            </div>
+            <div style="overflow-x: auto">
+              <table
+                style="width: 100%; border-collapse: collapse; font-size: 12px"
+              >
+                <thead>
+                  <tr style="background: var(--surface2)">
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: left;
+                        border-bottom: 1px solid var(--border);
+                      "
+                    >
+                      가구원수
+                    </th>
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: right;
+                        border-bottom: 1px solid var(--border);
+                        color: #fbbf24;
+                      "
+                    >
+                      60% (Ⅰ유형 요건심사형)
+                    </th>
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: right;
+                        border-bottom: 1px solid var(--border);
+                        color: #4ade80;
+                      "
+                    >
+                      100% (Ⅱ유형 일반, 참고)
+                    </th>
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: right;
+                        border-bottom: 1px solid var(--border);
+                        color: #60a5fa;
+                      "
+                    >
+                      120% (Ⅰ유형 청년특례)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="gw_income_table"></tbody>
+              </table>
+            </div>
+            <div
+              style="
+                margin-top: 14px;
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 12px 14px;
+                font-size: 12px;
+                color: var(--text2);
+                line-height: 1.9;
+              "
+            >
+              <strong style="color: var(--text)">재산 기준</strong><br />
+              • 일반: 가구원 합산 재산 <strong>4억원 이하</strong><br />
+              • 만 15~34세 청년(청년특례 포함): 재산
+              <strong>5억원 이하</strong>
+            </div>
+            <div
+              style="
+                margin-top: 10px;
+                font-size: 11px;
+                color: var(--text3);
+                line-height: 1.7;
+              "
+            >
+              ※ 위 금액은 2026년 고시 기준 중위소득으로 자동 계산한 값이며,
+              실제 심사 기준·비율은 매년 예산 및 지침에 따라 변경될 수
+              있습니다. 정확한 자격은 고용24(work24.go.kr) 자가진단 또는
+              고용센터 상담으로 확인하세요.
+            </div>
+          </div>
+        </div>
+
+        <!-- ④ 자활사업 안내 -->
+        <div id="gw-jahwal" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">🛠️</span> 기초수급자 자활사업(자활근로) 안내
+            </div>
+            <div
+              style="font-size: 12px; color: var(--text2); margin-bottom: 14px; line-height: 1.9"
+            >
+              생계급여를 받는
+              <strong style="color: var(--text)">조건부수급자</strong>(근로능력
+              있는 18~64세)는 원칙적으로 자활사업에 참여해야 생계급여를 받을 수
+              있습니다. 자활근로는 자립을 위한 단계별 사다리로 설계되어
+              있습니다.
+            </div>
+            <div style="display: grid; gap: 10px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  gap: 12px;
+                  align-items: flex-start;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    color: #60a5fa;
+                    min-width: 74px;
+                    font-size: 12px;
+                  "
+                >
+                  1단계
+                </div>
+                <div>
+                  <div style="font-weight: 700">근로유지형</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    근로강도가 낮은 대상자용. 노인·취약계층 돌봄 보조 등 (환경
+                    정비, 공공시설 관리 등)
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  gap: 12px;
+                  align-items: flex-start;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    color: #60a5fa;
+                    min-width: 74px;
+                    font-size: 12px;
+                  "
+                >
+                  2단계
+                </div>
+                <div>
+                  <div style="font-weight: 700">사회서비스형</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    돌봄·간병 도우미, 집수리, 청소 등 사회서비스 제공형 자활근로
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  gap: 12px;
+                  align-items: flex-start;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    color: #60a5fa;
+                    min-width: 74px;
+                    font-size: 12px;
+                  "
+                >
+                  3단계
+                </div>
+                <div>
+                  <div style="font-weight: 700">시장진입형</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    간병·집수리·청소·재활용 등 매출이 발생하는 사업단 근로.
+                    급여 수준이 가장 높음
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  gap: 12px;
+                  align-items: flex-start;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    color: #60a5fa;
+                    min-width: 74px;
+                    font-size: 12px;
+                  "
+                >
+                  4단계
+                </div>
+                <div>
+                  <div style="font-weight: 700">인턴·도우미형 / 자활기업</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    민간기업 인턴 근무를 거쳐 취업 연계, 또는 자활근로
+                    참여자들이 모여 자활기업 창업 지원
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 14px;
+                background: rgba(74, 222, 128, 0.08);
+                border: 1px solid rgba(74, 222, 128, 0.25);
+                border-radius: 10px;
+                padding: 12px 14px;
+                font-size: 12px;
+                color: var(--text2);
+                line-height: 1.9;
+              "
+            >
+              <strong style="color: #4ade80">💡 자활 참여자 주요 혜택</strong
+              ><br />
+              • 자활근로 급여 지급 (단계·사업단에 따라 차등)<br />
+              • 자활장려금: 근로소득 중 일부를 소득산정에서 공제하여 급여
+              삭감·탈수급을 완화<br />
+              • 자활성공수당: 자활기업 창업, 취업 성공 시 추가 지급 가능<br />
+              • 자활특례: 소득 증가로 수급에서 벗어나도 일정 기간 의료급여
+              등을 유지해주는 제도 연계 가능
+            </div>
+            <div
+              style="
+                margin-top: 10px;
+                font-size: 11px;
+                color: var(--text3);
+                line-height: 1.7;
+              "
+            >
+              ※ 국민취업지원제도(국취)와 자활사업은 운영 부처(고용노동부 ↔
+              보건복지부)가 다르고 동시 참여가 제한될 수 있습니다. 본인에게
+              유리한 쪽은 읍면동 주민센터 또는 관할 고용센터 상담을 통해
+              확인하는 것이 좋습니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- ⑤ 신청 방법 -->
+        <div id="gw-apply" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">📝</span> 신청 절차
+            </div>
+            <div style="display: grid; gap: 10px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ① 자가진단·온라인 신청
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  고용24(work24.go.kr) 또는 국민취업지원제도 모바일 앱에서
+                  자가진단 후 온라인 신청 가능
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ② 관할 고용센터 방문 신청
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  온라인이 어렵다면 주소지 관할 고용센터를 방문해 신분증을
+                  지참하고 신청서를 작성
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ③ 수급자격 확인·초기상담
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  소득·재산·취업경험 등을 심사하여 유형을 확정하고 담당
+                  상담사가 배정됨
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ④ 취업활동계획(IAP) 수립
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  상담을 거쳐 개인별 취업지원계획을 수립하고 이에 따른 구직활동
+                  의무가 부여됨
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #4ade80;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px; color: #4ade80">
+                  ⑤ 수당·서비스 개시
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  Ⅰ유형은 구직촉진수당(월 60만원×최대 6개월) 지급, Ⅱ유형은
+                  직업훈련·취업활동비용 등 지원 시작
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">📄</span> 준비 서류
+            </div>
+            <div style="font-size: 12px; color: var(--text2); line-height: 2">
+              • 신분증<br />
+              • 가족관계증명서(가구원 확인용)<br />
+              • 소득·재산 확인 서류 (건강보험료 납부확인서 등, 심사 과정에서
+              공적자료로 조회되는 경우가 많음)<br />
+              • (해당 시) 최근 2년 이내 취업경험 증빙서류 (경력증명서, 급여명세
+              등)<br />
+              • (특정계층 해당 시) 결혼이민 확인서류, 특고 매출 증빙 등 해당
+              사유 증빙서류
+            </div>
+          </div>
+          <div
+            style="
+              background: rgba(239, 68, 68, 0.08);
+              border: 1px solid rgba(239, 68, 68, 0.25);
+              border-radius: 12px;
+              padding: 14px 16px;
+              font-size: 12px;
+              color: var(--text2);
+              line-height: 1.9;
+            "
+          >
+            <strong style="color: #f87171">⚠️ 유의사항</strong><br />
+            • 수당을 받으며 단기 알바를 병행할 수 있지만, 소득이 일정 금액을
+            초과하면 해당 월 수당이 지급되지 않을 수 있으니 반드시 사전에
+            담당 상담사에게 신고하세요.<br />
+            • 정당한 사유 없이 구직활동 의무를 이행하지 않으면 수당 지급이
+            중단되거나 참여가 종료될 수 있습니다.<br />
+            • 본 안내는 참고용이며, 실제 지급액·기준은 연도별 예산과 지침에
+            따라 달라질 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /main-gwork -->
+
+    <!-- ─── 한부모가족 탭 ─── -->
+    <div id="main-hanbumo" style="display: none">
+      <div class="container">
+        <!-- 소분류 탭 -->
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px"
+        >
+          <button
+            class="step-btn active"
+            onclick="hpTab('overview')"
+            id="hptab-overview"
+          >
+            📋 대상·기준
+          </button>
+          <button
+            class="step-btn"
+            onclick="hpTab('benefits')"
+            id="hptab-benefits"
+          >
+            💰 지원 금액
+          </button>
+          <button class="step-btn" onclick="hpTab('apply')" id="hptab-apply">
+            📝 신청 방법
+          </button>
+          <button class="step-btn" onclick="hpTab('extra')" id="hptab-extra">
+            🎁 추가 지원제도
+          </button>
+        </div>
+
+        <!-- ① 대상·기준 -->
+        <div id="hp-overview">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">👨‍👩‍👧</span> 한부모가족지원제도란?
+            </div>
+            <div
+              style="
+                background: rgba(96, 165, 250, 0.08);
+                border: 1px solid rgba(96, 165, 250, 0.2);
+                border-radius: 10px;
+                padding: 14px;
+                margin-bottom: 14px;
+                font-size: 12px;
+                line-height: 1.9;
+              "
+            >
+              <strong style="color: var(--text)">한부모가족지원법</strong>에
+              근거해 성평등가족부(구 여성가족부)가 주관하고, 지자체를 통해
+              신청·지급되는 제도입니다.<br />
+              기초생활보장 수급 여부와 별개로 신청할 수 있으며, 기초수급자인
+              한부모가족은 생계·주거급여 등과 <strong>중복 수령</strong>이
+              가능한 항목도 있습니다(단, 일부 급여는 중복 조정될 수 있음).
+            </div>
+            <div style="display: grid; gap: 12px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 14px;
+                  border-left: 4px solid #60a5fa;
+                "
+              >
+                <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+                  👪 한부모가족
+                </div>
+                <div style="color: var(--text2); line-height: 1.9">
+                  만 18세 미만(취학 시 만 22세 미만) 자녀를 양육하는 모(母) 또는
+                  부(父)로 이루어진 가족<br />
+                  선정기준: <strong style="color: #60a5fa">기준 중위소득 65% 이하</strong>
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 14px;
+                  border-left: 4px solid #fb923c;
+                "
+              >
+                <div style="font-weight: 700; color: #fb923c; margin-bottom: 8px">
+                  👴 조손가족
+                </div>
+                <div style="color: var(--text2); line-height: 1.9">
+                  부모의 부양을 받지 못하는 아동을 조부 또는 조모가 양육하는
+                  가족<br />
+                  선정기준: <strong style="color: #fb923c">기준 중위소득 65% 이하</strong>
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 14px;
+                  border-left: 4px solid #4ade80;
+                "
+              >
+                <div style="font-weight: 700; color: #4ade80; margin-bottom: 8px">
+                  🧑 청소년한부모가족
+                </div>
+                <div style="color: var(--text2); line-height: 1.9">
+                  모 또는 부의 연령이 만 24세 이하인 한부모가족<br />
+                  선정기준: 기준 중위소득
+                  <strong style="color: #4ade80">72% 이하</strong> (아동양육비
+                  등 급여 지급 기준은 65% 이하)
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                font-size: 11px;
+                color: var(--text3);
+                line-height: 1.7;
+              "
+            >
+              ※ 소득인정액 산정 방식(소득평가액 + 재산의 소득환산액)은 기초생활보장
+              계산기와 유사한 방식으로 산정됩니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- ② 지원 금액 -->
+        <div id="hp-benefits" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">💰</span> 2026년 가구원별 소득 기준 (월액)
+            </div>
+            <div style="overflow-x: auto">
+              <table
+                style="width: 100%; border-collapse: collapse; font-size: 12px"
+              >
+                <thead>
+                  <tr style="background: var(--surface2)">
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: left;
+                        border-bottom: 1px solid var(--border);
+                      "
+                    >
+                      가구원수
+                    </th>
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: right;
+                        border-bottom: 1px solid var(--border);
+                        color: #60a5fa;
+                      "
+                    >
+                      65% (한부모·조손가족)
+                    </th>
+                    <th
+                      style="
+                        padding: 10px;
+                        text-align: right;
+                        border-bottom: 1px solid var(--border);
+                        color: #4ade80;
+                      "
+                    >
+                      72% (청소년한부모, 선정기준)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="hp_income_table"></tbody>
+              </table>
+            </div>
+            <div
+              style="
+                margin-top: 10px;
+                font-size: 11px;
+                color: var(--text3);
+                line-height: 1.7;
+              "
+            >
+              ※ 위 금액은 2026년 고시 기준 중위소득으로 자동 계산한
+              참고값입니다. 실제 대상자 수는 자녀 포함 가구원 수를 기준으로
+              산정됩니다.
+            </div>
+          </div>
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">🎁</span> 주요 지원 항목 (월 지급액 예시)
+            </div>
+            <div style="display: grid; gap: 10px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700">아동양육비 (일반 한부모)</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    만 18세 미만 자녀 1인당
+                  </div>
+                </div>
+                <div style="font-weight: 800; color: #60a5fa; white-space: nowrap">
+                  약 월 21만원
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700">아동양육비 (청소년한부모)</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    자녀 1인당 (0~1세 자녀는 금액 상향)
+                  </div>
+                </div>
+                <div style="font-weight: 800; color: #4ade80; white-space: nowrap">
+                  약 월 35만원~
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700">추가양육비</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    미혼모·부, 조손가족 등 조건 해당 시 자녀 1인당
+                  </div>
+                </div>
+                <div style="font-weight: 800; color: #fb923c; white-space: nowrap">
+                  약 월 33만원
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700">학용품비</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    중·고등학생 자녀 1인당, 연 1회 지급
+                  </div>
+                </div>
+                <div style="font-weight: 800; color: #fbbf24; white-space: nowrap">
+                  연 약 9만원대
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700">생활보조금</div>
+                  <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
+                    시설 입소 한부모가족 가구당
+                  </div>
+                </div>
+                <div style="font-weight: 800; color: var(--text2); white-space: nowrap">
+                  가구당 월 5만원대
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 14px;
+                background: rgba(245, 158, 11, 0.08);
+                border: 1px solid rgba(245, 158, 11, 0.25);
+                border-radius: 10px;
+                padding: 12px 14px;
+                font-size: 11px;
+                color: var(--text2);
+                line-height: 1.8;
+              "
+            >
+              ⚠️ 위 금액은 최근 공고를 바탕으로 한 <strong>참고용 예시</strong>이며,
+              매년 예산·지자체 공고에 따라 변동됩니다. 정확한 금액은 반드시
+              복지로(bokjiro.go.kr) 또는 읍면동 주민센터에서 확인하세요.
+            </div>
+          </div>
+        </div>
+
+        <!-- ③ 신청 방법 -->
+        <div id="hp-apply" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">📝</span> 신청 절차
+            </div>
+            <div style="display: grid; gap: 10px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ① 주민센터 방문 또는 복지로 온라인 신청
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  주소지 관할 읍·면·동 주민센터를 방문하거나, 복지로
+                  (bokjiro.go.kr) 홈페이지·앱에서 온라인 신청 가능
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ② 신청서·소득재산신고서 작성
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  한부모가족 지원 신청서와 소득·재산 신고서를 작성해 제출
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #3b82f6;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px">
+                  ③ 소득인정액 조사
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  사회보장정보시스템 연계 조사를 통해 소득·재산을 확인하며,
+                  통상 2~4주 정도 소요됨
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #4ade80;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 4px; color: #4ade80">
+                  ④ 선정 통보·급여 지급
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  선정되면 통상 신청일이 속한 달을 기준으로 소급 지급되는 것이
+                  원칙 (지자체 공고 확인 필요)
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">📄</span> 준비 서류 체크리스트
+            </div>
+            <div style="display: grid; gap: 8px">
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  사회복지서비스 및 급여제공 신청서
+                </div>
+              </label>
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  가족관계증명서(상세) / 주민등록등본
+                </div>
+              </label>
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  소득·재산 신고서 및 금융정보 제공동의서
+                </div>
+              </label>
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  임대차계약서 (임차 거주 시)
+                </div>
+              </label>
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  통장 사본
+                </div>
+              </label>
+              <label class="gw-check-item" onclick="gwCheckItem(this)">
+                <input type="checkbox" />
+                <div style="font-weight: 700; font-size: 12px">
+                  혼인관계증명서 등 한부모가족 해당 사실 증빙서류
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ④ 추가 지원제도 -->
+        <div id="hp-extra" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-title">
+              <span class="icon">🎁</span> 함께 챙기면 좋은 추가 지원제도
+            </div>
+            <div style="display: grid; gap: 10px; font-size: 12px">
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #60a5fa;
+                "
+              >
+                <div style="font-weight: 700; color: #60a5fa; margin-bottom: 4px">
+                  🏘️ 공공임대주택 우선공급 / 전세임대 지원
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  한부모가족은 국민임대·행복주택 등 공공임대주택 우선공급
+                  대상이며, 한부모가족 전세임대 지원사업도 별도 운영됩니다.
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #4ade80;
+                "
+              >
+                <div style="font-weight: 700; color: #4ade80; margin-bottom: 4px">
+                  🧸 국공립 어린이집·유치원 우선입소
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  한부모가족 자녀는 국공립 어린이집·유치원 입소 시 우선순위가
+                  부여됩니다.
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #fbbf24;
+                "
+              >
+                <div style="font-weight: 700; color: #fbbf24; margin-bottom: 4px">
+                  ⚖️ 양육비 이행지원 (양육비이행관리원)
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  비양육 부모가 양육비를 지급하지 않을 때 상담·소송지원·추심
+                  지원을 받을 수 있습니다. 한시적 양육비 긴급지원도 신청
+                  가능합니다.
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #fb923c;
+                "
+              >
+                <div style="font-weight: 700; color: #fb923c; margin-bottom: 4px">
+                  🏥 건강보험료 감면
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  지역가입자인 한부모가족은 건강보험료 일부 감면을 신청할 수
+                  있습니다.
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #f87171;
+                "
+              >
+                <div style="font-weight: 700; color: #f87171; margin-bottom: 4px">
+                  💳 자산형성지원 (저축계좌 연계)
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  희망저축계좌·청년내일저축계좌 등 자산형성지원사업 신청 시
+                  한부모가족은 우대 요건이 적용되는 경우가 많습니다.
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--surface2);
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  border-left: 4px solid #a78bfa;
+                "
+              >
+                <div style="font-weight: 700; color: #a78bfa; margin-bottom: 4px">
+                  🎫 문화누리카드 · 급식비 등 연계 지원
+                </div>
+                <div style="color: var(--text2); line-height: 1.8">
+                  기초수급자·차상위계층과 마찬가지로 문화누리카드, 통신요금
+                  감면, 자녀 급식비 지원 등을 함께 신청할 수 있습니다.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 14px;
+                font-size: 11px;
+                color: var(--text3);
+                line-height: 1.7;
+              "
+            >
+              ※ 제도별 세부 자격·금액은 지자체·연도에 따라 다를 수 있으므로,
+              신청 전 반드시 읍면동 주민센터 또는 복지로에서 최신 안내를
+              확인하세요.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /main-hanbumo -->
+
     <script>
       // ──────────────────────────────────────────
       // 전역 유틸리티
@@ -7334,6 +8826,8 @@
           "rental",
           "workability",
           "plan",
+          "gwork",
+          "hanbumo",
         ].forEach((t) => {
           const el = document.getElementById("main-" + t);
           const btn = document.getElementById("mtab-" + t);
@@ -7347,6 +8841,8 @@
         if (tab === "rental") rentalTab("overview");
         if (tab === "workability") wa_init();
         if (tab === "plan") plan_init();
+        if (tab === "gwork") gw_init();
+        if (tab === "hanbumo") hp_init();
       }
 
       // ──────────────────────────────────────────
@@ -10833,6 +12329,107 @@
       function toggleSvc(id) {
         const card = document.getElementById("svc-" + id);
         card.classList.toggle("open");
+      }
+
+      // ──────────────────────────────────────────
+      // 자활/취업(국취) 탭
+      // ──────────────────────────────────────────
+      const GW_TABS = [
+        "overview",
+        "checklist",
+        "criteria",
+        "jahwal",
+        "apply",
+      ];
+      let gw_initialized = false;
+
+      function gwTab(id) {
+        GW_TABS.forEach((t) => {
+          const el = document.getElementById("gw-" + t);
+          const btn = document.getElementById("gwtab-" + t);
+          if (el) el.style.display = t === id ? "" : "none";
+          if (btn) btn.classList.toggle("active", t === id);
+        });
+      }
+
+      function gw_init() {
+        if (gw_initialized) return;
+        gw_initialized = true;
+        gwTab("overview");
+        gw_renderIncomeTable();
+      }
+
+      // 체크리스트 항목 클릭 시 시각적 표시 + 그룹별 카운터 갱신
+      function gwCheckItem(label) {
+        const input = label.querySelector('input[type="checkbox"]');
+        if (!input) return;
+        label.classList.toggle("checked", input.checked);
+        const group = label.closest("[data-gwgroup]");
+        if (group) {
+          const total = group.querySelectorAll(
+            'input[type="checkbox"]',
+          ).length;
+          const checked = group.querySelectorAll(
+            'input[type="checkbox"]:checked',
+          ).length;
+          const counter = group.querySelector(".gw-counter");
+          if (counter) counter.textContent = checked + "/" + total + " 항목 해당";
+        }
+      }
+
+      function gw_renderIncomeTable() {
+        const el = document.getElementById("gw_income_table");
+        if (!el || typeof MEDIAN_2026 === "undefined") return;
+        let rows = "";
+        [1, 2, 3, 4].forEach((n) => {
+          const m = MEDIAN_2026[n];
+          if (!m) return;
+          rows += `<tr>
+            <td style="padding:10px;border-bottom:1px solid var(--border)">${n}인</td>
+            <td style="padding:10px;text-align:right;border-bottom:1px solid var(--border)">${fmt(Math.round(m * 0.6))}</td>
+            <td style="padding:10px;text-align:right;border-bottom:1px solid var(--border)">${fmt(Math.round(m * 1.0))}</td>
+            <td style="padding:10px;text-align:right;border-bottom:1px solid var(--border)">${fmt(Math.round(m * 1.2))}</td>
+          </tr>`;
+        });
+        el.innerHTML = rows;
+      }
+
+      // ──────────────────────────────────────────
+      // 한부모가족 탭
+      // ──────────────────────────────────────────
+      const HP_TABS = ["overview", "benefits", "apply", "extra"];
+      let hp_initialized = false;
+
+      function hpTab(id) {
+        HP_TABS.forEach((t) => {
+          const el = document.getElementById("hp-" + t);
+          const btn = document.getElementById("hptab-" + t);
+          if (el) el.style.display = t === id ? "" : "none";
+          if (btn) btn.classList.toggle("active", t === id);
+        });
+      }
+
+      function hp_init() {
+        if (hp_initialized) return;
+        hp_initialized = true;
+        hpTab("overview");
+        hp_renderIncomeTable();
+      }
+
+      function hp_renderIncomeTable() {
+        const el = document.getElementById("hp_income_table");
+        if (!el || typeof MEDIAN_2026 === "undefined") return;
+        let rows = "";
+        [1, 2, 3, 4].forEach((n) => {
+          const m = MEDIAN_2026[n];
+          if (!m) return;
+          rows += `<tr>
+            <td style="padding:10px;border-bottom:1px solid var(--border)">${n}인</td>
+            <td style="padding:10px;text-align:right;border-bottom:1px solid var(--border)">${fmt(Math.round(m * 0.65))}</td>
+            <td style="padding:10px;text-align:right;border-bottom:1px solid var(--border)">${fmt(Math.round(m * 0.72))}</td>
+          </tr>`;
+        });
+        el.innerHTML = rows;
       }
     </script>
   </body>
