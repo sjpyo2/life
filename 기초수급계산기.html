@@ -1385,6 +1385,9 @@
       <button class="main-tab" onclick="switchMain('gwork')" id="mtab-gwork">
         💼 자활/취업(국취)
       </button>
+      <button class="main-tab" onclick="switchMain('gjang')" id="mtab-gjang">
+        💵 근로·자녀장려금
+      </button>
       <button
         class="main-tab"
         onclick="switchMain('hanbumo')"
@@ -8370,6 +8373,392 @@
     </div>
     <!-- /main-hanbumo -->
 
+    <!-- ─── 근로장려금·자녀장려금 계산기 탭 ─── -->
+    <div id="main-gjang" style="display: none">
+      <div class="container">
+        <!-- 최상단 핵심 안내 배너 -->
+        <div
+          style="
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1.5px solid rgba(34, 197, 94, 0.35);
+            font-size: 13.5px;
+            line-height: 1.8;
+          "
+        >
+          <div style="color: var(--green); font-weight: 800; margin-bottom: 4px;">
+            💼 근로장려금은 생계급여 등 수급비와 <u>무관</u>합니다
+          </div>
+          <div style="color: var(--yellow); font-weight: 800;">
+            👶 자녀장려금은 생계급여와 <u>중복 지원되지 않습니다</u> (생계급여 수급 가구는 신청 불가)
+          </div>
+        </div>
+
+        <!-- 인트로 -->
+        <div
+          class="card"
+          style="
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--surface), var(--surface2));
+          "
+        >
+          <div class="card-title">
+            <span class="icon">💵</span> 근로장려금 · 자녀장려금이란?
+          </div>
+          <div style="font-size: 13px; color: var(--text2); line-height: 1.8">
+            국세청이 저소득 근로자·사업자·종교인 소득이 있는 가구에 지급하는
+            <strong style="color: var(--text)">현금성 지원 제도</strong>로,
+            기초생활보장제도(생계·의료·주거·교육급여)와는
+            <strong style="color: var(--accent2)">별도로 운영되는 국세청 제도</strong>입니다.<br /><br />
+            <span style="color: var(--green); font-weight: 700"
+              >✔ 근로장려금</span
+            >은 생계급여 등 기초수급 여부와 <strong>무관하게</strong> 소득·재산
+            요건만 맞으면 신청할 수 있습니다.<br />
+            <span style="color: var(--yellow); font-weight: 700"
+              >⚠ 자녀장려금</span
+            >은 <strong>국민기초생활보장법상 "생계급여" 수급 가구는 신청 대상에서
+            제외</strong>됩니다 (생계급여와의 중복 지원 방지).
+          </div>
+        </div>
+
+        <!-- 소분류 탭 -->
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px"
+        >
+          <button class="step-btn active" onclick="gjTab('calc')" id="gjtab-calc">
+            🧮 예상액 계산기
+          </button>
+          <button class="step-btn" onclick="gjTab('guide')" id="gjtab-guide">
+            📋 제도 안내
+          </button>
+        </div>
+
+        <!-- ═══════════ 계산기 ═══════════ -->
+        <div id="gj-calc">
+          <div class="card">
+            <div class="card-title"><span class="icon">👪</span> 가구 구성</div>
+            <div class="field" style="margin-bottom: 16px">
+              <label>배우자 유무</label>
+              <div class="chip-group" id="gj_spouse">
+                <div
+                  class="chip on"
+                  data-val="none"
+                  onclick="selectChip(this, 'gj_spouse'); gj_calc()"
+                >
+                  혼자 산다 (배우자 없음)
+                </div>
+                <div
+                  class="chip"
+                  data-val="single"
+                  onclick="selectChip(this, 'gj_spouse'); gj_calc()"
+                >
+                  배우자 있음 · 외벌이
+                </div>
+                <div
+                  class="chip"
+                  data-val="dual"
+                  onclick="selectChip(this, 'gj_spouse'); gj_calc()"
+                >
+                  배우자 있음 · 맞벌이
+                </div>
+              </div>
+              <div class="info-box" style="margin-top: 10px">
+                외벌이 = 배우자 연소득 300만원 미만(또는 소득 없음) · 맞벌이 =
+                신청인·배우자 각각 연소득 300만원 이상
+              </div>
+            </div>
+            <div class="field">
+              <label
+                >18세 미만 부양자녀 수
+                <span class="tip">(자녀장려금 계산에 사용)</span></label
+              >
+              <div class="chip-group" id="gj_child">
+                <div
+                  class="chip on"
+                  data-val="0"
+                  onclick="selectChip(this, 'gj_child'); gj_calc()"
+                >
+                  0명
+                </div>
+                <div
+                  class="chip"
+                  data-val="1"
+                  onclick="selectChip(this, 'gj_child'); gj_calc()"
+                >
+                  1명
+                </div>
+                <div
+                  class="chip"
+                  data-val="2"
+                  onclick="selectChip(this, 'gj_child'); gj_calc()"
+                >
+                  2명
+                </div>
+                <div
+                  class="chip"
+                  data-val="3"
+                  onclick="selectChip(this, 'gj_child'); gj_calc()"
+                >
+                  3명
+                </div>
+                <div
+                  class="chip"
+                  data-val="4"
+                  onclick="selectChip(this, 'gj_child'); gj_calc()"
+                >
+                  4명 이상
+                </div>
+              </div>
+            </div>
+            <div id="gj_typeBadge" class="info-box" style="margin-top: 14px"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="icon">💰</span> 연간 총소득
+              <span class="tip" style="font-weight: 400"
+                >(근로·사업·종교인소득 등 세전 합계, 원 단위)</span
+              >
+            </div>
+            <div class="form-row" id="gj_incomeRow">
+              <div class="field">
+                <label>본인 연소득 <span class="req">*</span></label>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  id="gj_income"
+                  class="mono"
+                  placeholder="예: 18,000,000"
+                  oninput="gj_calc()"
+                />
+              </div>
+              <div class="field" id="gj_spouseIncomeField" style="display: none">
+                <label>배우자 연소득</label>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  id="gj_spouseIncome"
+                  class="mono"
+                  placeholder="예: 12,000,000"
+                  oninput="gj_calc()"
+                />
+              </div>
+            </div>
+            <div class="info-box">
+              사업소득자는 업종별 조정률(도소매업 20%, 음식·숙박업 45%,
+              제조업 30% 등)을 곱한 금액이 "총급여액 등"이 되어 실제 매출보다
+              낮게 산정됩니다. 정확한 금액은 홈택스 모의계산에서 확인하세요.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">🏦</span> 재산·수급 상태</div>
+            <div class="form-row single">
+              <div class="field">
+                <label
+                  >가구원 전체 재산 합계
+                  <span class="tip"
+                    >(부동산·전세보증금·예금·자동차 등, 부채 차감 X)</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  id="gj_asset"
+                  class="mono"
+                  placeholder="예: 50,000,000"
+                  oninput="gj_calc()"
+                />
+              </div>
+            </div>
+            <div class="check-row">
+              <input
+                type="checkbox"
+                id="gj_livelihood"
+                onchange="gj_calc()"
+              />
+              <label class="check-label" for="gj_livelihood">
+                <strong>현재 국민기초생활보장 "생계급여" 수급 중</strong>
+                <span
+                  >생계급여 수급 가구는 자녀장려금 신청 대상에서
+                  제외됩니다 (근로장려금은 영향 없음)</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- 결과 -->
+          <div class="summary-bar">
+            <div>
+              <div class="total-label">
+                예상 합계 수령액 (근로장려금 + 자녀장려금)
+              </div>
+              <div class="total-amount" id="gj_totalAmount">0원</div>
+            </div>
+            <div style="font-size: 11px; color: var(--text3)" id="gj_typeLabel"></div>
+          </div>
+
+          <div class="benefit-grid">
+            <div class="benefit-card" id="gj_eitcCard">
+              <div class="b-name">💼 근로장려금</div>
+              <div class="b-status" id="gj_eitcStatus">계산 중</div>
+              <div class="b-amount" id="gj_eitcAmount">0원</div>
+              <div class="b-threshold" id="gj_eitcThreshold"></div>
+            </div>
+            <div class="benefit-card" id="gj_ctcCard">
+              <div class="b-name">👶 자녀장려금</div>
+              <div class="b-status" id="gj_ctcStatus">계산 중</div>
+              <div class="b-amount" id="gj_ctcAmount">0원</div>
+              <div class="b-threshold" id="gj_ctcThreshold"></div>
+            </div>
+          </div>
+
+          <button
+            class="detail-toggle"
+            onclick="this.nextElementSibling.classList.toggle('show')"
+          >
+            🔍 산정 계산 과정 자세히 보기
+          </button>
+          <div class="detail-content" id="gj_detail"></div>
+
+          <div class="warn-box" style="margin-top: 16px">
+            <strong>⚠️ 참고사항</strong>
+            이 계산기는 2025년 신청분(2024년 귀속) 근로·자녀장려금 산정표를
+            기준으로 한 단순 추정치입니다. 실제 지급액은 국세청 홈택스·손택스
+            모의계산 및 심사 결과에 따라 달라질 수 있습니다. 산정액이 3만원
+            미만이면 지급되지 않으며, 기한 후 신청 시 5% 감액, 국세 체납액이
+            있으면 최대 30% 한도에서 충당 후 지급됩니다.
+          </div>
+        </div>
+
+        <!-- ═══════════ 제도 안내 ═══════════ -->
+        <div id="gj-guide" style="display: none">
+          <div class="card">
+            <div class="card-title">
+              <span class="icon">📊</span> 근로장려금 가구 유형별 기준
+            </div>
+            <div style="overflow-x: auto">
+              <table
+                style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  font-size: 12px;
+                "
+              >
+                <tr style="border-bottom: 1px solid var(--border)">
+                  <td style="padding: 8px 6px; color: var(--text3)">가구 유형</td>
+                  <td style="padding: 8px 6px; color: var(--text3)">정의</td>
+                  <td style="padding: 8px 6px; color: var(--text3); text-align: right">
+                    소득기준
+                  </td>
+                  <td style="padding: 8px 6px; color: var(--text3); text-align: right">
+                    최대지급액
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border)">
+                  <td style="padding: 8px 6px; font-weight: 700">단독가구</td>
+                  <td style="padding: 8px 6px; color: var(--text2)">
+                    배우자·부양자녀·70세↑직계존속 모두 없음
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace">
+                    2,200만원 미만
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--green)">
+                    165만원
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border)">
+                  <td style="padding: 8px 6px; font-weight: 700">홑벌이가구</td>
+                  <td style="padding: 8px 6px; color: var(--text2)">
+                    배우자(소득 300만원 미만)·부양자녀·70세↑직계존속 중 1개↑
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace">
+                    3,200만원 미만
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--green)">
+                    285만원
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 6px; font-weight: 700">맞벌이가구</td>
+                  <td style="padding: 8px 6px; color: var(--text2)">
+                    신청인·배우자 각각 소득 300만원 이상
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace">
+                    4,400만원 미만
+                  </td>
+                  <td style="padding: 8px 6px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--green)">
+                    330만원
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="info-box" style="margin-top: 14px">
+              지급액은 소득 구간에 따라 <strong>점증(늘수록 증가) → 평탄(최대
+              구간) → 점감(늘수록 감소)</strong> 구조입니다. 소득이 너무
+              적어도, 너무 많아도 최대액을 못 받고 중간 구간에서 가장 많이
+              받습니다. 자녀가 있는 무배우자(한부모) 가구는 홑벌이가구로
+              산정됩니다.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">👶</span> 자녀장려금 기준</div>
+            <div style="font-size: 13px; color: var(--text2); line-height: 1.9">
+              • <strong style="color: var(--text)">대상</strong>: 18세 미만
+              부양자녀가 있는 홑벌이·맞벌이 가구 (단독가구는 대상 아님)<br />
+              • <strong style="color: var(--text)">소득기준</strong>: 부부합산
+              연소득 7,000만원 미만<br />
+              • <strong style="color: var(--text)">지급액</strong>: 자녀
+              1인당 최대 <strong>100만원</strong>. 홑벌이가구는 연소득
+              2,100만원 미만, 맞벌이가구는 2,500만원 미만까지 100만원
+              정액이며, 이후 7,000만원까지 100만원에서
+              <strong>50만원</strong>까지 점감<br />
+              • <strong style="color: var(--text)">재산기준</strong>:
+              근로장려금과 동일 (2.4억원 미만, 1.7억~2.4억원은 50% 감액)<br />
+              • <strong style="color: var(--red)">생계급여 수급 가구 제외</strong
+              >: 국민기초생활보장법상 "생계급여"를 받는 가구는 자녀장려금을
+              신청할 수 없습니다. 의료·주거·교육급여만 받는 가구나
+              차상위계층은 신청 가능합니다.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📅</span> 신청 방법·시기</div>
+            <div style="font-size: 13px; color: var(--text2); line-height: 1.9">
+              • <strong style="color: var(--text)">정기신청</strong>: 매년 5월
+              1일 ~ 5월 31일 (전년도 소득 기준) → 8~9월 지급<br />
+              • <strong style="color: var(--text)">기한후신청</strong>:
+              정기신청 종료 후 6개월 이내(11월 30일까지) 가능하나 지급액
+              5% 감액<br />
+              • <strong style="color: var(--text)">반기신청</strong>:
+              근로소득만 있는 경우 상반기분(9월)·하반기분(3월)으로 나눠 미리
+              신청 가능<br />
+              • <strong style="color: var(--text)">신청 방법</strong>:
+              홈택스(PC)·손택스(모바일 앱)·ARS(1544-9944)·세무서 방문<br />
+              • 근로장려금과 자녀장려금은 <strong>동시에 한 번 신청</strong>하며,
+              국세청이 각각 심사해 합산 지급합니다.
+            </div>
+            <div class="info-box" style="margin-top: 14px">
+              📞 장려금 상담센터: <strong>1566-3636</strong> (평일 9시~18시)
+            </div>
+          </div>
+
+          <div class="warn-box">
+            <strong>⚠️ 신청 제외 대상</strong>
+            대한민국 국적이 없는 자(예외 있음), 다른 거주자의 부양자녀,
+            전문직 사업자와 그 배우자, 상용근로자로서 월평균 총급여
+            500만원 이상인 자(그 배우자 포함, 근로장려금만 해당)는 신청할
+            수 없습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /main-gjang -->
+
+
     <script>
       // ──────────────────────────────────────────
       // 전역 유틸리티
@@ -9054,6 +9443,7 @@
           "workability",
           "plan",
           "gwork",
+          "gjang",
           "hanbumo",
         ].forEach((t) => {
           const el = document.getElementById("main-" + t);
@@ -9069,6 +9459,7 @@
         if (tab === "workability") wa_init();
         if (tab === "plan") plan_init();
         if (tab === "gwork") gw_init();
+        if (tab === "gjang") gj_init();
         if (tab === "hanbumo") hp_init();
       }
 
@@ -12710,6 +13101,198 @@
           </tr>`;
         });
         el.innerHTML = rows;
+      }
+
+      // ──────────────────────────────────────────
+      // 근로장려금 · 자녀장려금 계산기 탭
+      // (2025년 신청분 / 2024년 귀속 기준 — 국세청 산정표)
+      // ──────────────────────────────────────────
+      const GJ_TABS = ["calc", "guide"];
+      let gj_initialized = false;
+
+      // 근로장려금 가구유형별 산정 테이블 (단위: 만원)
+      // t1: 점증구간→평탄구간 전환점, t2: 평탄구간→점감구간 전환점, cap: 소득상한, max: 최대지급액
+      const GJ_EITC_TABLE = {
+        단독가구: { t1: 400, t2: 900, cap: 2200, max: 165 },
+        홑벌이가구: { t1: 700, t2: 1400, cap: 3200, max: 285 },
+        맞벌이가구: { t1: 800, t2: 1700, cap: 4400, max: 330 },
+      };
+
+      function gjTab(id) {
+        GJ_TABS.forEach((t) => {
+          const el = document.getElementById("gj-" + t);
+          const btn = document.getElementById("gjtab-" + t);
+          if (el) el.style.display = t === id ? "" : "none";
+          if (btn) btn.classList.toggle("active", t === id);
+        });
+      }
+
+      function gj_init() {
+        if (gj_initialized) return;
+        gj_initialized = true;
+        bindCommaInput("gj_income");
+        bindCommaInput("gj_spouseIncome");
+        bindCommaInput("gj_asset");
+        gjTab("calc");
+        gj_calc();
+      }
+
+      function gj_getSpouseType() {
+        const el = document.querySelector("#gj_spouse .chip.on");
+        return el ? el.dataset.val : "none";
+      }
+      function gj_getChildCount() {
+        const el = document.querySelector("#gj_child .chip.on");
+        return el ? parseInt(el.dataset.val) : 0;
+      }
+      // 가구유형 판정: 배우자 있고 맞벌이면 맞벌이가구, 배우자(외벌이) 또는
+      // (배우자 없이) 자녀가 있으면 홑벌이가구, 그 외(혼자+자녀없음)는 단독가구
+      function gj_householdType(spouseVal, childCount) {
+        if (spouseVal === "dual") return "맞벌이가구";
+        if (spouseVal === "single") return "홑벌이가구";
+        return childCount > 0 ? "홑벌이가구" : "단독가구";
+      }
+
+      // 근로장려금 산정액 (만원 단위, 재산 반영 전)
+      function gj_calcEITC(type, incomeManwon) {
+        const T = GJ_EITC_TABLE[type];
+        if (incomeManwon <= 0 || incomeManwon >= T.cap) return 0;
+        let amt;
+        if (incomeManwon < T.t1) amt = incomeManwon * (T.max / T.t1);
+        else if (incomeManwon < T.t2) amt = T.max;
+        else amt = T.max - (incomeManwon - T.t2) * (T.max / (T.cap - T.t2));
+        amt = Math.max(0, amt);
+        if (amt < 3) amt = 0; // 산정액 3만원 미만은 지급하지 않음
+        return amt;
+      }
+
+      // 자녀장려금 1인당 산정액 (만원 단위, 재산 반영 전)
+      // 홑벌이가구: 2,100만원 미만 100만원 정액 / 2,100만~7,000만원 100만원→50만원 점감
+      // 맞벌이가구: 2,500만원 미만 100만원 정액 / 2,500만~7,000만원 100만원→50만원 점감
+      function gj_calcCTCPerChild(type, incomeManwon) {
+        if (incomeManwon >= 7000) return 0;
+        const flatEnd = type === "맞벌이가구" ? 2500 : 2100;
+        if (incomeManwon < flatEnd) return 100;
+        return Math.max(0, 100 - (incomeManwon - flatEnd) * (50 / (7000 - flatEnd)));
+      }
+
+      // 재산 기준 감액 적용 (근로·자녀장려금 공통: 1.7억~2.4억 50%, 2.4억 이상 0%)
+      function gj_applyAsset(amtManwon, assetManwon) {
+        if (assetManwon >= 24000)
+          return { amt: 0, note: "재산 2.4억원 이상: 지급 제외" };
+        if (assetManwon >= 17000)
+          return {
+            amt: amtManwon * 0.5,
+            note: "재산 1.7억원 이상 2.4억원 미만: 산정액의 50%만 지급",
+          };
+        return { amt: amtManwon, note: "" };
+      }
+
+      // 만원(소수) → 원 단위, 1,000원 미만 절사
+      function gj_wonRound(manwonFloat) {
+        const won = manwonFloat * 10000;
+        return Math.floor(won / 1000) * 1000;
+      }
+
+      function gj_calc() {
+        const spouseVal = gj_getSpouseType();
+        const childCount = gj_getChildCount();
+        document.getElementById("gj_spouseIncomeField").style.display =
+          spouseVal === "none" ? "none" : "";
+
+        const myIncomeWon = parseComma(
+          document.getElementById("gj_income").value,
+        );
+        const spouseIncomeWon =
+          spouseVal === "none"
+            ? 0
+            : parseComma(document.getElementById("gj_spouseIncome").value);
+        const assetWon = parseComma(document.getElementById("gj_asset").value);
+        const livelihood = document.getElementById("gj_livelihood").checked;
+
+        const myIncome = myIncomeWon / 10000;
+        const spouseIncome = spouseIncomeWon / 10000;
+        const totalIncome = myIncome + spouseIncome;
+        const asset = assetWon / 10000;
+
+        const type = gj_householdType(spouseVal, childCount);
+        document.getElementById("gj_typeBadge").innerHTML =
+          `📌 산정 가구 유형: <strong style="color:var(--accent2)">${type}</strong>` +
+          (spouseVal === "none" && childCount > 0
+            ? ' <span class="tip">(자녀가 있는 무배우자 가구는 홑벌이가구로 산정)</span>'
+            : "");
+
+        // 근로장려금
+        const eitcRaw = gj_calcEITC(type, totalIncome);
+        const eitcAsset = gj_applyAsset(eitcRaw, asset);
+        const eitcFinal = gj_wonRound(eitcAsset.amt);
+        const eitcCap = GJ_EITC_TABLE[type].cap;
+        const eitcEligible = eitcFinal > 0;
+
+        // 자녀장려금
+        let ctcNote = "";
+        let ctcFinal = 0;
+        let ctcEligible = false;
+        let ctcRaw = 0;
+        let ctcAssetNote = "";
+        if (livelihood) {
+          ctcNote = "생계급여 수급 가구는 자녀장려금 신청 대상에서 제외됩니다.";
+        } else if (childCount <= 0) {
+          ctcNote = "18세 미만 부양자녀가 없어 자녀장려금 대상이 아닙니다.";
+        } else if (totalIncome >= 7000) {
+          ctcNote = "연소득 7,000만원 이상으로 자녀장려금 대상이 아닙니다.";
+        } else if (asset >= 24000) {
+          ctcNote = "재산 2.4억원 이상으로 지급 제외됩니다.";
+        } else {
+          const perChild = gj_calcCTCPerChild(type, totalIncome);
+          ctcRaw = perChild * childCount;
+          const ctcAsset = gj_applyAsset(ctcRaw, asset);
+          ctcAssetNote = ctcAsset.note;
+          ctcFinal = gj_wonRound(ctcAsset.amt);
+          ctcNote =
+            ctcAsset.note ||
+            `자녀 ${childCount}명 × 1인당 약 ${perChild.toFixed(0)}만원`;
+          ctcEligible = ctcFinal > 0;
+        }
+
+        // 근로장려금 카드 렌더링
+        const eCard = document.getElementById("gj_eitcCard");
+        eCard.className = "benefit-card " + (eitcEligible ? "eligible" : "ineligible");
+        document.getElementById("gj_eitcStatus").textContent = eitcEligible
+          ? "지급 대상"
+          : "해당 없음";
+        document.getElementById("gj_eitcAmount").textContent = fmt(eitcFinal);
+        document.getElementById("gj_eitcThreshold").textContent =
+          `${type} 소득기준 ${eitcCap.toLocaleString()}만원 미만 · 최대 ${GJ_EITC_TABLE[type].max}만원` +
+          (eitcAsset.note ? ` · ${eitcAsset.note}` : "");
+
+        // 자녀장려금 카드 렌더링
+        const cCard = document.getElementById("gj_ctcCard");
+        cCard.className = "benefit-card " + (ctcEligible ? "eligible" : "ineligible");
+        document.getElementById("gj_ctcStatus").textContent = ctcEligible
+          ? "지급 대상"
+          : "해당 없음";
+        document.getElementById("gj_ctcAmount").textContent = fmt(ctcFinal);
+        document.getElementById("gj_ctcThreshold").textContent = ctcNote;
+
+        const total = eitcFinal + ctcFinal;
+        document.getElementById("gj_totalAmount").textContent = fmt(total);
+        document.getElementById("gj_typeLabel").textContent =
+          `부부합산 연소득 ${Math.round(totalIncome).toLocaleString()}만원 기준`;
+
+        // 상세 계산 과정
+        document.getElementById("gj_detail").innerHTML = `
+          <div class="detail-row"><div class="d-label">가구 유형</div><div class="d-val">${type}</div></div>
+          <div class="detail-row"><div class="d-label">부부합산 연소득</div><div class="d-val">${Math.round(totalIncome * 10000).toLocaleString()}원 (약 ${Math.round(totalIncome).toLocaleString()}만원)</div></div>
+          <div class="detail-row"><div class="d-label">가구원 재산 합계</div><div class="d-val">${Math.round(asset * 10000).toLocaleString()}원</div></div>
+          <div class="detail-row"><div class="d-label">근로장려금 산정액 (재산 반영 전)</div><div class="d-val">${eitcRaw.toFixed(1)}만원</div></div>
+          <div class="detail-row"><div class="d-label">근로장려금 재산 조정</div><div class="d-val">${eitcAsset.note || "해당 없음 (전액 지급)"}</div></div>
+          <div class="detail-row"><div class="d-label">근로장려금 최종액</div><div class="d-val total">${fmt(eitcFinal)}</div></div>
+          <div class="detail-row"><div class="d-label">자녀장려금 산정액 (재산 반영 전)</div><div class="d-val">${ctcRaw.toFixed(1)}만원</div></div>
+          <div class="detail-row"><div class="d-label">자녀장려금 재산 조정</div><div class="d-val">${ctcAssetNote || "해당 없음 (전액 지급 또는 대상 아님)"}</div></div>
+          <div class="detail-row"><div class="d-label">자녀장려금 최종액</div><div class="d-val total">${fmt(ctcFinal)}</div></div>
+          <div class="detail-row"><div class="d-label">합계 (근로+자녀장려금)</div><div class="d-val total">${fmt(total)}</div></div>
+        `;
       }
     </script>
   </body>
