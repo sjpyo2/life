@@ -9047,15 +9047,28 @@
         const generalIncome = generalNet * RATE.general;
 
         // 금융재산 미리보기 계산 (propSummaryBox용)
+        // 기본재산액은 주거용재산 → 일반재산 → 금융재산 순으로 순차 차감됩니다 (보건복지부 사업안내 기준).
         const propFinancialPreview = parseComma(
           document.getElementById("propFinancial")?.value || "0",
         );
         const financialBasicPreview = parseComma(
           document.getElementById("financialBasic")?.value || "5000000",
         );
-        const netFinancialPreview = Math.max(
+        const usedDedGeneralPreview = Math.min(
+          generalTotal > 0 ? generalTotal : 0,
+          remainDed,
+        );
+        const remainDedForFinancialPreview = Math.max(
+          0,
+          remainDed - usedDedGeneralPreview,
+        );
+        const netFinancialAfterBasicPreview = Math.max(
           0,
           propFinancialPreview - financialBasicPreview,
+        );
+        const netFinancialPreview = Math.max(
+          0,
+          netFinancialAfterBasicPreview - remainDedForFinancialPreview,
         );
         const financialIncomePreview = netFinancialPreview * RATE.financial;
 
@@ -9084,6 +9097,7 @@
           ? `
       <div class="prop-row" style="margin-top:6px"><span class="pl">💳 금융재산 합계</span><span class="pv">${fmt(propFinancialPreview)}</span></div>
       <div class="prop-row"><span class="pl">↳ 생활준비금 공제 (500만원)</span><span class="pv">−${fmt(financialBasicPreview)}</span></div>
+      ${remainDedForFinancialPreview > 0 ? `<div class="prop-row"><span class="pl">↳ 잔여 기본재산공제 추가 차감</span><span class="pv">−${fmt(remainDedForFinancialPreview)}</span></div>` : ""}
       <div class="prop-row"><span class="pl">↳ 순 금융재산 (과세대상)</span><span class="pv">${fmt(netFinancialPreview)}</span></div>
       <div class="prop-row"><span class="pl">금융재산 환산소득 (월, ×6.26%)</span><span class="pv acc">${fmt(financialIncomePreview)}</span></div>
       `
@@ -9336,8 +9350,15 @@
         const generalNet = Math.max(0, generalRaw - remainDed);
         const generalIncome = generalNet * RATE.general;
 
-        // ③ 금융재산 (500만원 생활준비금 공제 후 6.26%)
-        const netFinancial = Math.max(0, propFinancial - financialBasic);
+        // ③ 금융재산 (500만원 생활준비금 공제 → 일반재산에서 못 쓴 잔여 기본재산공제까지 추가 공제 후 6.26%)
+        // 기본재산액은 주거용재산 → 일반재산 → 금융재산 순으로 순차 차감됩니다 (보건복지부 사업안내 기준).
+        const usedDedGeneral = Math.min(generalRaw > 0 ? generalRaw : 0, remainDed);
+        const remainDedForFinancial = Math.max(0, remainDed - usedDedGeneral);
+        const netFinancialAfterBasic = Math.max(0, propFinancial - financialBasic);
+        const netFinancial = Math.max(
+          0,
+          netFinancialAfterBasic - remainDedForFinancial,
+        );
         const financialIncome = netFinancial * RATE.financial;
 
         // ④ 자동차
@@ -9478,7 +9499,10 @@
         <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">🏗️ 일반재산 (비거주+기타+부채차감)</span><span class="d-val">${fmt(generalRaw)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 잔여 기본재산공제</span><span class="d-val minus">−${fmt(remainDed)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 일반재산 환산소득 (×4.17%/월)</span><span class="d-val">${fmt(generalIncome)}</span></div>
-        <div class="detail-row"><span class="d-label">💳 금융재산 환산소득 <small style="color:var(--text3)">(금융재산−500만원 생활준비금 후 ×6.26%/월)</small></span><span class="d-val">${fmt(financialIncome)}</span></div>
+        <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">💳 금융재산 합계</span><span class="d-val">${fmt(propFinancial)}</span></div>
+        <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 생활준비금 공제</span><span class="d-val minus">−${fmt(financialBasic)}</span></div>
+        ${remainDedForFinancial > 0 ? `<div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 일반재산에서 못 쓴 잔여 기본재산공제 추가 차감 <small style="color:var(--text3)">(주거용→일반→금융 순 차감)</small></span><span class="d-val minus">−${fmt(remainDedForFinancial)}</span></div>` : ""}
+        <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 금융재산 환산소득 (×6.26%/월)</span><span class="d-val">${fmt(financialIncome)}</span></div>
         <div class="detail-row"><span class="d-label">🚗 자동차 환산소득 <small style="color:var(--text3)">${carRateVal === 0 ? "(면제)" : carRateVal === 100 ? "(100% 전액)" : "(×4.17%/월)"}</small></span><span class="d-val ${carRateVal === 0 ? "minus" : ""}">${carRateVal === 0 ? "면제" : fmt(carIncome)}</span></div>
         <div class="detail-row"><span class="d-label"><strong>소득인정액 합계</strong></span><span class="d-val total">${fmt(recognizedIncome)}</span></div>
       </div>
