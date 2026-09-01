@@ -9806,7 +9806,7 @@
           laborRec = Math.max(0, laborRaw - 200000) * 0.7;
         else laborRec = laborRaw * 0.7;
 
-        // 재산 환산 (현재)
+        // 재산 환산 (현재) — 기본재산공제는 주거용→일반→금융재산 순으로 순차 차감
         const houseLimit = RV_HOUSING_LIMIT[region];
         const basicDed = RV_BASIC_DEDUCT[region];
         const withinH = Math.min(housing, houseLimit);
@@ -9814,9 +9814,16 @@
         const usedDed = Math.min(withinH, basicDed);
         const remDed = Math.max(0, basicDed - usedDed);
         const housingInc = Math.max(0, withinH - basicDed) * RATE_HOUSING;
-        const generalNet = Math.max(0, general + overH - remDed);
+        const generalRawRV = general + overH;
+        const usedDedGeneralRV = Math.min(
+          generalRawRV > 0 ? generalRawRV : 0,
+          remDed,
+        );
+        const remDedForFin = Math.max(0, remDed - usedDedGeneralRV);
+        const generalNet = Math.max(0, generalRawRV - remDed);
         const generalInc = generalNet * RATE_GENERAL;
-        const netFin = Math.max(0, financial - FINANCIAL_DEDUCT);
+        const netFinAfterBasic = Math.max(0, financial - FINANCIAL_DEDUCT);
+        const netFin = Math.max(0, netFinAfterBasic - remDedForFin);
         const finInc = netFin * RATE_FINANCIAL;
 
         const propInc = housingInc + generalInc + finInc;
