@@ -1138,6 +1138,81 @@
         margin-top: 4px;
       }
 
+      .ic-fc-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .ic-fc-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+      }
+      .ic-fc-q {
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.5;
+        flex: 1;
+      }
+      .ic-fc-btn {
+        flex-shrink: 0;
+        font-size: 12px;
+        padding: 8px 12px;
+        white-space: nowrap;
+      }
+      .ic-fc-verdict-box {
+        margin-top: 14px;
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+      }
+      .ic-fc-verdict-box.true {
+        background: rgba(74, 222, 128, 0.1);
+        border-color: rgba(74, 222, 128, 0.4);
+      }
+      .ic-fc-verdict-box.false {
+        background: rgba(248, 113, 113, 0.1);
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .ic-fc-verdict-box.partial {
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.4);
+      }
+      .ic-fc-verdict-label {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .ic-fc-verdict-box.true .ic-fc-verdict-label {
+        color: #4ade80;
+      }
+      .ic-fc-verdict-box.false .ic-fc-verdict-label {
+        color: #f87171;
+      }
+      .ic-fc-verdict-box.partial .ic-fc-verdict-label {
+        color: #fbbf24;
+      }
+      .ic-fc-verdict-body {
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.7;
+      }
+      .ic-fc-verdict-body b {
+        color: var(--text);
+      }
+      .ic-elig-badge {
+        font-size: 13px;
+        font-weight: 700;
+        text-align: center;
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+      }
       .ic-total-banner {
         background: linear-gradient(135deg, #1a3a2a, #1a2340);
         border: 1px solid rgba(34, 197, 94, 0.3);
@@ -2820,6 +2895,51 @@
 ══════════════════════════════════════ -->
     <div id="main-income" style="display: none">
       <div class="container">
+        <!-- 대화/커뮤니티 소문 팩트체크 -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🔍</span> 카톡·커뮤니티 소문 팩트체크
+            <span
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                font-weight: 400;
+                margin-left: 6px;
+              "
+              >(버튼 클릭 시 실제 수치로 즉시 재계산)</span
+            >
+          </div>
+          <div class="ic-fc-list">
+            <div class="ic-fc-item">
+              <div class="ic-fc-q">
+                "청년은 알바해서 70만원 벌어도 적정금액까지 생계급여 100%
+                나온다는데?"
+              </div>
+              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q1')">
+                이 케이스로 검증하기
+              </button>
+            </div>
+            <div class="ic-fc-item">
+              <div class="ic-fc-q">
+                "청년 아닌 수급자는 알바하면 생계급여에서 다 깎이나요?"
+              </div>
+              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q2')">
+                이 케이스로 검증하기
+              </button>
+            </div>
+            <div class="ic-fc-item">
+              <div class="ic-fc-q">
+                "청년 아니고 35세 이상 장애인인데 알바하면 생계급여 다
+                깎이나요? 120만원까지 소득 인정된다던데 맞나요?"
+              </div>
+              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q3')">
+                이 케이스로 검증하기
+              </button>
+            </div>
+          </div>
+          <div id="ic_fc_result"></div>
+        </div>
+
         <div class="card">
           <div class="card-title">
             <span class="icon">⚙️</span> 내 수급 조건 설정
@@ -2849,14 +2969,13 @@
           <div class="form-row">
             <div class="field">
               <label
-                >연령 유형 <span class="tip">(근로소득 공제 기준)</span></label
+                >수급자 조건 유형
+                <span class="tip">(근로소득 공제 기준 — 중복 해당 시 유리한 유형 선택)</span></label
               >
               <select id="ic_age" onchange="ic_calc()">
-                <option value="youth">청년 (19~34세) — 60만원+30%공제</option>
-                <option value="general">일반 — 30% 공제</option>
-                <option value="elder">
-                  노인/장애인 (65세↑) — 20만원+30%공제
-                </option>
+                <option value="general">기초수급자(일반) — 소득 전체의 30% 공제</option>
+                <option value="youth">청년수급자 (만 19~34세) — 60만원 공제 + 잔여액 30% 공제</option>
+                <option value="disabled">등록장애인 (연령 무관) — 20만원 공제 + 잔여액 30% 공제</option>
               </select>
             </div>
             <div class="field">
@@ -2979,6 +3098,27 @@
                 oninput="ic_calc()"
               />
             </div>
+          </div>
+          <div class="form-row" style="margin-top: 12px">
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                font-size: 13px;
+                color: var(--text2);
+              "
+            >
+              <input
+                type="checkbox"
+                id="ic_conditional"
+                onchange="ic_calc()"
+                style="width: 16px; height: 16px"
+              />
+              조건부 수급자 (근로능력 있는 18~64세 · 자활사업 참여가 생계급여
+              수급 조건)
+            </label>
           </div>
         </div>
 
@@ -10678,6 +10818,102 @@
         ic_calc();
       }
 
+      // ── 카톡/커뮤니티 소문 팩트체크 ──
+      // family=1(1인가구) 기준, 각 대화 속 조건 그대로 매핑해 실제 공제식으로 재계산
+      const FACTCHECK_CASES = {
+        q1: {
+          family: 1,
+          ageType: "youth",
+          albaPay: 700000,
+          claimTitle:
+            '"청년은 알바해서 70만원 벌어도 적정금액까지 생계급여 100% 나온다"',
+        },
+        q2: {
+          family: 1,
+          ageType: "general",
+          albaPay: 700000,
+          claimTitle:
+            '"청년 아닌 수급자는 알바하면 생계급여에서 다 깎이나요?"',
+        },
+        q3: {
+          family: 1,
+          ageType: "disabled",
+          albaPay: 500000,
+          claimTitle:
+            '"35세 이상 장애인은 알바하면 생계급여 다 깎이나요? 120만원까지 소득 인정된다던데?"',
+        },
+      };
+
+      function ic_factCheck(id) {
+        const c = FACTCHECK_CASES[id];
+        if (!c) return;
+
+        // 1) 계산기 입력값을 해당 케이스로 세팅하고 아래 계산기도 함께 갱신
+        document.getElementById("ic_family").value = c.family;
+        document.getElementById("ic_type").value = "life";
+        document.getElementById("ic_age").value = c.ageType;
+        document.getElementById("ic_hourly").value = "";
+        document.getElementById("ic_alba_pay").value = addComma(c.albaPay);
+        document.getElementById("ic_other_pay").value = "";
+        document.getElementById("ic_jahwal_pay").value = "";
+        document.getElementById("ic_conditional").checked = false;
+        const benefitEl = document.getElementById("ic_benefit");
+        delete benefitEl.dataset.manual;
+        ic_updateBenefit(); // 기준액 자동 채움 + ic_calc() 자동 실행
+
+        // 2) 실제 공제식으로 직접 검증 계산
+        const benefitMax = BENEFIT_2026[c.family];
+        let recognized, deductLabel, threshold;
+        if (c.ageType === "youth") {
+          recognized = Math.max(0, c.albaPay - 600000) * 0.7;
+          deductLabel = "60만원 공제 후 잔여액의 30% 인정(70%는 계속 공제)";
+          threshold = 600000;
+        } else if (c.ageType === "disabled") {
+          recognized = Math.max(0, c.albaPay - 200000) * 0.7;
+          deductLabel = "20만원 공제 후 잔여액의 30% 인정(연령 무관)";
+          threshold = 200000;
+        } else {
+          recognized = c.albaPay * 0.7;
+          deductLabel = "소득의 30% 인정(70%는 공제)";
+          threshold = 0;
+        }
+        const newBenefit = Math.max(0, benefitMax - recognized);
+        const keptPct = ((newBenefit / benefitMax) * 100).toFixed(1);
+        const netGain = c.albaPay - (benefitMax - newBenefit);
+
+        let verdict, label, body;
+        if (id === "q1") {
+          const fullyProtected = c.albaPay <= threshold;
+          verdict = fullyProtected ? "true" : "partial";
+          label = fullyProtected
+            ? "✅ 사실"
+            : "🟡 부분적으로만 사실 (문턱값이 다름)";
+          body = `청년(19~34세) 공제는 <b>월 60만원까지는 소득으로 전혀 잡히지 않아 생계급여 100% 그대로</b> 나옵니다. 다만 대화에서 말한 <b>70만원</b>은 60만원 문턱을 넘은 금액이라, 초과분 10만원의 30%인 <b>${fmt(recognized)}</b>만 소득으로 인정돼 생계급여가 그만큼 줄어듭니다.<br><br>
+            → 70만원 벌면: 생계급여 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b> (기준액의 ${keptPct}%), 총수입은 알바+급여 합쳐 <b>${fmt(c.albaPay + newBenefit)}</b>원으로 순증가 ${fmt(netGain)}원.<br>
+            <b>정확히는 "70만원"이 아니라 "60만원까지"가 100% 보장 구간입니다.</b>`;
+        } else if (id === "q2") {
+          verdict = "false";
+          label = "❌ 사실 아님";
+          body = `일반(기초) 수급자도 근로소득의 <b>30%는 공제</b>되어, 70%만 소득으로 잡힙니다. "다 깎인다"는 사실이 아닙니다.<br><br>
+            → 70만원 벌면: 소득 인정액 <b>${fmt(recognized)}</b>만 늘어나 생계급여는 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b>로 줄지만, 알바 소득 70만원은 그대로 받으므로 총수입은 <b>${fmt(c.albaPay + newBenefit)}</b>원, 일 안 했을 때보다 <b>+${fmt(netGain)}</b>원 순이익입니다.`;
+        } else if (id === "q3") {
+          verdict = "false";
+          label = "❌ 사실 아님 (근거 없는 '120만원 기준')";
+          body = `<b>"120만원까지 소득 인정"이라는 특례는 존재하지 않습니다.</b> 등록장애인은 연령과 무관하게 <b>20만원 공제 후 잔여액의 30%</b>만 소득으로 잡히는 방식(70%는 공제)입니다. "다 깎인다"는 것도 사실이 아닙니다.<br><br>
+            → 50만원 벌면: 20만원 공제 후 남은 30만원의 30%인 <b>${fmt(recognized)}</b>만 소득 인정 → 생계급여 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b>로 소폭 감소. 알바 50만원은 그대로 받으므로 총수입은 <b>${fmt(c.albaPay + newBenefit)}</b>원, 순이익 <b>+${fmt(netGain)}</b>원입니다.`;
+        }
+
+        const box = document.getElementById("ic_fc_result");
+        box.innerHTML = `
+      <div class="ic-fc-verdict-box ${verdict}">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">검증 대상 발언: ${c.claimTitle}</div>
+        <div class="ic-fc-verdict-label">${label}</div>
+        <div class="ic-fc-verdict-body">${body}</div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text3)">공제 방식: ${deductLabel} · 1인 가구 기준액 ${fmt(benefitMax)}원 기준 · 아래 계산기에도 동일 조건이 반영되어 상세 내역을 볼 수 있습니다.</div>
+      </div>`;
+        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
       function ic_updateBenefit() {
         const family = Math.min(
           Math.max(
@@ -10781,16 +11017,23 @@
         // 근로소득 공제 (알바 + 자활은 별도 특례 — 여기선 알바만 공제 적용)
         let albaRecognized = 0;
         let albaDeductLabel = "";
+        let categoryLabel = "";
         if (ageType === "youth") {
           albaRecognized = Math.max(0, albaPay - 600000) * 0.7;
           albaDeductLabel = `청년공제: 60만원 차감 후 ×70%`;
-        } else if (ageType === "elder") {
+          categoryLabel = "청년수급자 (만 19~34세)";
+        } else if (ageType === "disabled") {
           albaRecognized = Math.max(0, albaPay - 200000) * 0.7;
-          albaDeductLabel = `노인·장애인: 20만원 차감 후 ×70%`;
+          albaDeductLabel = `등록장애인공제: 20만원 차감 후 ×70%`;
+          categoryLabel = "등록장애인 (연령 무관)";
         } else {
           albaRecognized = albaPay * 0.7;
           albaDeductLabel = `일반 30% 공제`;
+          categoryLabel = "기초수급자(일반)";
         }
+
+        const isConditional =
+          document.getElementById("ic_conditional")?.checked || false;
 
         // 자활 참여수당 → 조건부수급자 특례: 자활급여는 소득인정액 산입 제외 (특례)
         // 단, 일반 수급자 자원 참여 시 소득 인정 가능 → 보수적으로 70% 인정으로 계산
@@ -10836,7 +11079,18 @@
           verdict = `<div class="ic-alert warn"><strong>⚠️ 총 수입 감소 가능성</strong>계산 기준상 소득인정액 증가로 수급비가 줄어 실질 수입이 감소할 수 있습니다. 주민센터에 정확한 산정 확인을 권장합니다.</div>`;
         }
 
+        // 선정(수급 유지) 여부 판정 — 조건별(기초수급자/청년/장애인/자활/조건부) 공통 체크
+        const isDropout = incomeRecognized >= benefitMax;
+        const isNearDropout = !isDropout && incomeRecognized >= benefitMax * 0.8;
+        const eligBadge = isDropout
+          ? `<div class="ic-elig-badge" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.4);color:#f87171">🚨 수급 탈락 — 소득인정액이 기준액을 초과합니다</div>`
+          : isNearDropout
+            ? `<div class="ic-elig-badge" style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.4);color:#fbbf24">⚠️ 탈락 위험 구간 — 수급은 유지되나 기준액의 80% 이상 소진</div>`
+            : `<div class="ic-elig-badge" style="background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.4);color:#4ade80">🟢 수급 유지 가능 — 생계급여 계속 지급</div>`;
+
         resultEl.innerHTML = `
+    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">적용 유형: <strong style="color:var(--text2)">${categoryLabel}</strong>${isConditional ? ' · <strong style="color:#fbbf24">조건부 수급자</strong>' : ""}</div>
+    ${eligBadge}
     <div class="ic-total-banner">
       <div class="banner-label">근로 후 예상 월 총 수입</div>
       <div class="banner-amount">${fmt(totalIncome)}</div>
@@ -10942,6 +11196,11 @@
       if (albaPay >= 1500000) {
         warnLines.push(
           "근로소득이 150만원 이상입니다. <strong>소득 신고 의무</strong>가 있으며 미신고 시 급여 환수 및 불이익이 발생할 수 있습니다.",
+        );
+      }
+      if (isConditional && ic_jahwalType === "none") {
+        warnLines.push(
+          '<strong style="color:#f87171">🚨 조건부 수급자 자활 미참여</strong> — 조건부 수급자는 원칙적으로 자활사업(또는 국민취업지원제도 Ⅱ유형 연계)에 참여해야 생계급여를 받을 수 있습니다. 참여하지 않으면 근로소득 유무와 무관하게 생계급여가 중단될 수 있습니다.',
         );
       }
       if (warnLines.length === 0) return "";
