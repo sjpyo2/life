@@ -1138,81 +1138,6 @@
         margin-top: 4px;
       }
 
-      .ic-fc-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .ic-fc-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 10px 12px;
-      }
-      .ic-fc-q {
-        font-size: 12.5px;
-        color: var(--text2);
-        line-height: 1.5;
-        flex: 1;
-      }
-      .ic-fc-btn {
-        flex-shrink: 0;
-        font-size: 12px;
-        padding: 8px 12px;
-        white-space: nowrap;
-      }
-      .ic-fc-verdict-box {
-        margin-top: 14px;
-        border-radius: var(--radius);
-        padding: 14px 16px;
-        border: 1px solid var(--border);
-      }
-      .ic-fc-verdict-box.true {
-        background: rgba(74, 222, 128, 0.1);
-        border-color: rgba(74, 222, 128, 0.4);
-      }
-      .ic-fc-verdict-box.false {
-        background: rgba(248, 113, 113, 0.1);
-        border-color: rgba(248, 113, 113, 0.4);
-      }
-      .ic-fc-verdict-box.partial {
-        background: rgba(251, 191, 36, 0.1);
-        border-color: rgba(251, 191, 36, 0.4);
-      }
-      .ic-fc-verdict-label {
-        font-size: 14px;
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
-      .ic-fc-verdict-box.true .ic-fc-verdict-label {
-        color: #4ade80;
-      }
-      .ic-fc-verdict-box.false .ic-fc-verdict-label {
-        color: #f87171;
-      }
-      .ic-fc-verdict-box.partial .ic-fc-verdict-label {
-        color: #fbbf24;
-      }
-      .ic-fc-verdict-body {
-        font-size: 12.5px;
-        color: var(--text2);
-        line-height: 1.7;
-      }
-      .ic-fc-verdict-body b {
-        color: var(--text);
-      }
-      .ic-elig-badge {
-        font-size: 13px;
-        font-weight: 700;
-        text-align: center;
-        padding: 10px 14px;
-        border-radius: var(--radius);
-        margin-bottom: 12px;
-      }
       .ic-total-banner {
         background: linear-gradient(135deg, #1a3a2a, #1a2340);
         border: 1px solid rgba(34, 197, 94, 0.3);
@@ -2866,10 +2791,7 @@
             📱 통신·문화
           </button>
           <button class="bcat-btn" onclick="filterBenefit('housing', this)">
-            🏠 주거
-          </button>
-          <button class="bcat-btn" onclick="filterBenefit('energy', this)">
-            🔥 에너지·냉난방
+            🏠 주거·에너지
           </button>
           <button class="bcat-btn" onclick="filterBenefit('discount', this)">
             💸 생활요금 감면
@@ -2898,51 +2820,6 @@
 ══════════════════════════════════════ -->
     <div id="main-income" style="display: none">
       <div class="container">
-        <!-- 대화/커뮤니티 소문 팩트체크 -->
-        <div class="card">
-          <div class="card-title">
-            <span class="icon">🔍</span> 카톡·커뮤니티 소문 팩트체크
-            <span
-              style="
-                font-size: 11px;
-                color: var(--text3);
-                font-weight: 400;
-                margin-left: 6px;
-              "
-              >(버튼 클릭 시 실제 수치로 즉시 재계산)</span
-            >
-          </div>
-          <div class="ic-fc-list">
-            <div class="ic-fc-item">
-              <div class="ic-fc-q">
-                "청년은 알바해서 70만원 벌어도 적정금액까지 생계급여 100%
-                나온다는데?"
-              </div>
-              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q1')">
-                이 케이스로 검증하기
-              </button>
-            </div>
-            <div class="ic-fc-item">
-              <div class="ic-fc-q">
-                "청년 아닌 수급자는 알바하면 생계급여에서 다 깎이나요?"
-              </div>
-              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q2')">
-                이 케이스로 검증하기
-              </button>
-            </div>
-            <div class="ic-fc-item">
-              <div class="ic-fc-q">
-                "청년 아니고 35세 이상 장애인인데 알바하면 생계급여 다
-                깎이나요? 120만원까지 소득 인정된다던데 맞나요?"
-              </div>
-              <button class="alba-btn ic-fc-btn" onclick="ic_factCheck('q3')">
-                이 케이스로 검증하기
-              </button>
-            </div>
-          </div>
-          <div id="ic_fc_result"></div>
-        </div>
-
         <div class="card">
           <div class="card-title">
             <span class="icon">⚙️</span> 내 수급 조건 설정
@@ -2972,13 +2849,14 @@
           <div class="form-row">
             <div class="field">
               <label
-                >수급자 조건 유형
-                <span class="tip">(근로소득 공제 기준 — 중복 해당 시 유리한 유형 선택)</span></label
+                >연령 유형 <span class="tip">(근로소득 공제 기준)</span></label
               >
               <select id="ic_age" onchange="ic_calc()">
-                <option value="general">기초수급자(일반) — 소득 전체의 30% 공제</option>
-                <option value="youth">청년수급자 (만 19~34세) — 60만원 공제 + 잔여액 30% 공제</option>
-                <option value="disabled">등록장애인 (연령 무관) — 20만원 공제 + 잔여액 30% 공제</option>
+                <option value="youth">청년 (19~34세) — 60만원+30%공제</option>
+                <option value="general">일반 — 30% 공제</option>
+                <option value="elder">
+                  노인/장애인 (65세↑) — 20만원+30%공제
+                </option>
               </select>
             </div>
             <div class="field">
@@ -3101,27 +2979,6 @@
                 oninput="ic_calc()"
               />
             </div>
-          </div>
-          <div class="form-row" style="margin-top: 12px">
-            <label
-              style="
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                cursor: pointer;
-                font-size: 13px;
-                color: var(--text2);
-              "
-            >
-              <input
-                type="checkbox"
-                id="ic_conditional"
-                onchange="ic_calc()"
-                style="width: 16px; height: 16px"
-              />
-              조건부 수급자 (근로능력 있는 18~64세 · 자활사업 참여가 생계급여
-              수급 조건)
-            </label>
           </div>
         </div>
 
@@ -6311,10 +6168,15 @@
               <div
                 style="font-size: 12px; color: var(--text2); line-height: 1.7"
               >
-                근로·사업소득이 있는 경우 가입 가능<br />본인 월
-                <strong style="color: #fbbf24">10만원</strong> 적립 → 정부 월
-                <strong style="color: #fbbf24">10만원</strong> 매칭<br />3년 후
-                최대 <strong style="color: #4ade80">720만원 + 이자</strong
+                근로·사업소득이 있으면 가입 가능 (자활근로 의무 아님, 일반
+                근로자도 OK)<br />본인 월
+                <strong style="color: #fbbf24">10만원</strong> 적립 → 정부
+                매칭
+                <strong style="color: #fbbf24"
+                  >가입연차별 10만→20만→30만원</strong
+                >
+                ('25년~ 가입자)<br />3년 후 최대
+                <strong style="color: #4ade80">1,080만원 + 이자</strong
                 ><br /><span style="color: var(--text3)"
                   >신청: 주민센터 / 상반기(3~4월) 모집</span
                 >
@@ -8165,11 +8027,11 @@
                 <div>
                   <div style="font-weight: 700">아동양육비 (일반 한부모)</div>
                   <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
-                    만 18세 미만(고3까지 22세 미만) 자녀 1인당
+                    만 18세 미만 자녀 1인당
                   </div>
                 </div>
                 <div style="font-weight: 800; color: #60a5fa; white-space: nowrap">
-                  월 23만원
+                  약 월 21만원
                 </div>
               </div>
               <div
@@ -8186,11 +8048,11 @@
                 <div>
                   <div style="font-weight: 700">아동양육비 (청소년한부모)</div>
                   <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
-                    자녀 1인당 · 2세 미만(0~1세)은 40만원
+                    자녀 1인당 (0~1세 자녀는 금액 상향)
                   </div>
                 </div>
                 <div style="font-weight: 800; color: #4ade80; white-space: nowrap">
-                  월 37만원~40만원
+                  약 월 35만원~
                 </div>
               </div>
               <div
@@ -8207,11 +8069,11 @@
                 <div>
                   <div style="font-weight: 700">추가양육비</div>
                   <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
-                    미혼모·부·조손가족·청년한부모(만 5세 이하 자녀) 등 조건 해당 시 자녀 1인당 추가 지급
+                    미혼모·부, 조손가족 등 조건 해당 시 자녀 1인당
                   </div>
                 </div>
                 <div style="font-weight: 800; color: #fb923c; white-space: nowrap">
-                  월 10만원<br /><small style="font-weight:600;color:var(--text3)">(기본 23만원과 합산 시 총 33만원)</small>
+                  약 월 33만원
                 </div>
               </div>
               <div
@@ -8228,11 +8090,11 @@
                 <div>
                   <div style="font-weight: 700">학용품비</div>
                   <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
-                    초·중·고등학생 자녀 1인당, 연 1회 지급
+                    중·고등학생 자녀 1인당, 연 1회 지급
                   </div>
                 </div>
                 <div style="font-weight: 800; color: #fbbf24; white-space: nowrap">
-                  연 10만원
+                  연 약 9만원대
                 </div>
               </div>
               <div
@@ -8249,28 +8111,13 @@
                 <div>
                   <div style="font-weight: 700">생활보조금</div>
                   <div style="color: var(--text3); font-size: 11px; margin-top: 2px">
-                    시설 입소 한부모가족 <strong>가구당</strong> (자녀 수와 무관하게 가구 1개당 지급)
+                    시설 입소 한부모가족 가구당
                   </div>
                 </div>
                 <div style="font-weight: 800; color: var(--text2); white-space: nowrap">
-                  가구당 월 10만원
+                  가구당 월 5만원대
                 </div>
               </div>
-            </div>
-            <div
-              style="
-                margin-top: 10px;
-                font-size: 11px;
-                color: var(--text3);
-                line-height: 1.7;
-              "
-            >
-              ※ 추가양육비는 대상별로 금액이 다를 수 있습니다 — 조손가족·35세 이상 미혼 한부모 및 25~34세
-              청년한부모의 <strong>5세 이하</strong> 자녀는 월 10만원(총 33만원), 청년한부모의
-              <strong>6~18세 미만</strong> 자녀는 지자체·연도별 안내에 따라 5만~10만원으로 다를 수 있으니
-              정확한 금액은 주민센터에서 확인하세요. 생활보조금은 2026년 기존 월 5만원에서 10만원으로
-              인상되었습니다(<strong>가구 단위 지급</strong>이며 1인당 지급이 아닙니다 — 여성가족부 「한부모가족지원사업 안내」 및
-              easylaw.go.kr 확인).
             </div>
             <div
               style="
@@ -8512,46 +8359,6 @@
                   감면, 자녀 급식비 지원 등을 함께 신청할 수 있습니다.
                 </div>
               </div>
-              <div
-                style="
-                  background: var(--surface2);
-                  border-radius: 10px;
-                  padding: 12px 14px;
-                  border-left: 4px solid #34d399;
-                "
-              >
-                <div style="font-weight: 700; color: #34d399; margin-bottom: 4px">
-                  🎒 교육 실비 지원 (수학여행·수련활동·학습재료비)
-                </div>
-                <div style="color: var(--text2); line-height: 1.8">
-                  한부모가족보호대상자 자녀는 교육급여와 별개로 시·도교육청의
-                  <strong>교육비 지원사업</strong>(저소득층 학생 지원)도 함께 받을 수 있습니다.<br>
-                  • <strong>교육활동지원비</strong>(연 1회, 수학여행비 등 용도로 자유롭게 사용): 2026년 기준 초 50만 2천원 / 중 69만 9천원 / 고 86만원<br>
-                  • <strong>수학여행비(현장체험학습비)</strong>: 대략 초 <strong>20만원대</strong>~고 <strong>40만원대</strong> (시·도교육청·학교급별로 다름)<br>
-                  • <strong>수련활동비</strong>: 대략 2만원~15만원 (교육청·프로그램별로 다름)<br>
-                  • <strong>학습재료비</strong>: 일부 지자체는 월 15,000원 별도 지원 (지자체마다 상이)<br>
-                  ※ 정확한 금액은 매년·지역별로 다르므로 자녀가 다니는 학교 또는 시·도교육청 교육복지 담당부서, 교육비 원클릭(oneclick.neis.go.kr)에서 확인하세요.
-                </div>
-              </div>
-              <div
-                style="
-                  background: var(--surface2);
-                  border-radius: 10px;
-                  padding: 12px 14px;
-                  border-left: 4px solid #38bdf8;
-                "
-              >
-                <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px">
-                  🚌 통학비 · 대중교통 연계 혜택
-                </div>
-                <div style="color: var(--text2); line-height: 1.8">
-                  일부 지자체는 한부모가족·저소득층 학생 대상 <strong>통학비(스쿨버스·대중교통비)</strong>를
-                  자체 예산으로 지원합니다 — 거주지 교육청·주민센터에 확인해보세요.<br>
-                  수도권 거주자는 만 19~34세 청년이 월 6.2만원대로 대중교통을 무제한 이용하는
-                  <strong>기후동행카드</strong>, 그 외 지역은 각 지자체의 알뜰교통카드·K-패스(이용액의 일정 비율 환급)도
-                  함께 활용하면 통학·통근 교통비를 줄일 수 있습니다.
-                </div>
-              </div>
             </div>
             <div
               style="
@@ -8589,8 +8396,8 @@
           <div style="color: var(--green); font-weight: 800; margin-bottom: 4px;">
             💼 근로장려금은 생계급여 등 수급비와 <u>무관</u>합니다
           </div>
-          <div style="color: var(--green); font-weight: 800;">
-            👶 자녀장려금도 생계급여와 <u>중복 수급 가능</u>합니다 (2019년 세법 개정으로 생계급여 수급 가구도 자녀장려금 신청 가능)
+          <div style="color: var(--yellow); font-weight: 800;">
+            👶 자녀장려금은 생계급여와 <u>중복 지원되지 않습니다</u> (생계급여 수급 가구는 신청 불가)
           </div>
         </div>
 
@@ -8614,10 +8421,10 @@
               >✔ 근로장려금</span
             >은 생계급여 등 기초수급 여부와 <strong>무관하게</strong> 소득·재산
             요건만 맞으면 신청할 수 있습니다.<br />
-            <span style="color: var(--green); font-weight: 700"
-              >✔ 자녀장려금</span
-            >도 2019년 세법 개정 이후 <strong>국민기초생활보장법상 "생계급여" 수급
-            가구가 중복해서 받을 수 있습니다.</strong>
+            <span style="color: var(--yellow); font-weight: 700"
+              >⚠ 자녀장려금</span
+            >은 <strong>국민기초생활보장법상 "생계급여" 수급 가구는 신청 대상에서
+            제외</strong>됩니다 (생계급여와의 중복 지원 방지).
           </div>
         </div>
 
@@ -8780,8 +8587,8 @@
               <label class="check-label" for="gj_livelihood">
                 <strong>현재 국민기초생활보장 "생계급여" 수급 중</strong>
                 <span
-                  >2019년 세법 개정으로 생계급여 수급 가구도 자녀장려금을 중복해서
-                  받을 수 있습니다 (근로장려금도 영향 없음) — 참고용 체크박스입니다</span
+                  >생계급여 수급 가구는 자녀장려금 신청 대상에서
+                  제외됩니다 (근로장려금은 영향 없음)</span
                 >
               </label>
             </div>
@@ -8916,10 +8723,10 @@
               <strong>50만원</strong>까지 점감<br />
               • <strong style="color: var(--text)">재산기준</strong>:
               근로장려금과 동일 (2.4억원 미만, 1.7억~2.4억원은 50% 감액)<br />
-              • <strong style="color: var(--green)">생계급여 수급 가구도 신청 가능</strong
-              >: 2019년 세법 개정으로 국민기초생활보장법상 "생계급여"를 받는
-              가구도 다른 요건을 충족하면 자녀장려금을 중복해서 받을 수
-              있습니다.
+              • <strong style="color: var(--red)">생계급여 수급 가구 제외</strong
+              >: 국민기초생활보장법상 "생계급여"를 받는 가구는 자녀장려금을
+              신청할 수 없습니다. 의료·주거·교육급여만 받는 가구나
+              차상위계층은 신청 가능합니다.
             </div>
           </div>
 
@@ -9105,28 +8912,15 @@
         const generalIncome = generalNet * RATE.general;
 
         // 금융재산 미리보기 계산 (propSummaryBox용)
-        // 기본재산액은 주거용재산 → 일반재산 → 금융재산 순으로 순차 차감됩니다 (보건복지부 사업안내 기준).
         const propFinancialPreview = parseComma(
           document.getElementById("propFinancial")?.value || "0",
         );
         const financialBasicPreview = parseComma(
           document.getElementById("financialBasic")?.value || "5000000",
         );
-        const usedDedGeneralPreview = Math.min(
-          generalTotal > 0 ? generalTotal : 0,
-          remainDed,
-        );
-        const remainDedForFinancialPreview = Math.max(
-          0,
-          remainDed - usedDedGeneralPreview,
-        );
-        const netFinancialAfterBasicPreview = Math.max(
-          0,
-          propFinancialPreview - financialBasicPreview,
-        );
         const netFinancialPreview = Math.max(
           0,
-          netFinancialAfterBasicPreview - remainDedForFinancialPreview,
+          propFinancialPreview - financialBasicPreview,
         );
         const financialIncomePreview = netFinancialPreview * RATE.financial;
 
@@ -9155,7 +8949,6 @@
           ? `
       <div class="prop-row" style="margin-top:6px"><span class="pl">💳 금융재산 합계</span><span class="pv">${fmt(propFinancialPreview)}</span></div>
       <div class="prop-row"><span class="pl">↳ 생활준비금 공제 (500만원)</span><span class="pv">−${fmt(financialBasicPreview)}</span></div>
-      ${remainDedForFinancialPreview > 0 ? `<div class="prop-row"><span class="pl">↳ 잔여 기본재산공제 추가 차감</span><span class="pv">−${fmt(remainDedForFinancialPreview)}</span></div>` : ""}
       <div class="prop-row"><span class="pl">↳ 순 금융재산 (과세대상)</span><span class="pv">${fmt(netFinancialPreview)}</span></div>
       <div class="prop-row"><span class="pl">금융재산 환산소득 (월, ×6.26%)</span><span class="pv acc">${fmt(financialIncomePreview)}</span></div>
       `
@@ -9408,15 +9201,8 @@
         const generalNet = Math.max(0, generalRaw - remainDed);
         const generalIncome = generalNet * RATE.general;
 
-        // ③ 금융재산 (500만원 생활준비금 공제 → 일반재산에서 못 쓴 잔여 기본재산공제까지 추가 공제 후 6.26%)
-        // 기본재산액은 주거용재산 → 일반재산 → 금융재산 순으로 순차 차감됩니다 (보건복지부 사업안내 기준).
-        const usedDedGeneral = Math.min(generalRaw > 0 ? generalRaw : 0, remainDed);
-        const remainDedForFinancial = Math.max(0, remainDed - usedDedGeneral);
-        const netFinancialAfterBasic = Math.max(0, propFinancial - financialBasic);
-        const netFinancial = Math.max(
-          0,
-          netFinancialAfterBasic - remainDedForFinancial,
-        );
+        // ③ 금융재산 (500만원 생활준비금 공제 후 6.26%)
+        const netFinancial = Math.max(0, propFinancial - financialBasic);
         const financialIncome = netFinancial * RATE.financial;
 
         // ④ 자동차
@@ -9557,10 +9343,7 @@
         <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">🏗️ 일반재산 (비거주+기타+부채차감)</span><span class="d-val">${fmt(generalRaw)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 잔여 기본재산공제</span><span class="d-val minus">−${fmt(remainDed)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 일반재산 환산소득 (×4.17%/월)</span><span class="d-val">${fmt(generalIncome)}</span></div>
-        <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">💳 금융재산 합계</span><span class="d-val">${fmt(propFinancial)}</span></div>
-        <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 생활준비금 공제</span><span class="d-val minus">−${fmt(financialBasic)}</span></div>
-        ${remainDedForFinancial > 0 ? `<div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 일반재산에서 못 쓴 잔여 기본재산공제 추가 차감 <small style="color:var(--text3)">(주거용→일반→금융 순 차감)</small></span><span class="d-val minus">−${fmt(remainDedForFinancial)}</span></div>` : ""}
-        <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 금융재산 환산소득 (×6.26%/월)</span><span class="d-val">${fmt(financialIncome)}</span></div>
+        <div class="detail-row"><span class="d-label">💳 금융재산 환산소득 <small style="color:var(--text3)">(금융재산−500만원 생활준비금 후 ×6.26%/월)</small></span><span class="d-val">${fmt(financialIncome)}</span></div>
         <div class="detail-row"><span class="d-label">🚗 자동차 환산소득 <small style="color:var(--text3)">${carRateVal === 0 ? "(면제)" : carRateVal === 100 ? "(100% 전액)" : "(×4.17%/월)"}</small></span><span class="d-val ${carRateVal === 0 ? "minus" : ""}">${carRateVal === 0 ? "면제" : fmt(carIncome)}</span></div>
         <div class="detail-row"><span class="d-label"><strong>소득인정액 합계</strong></span><span class="d-val total">${fmt(recognizedIncome)}</span></div>
       </div>
@@ -9864,7 +9647,7 @@
           laborRec = Math.max(0, laborRaw - 200000) * 0.7;
         else laborRec = laborRaw * 0.7;
 
-        // 재산 환산 (현재) — 기본재산공제는 주거용→일반→금융재산 순으로 순차 차감
+        // 재산 환산 (현재)
         const houseLimit = RV_HOUSING_LIMIT[region];
         const basicDed = RV_BASIC_DEDUCT[region];
         const withinH = Math.min(housing, houseLimit);
@@ -9872,16 +9655,9 @@
         const usedDed = Math.min(withinH, basicDed);
         const remDed = Math.max(0, basicDed - usedDed);
         const housingInc = Math.max(0, withinH - basicDed) * RATE_HOUSING;
-        const generalRawRV = general + overH;
-        const usedDedGeneralRV = Math.min(
-          generalRawRV > 0 ? generalRawRV : 0,
-          remDed,
-        );
-        const remDedForFin = Math.max(0, remDed - usedDedGeneralRV);
-        const generalNet = Math.max(0, generalRawRV - remDed);
+        const generalNet = Math.max(0, general + overH - remDed);
         const generalInc = generalNet * RATE_GENERAL;
-        const netFinAfterBasic = Math.max(0, financial - FINANCIAL_DEDUCT);
-        const netFin = Math.max(0, netFinAfterBasic - remDedForFin);
+        const netFin = Math.max(0, financial - FINANCIAL_DEDUCT);
         const finInc = netFin * RATE_FINANCIAL;
 
         const propInc = housingInc + generalInc + finInc;
@@ -9986,16 +9762,14 @@
           color: "#60a5fa",
           urgent: true,
           summary:
-            "금융재산은 500만원 생활준비금 + 기본재산공제(서울 9,900만원, 주거·일반재산에서 안 쓴 만큼 이월) 공제 후 초과분만 월 6.26% 환산",
-          detail: `<strong>왜 중요한가:</strong> 금융재산은 <strong>①500만원(생활준비금)</strong>을 먼저 공제하고, <strong>②주거용·일반재산에서 다 못 쓴 기본재산공제 잔액</strong>까지 추가로 공제한 뒤, 남는 금액의 <strong>월 6.26%</strong>가 소득인정액에 더해집니다.<br>
-    <strong style="color:#4ade80">이 두 공제를 합친 금액까지는 금융재산이 있어도 환산소득이 0원입니다.</strong><br><br>
-    <strong>💡 서울 1인 기준, 주거용·일반재산이 없고 다른 소득도 없을 때:</strong><br>
-    • 기본 공제 한도: 기본재산공제 9,900만원 + 생활준비금 500만원 = <strong>1억 400만원까지는 환산소득 0원</strong><br>
-    • 생계급여(기준 820,556원) → 금융재산 <strong>약 1억 1,711만원</strong>까지 가능<br>
-    • 의료급여(기준 1,025,695원) → 금융재산 <strong>약 1억 2,038만원</strong>까지 가능<br>
-    • 주거급여(기준 1,230,834원) → 금융재산 <strong>약 1억 2,366만원</strong>까지 가능<br>
-    ※ 주거용재산(전세보증금 등)이나 일반재산(토지·건물 등)이 있으면, 기본재산공제 9,900만원을 그쪽에서 먼저 쓰게 되어 금융재산으로 넘어오는 공제가 그만큼 줄고 한계금액도 낮아짐<br>
-    ※ 위 금액은 서울(1급지) 기준이며, 지역별 기본재산공제는 경기 8,000만원 / 광역·세종·창원 7,700만원 / 그 외 5,300만원으로 다름<br><br>
+            "금융재산 500만원은 공제 기준일 뿐 — 초과분이 월 6.26%로 환산 (초과해도 환산소득이 급여기준 이하면 수급 가능)",
+          detail: `<strong>왜 중요한가:</strong> 금융재산은 500만원(생활준비금)을 공제한 <strong>나머지 금액의 월 6.26%</strong>가 소득인정액에 더해집니다.<br>
+    <strong style="color:#4ade80">금융재산이 500만원을 초과해도 환산소득이 급여 기준 이하면 수급 가능합니다.</strong><br><br>
+    <strong>💡 서울 1인 기준 금융재산 수급 가능 한계 (소득·다른재산 없을 때):</strong><br>
+    • 생계급여(기준 820,556원) → 금융재산 <strong>약 1,811만원</strong>까지 가능<br>
+    • 의료급여(기준 1,025,695원) → 금융재산 <strong>약 2,138만원</strong>까지 가능<br>
+    • 주거급여(기준 1,230,834원) → 금융재산 <strong>약 2,464만원</strong>까지 가능<br>
+    ※ 다른 소득·재산이 있으면 그만큼 한계가 줄어듦<br><br>
     <strong>금융재산을 줄여야 할 때 방법:</strong><br>
     • 생활비 지출 (식비·의료비·공과금 등 정상적 소비)<br>
     • 부채 상환 (금융대출 있다면 먼저 갚기 — 부채는 금융재산에서 차감)<br>
@@ -10090,9 +9864,8 @@
     <strong>의료비:</strong><br>
     치료 중인 질병이 있으면 근로능력평가 신청 가능 (근로능력 없음 판정 시 자활 조건 면제)<br>
     → 진단서, 진료기록부 미리 발급 받아두기<br><br>
-    <strong>금융재산 계산 예시</strong> <small style="color:var(--text3)">(주거·일반재산 기본재산공제를 이미 다 쓴 경우)</small>:<br>
-    예금 3,000만원 - 대출 1,500만원 = 순 금융재산 1,500만원 - 500만원 공제 = 1,000만원 × 6.26% = 월 62,600원 환산<br>
-    <small style="color:var(--text3)">※ 주거용·일반재산이 없거나 적으면 기본재산공제(서울 9,900만원 등) 잔액이 금융재산에도 추가로 공제되어 실제 환산소득은 이보다 작거나 0원일 수 있음</small>`,
+    <strong>금융재산 계산 예시:</strong><br>
+    예금 3,000만원 - 대출 1,500만원 = 순 금융재산 1,500만원 - 500만원 공제 = 1,000만원 × 6.26% = 월 62,600원 환산`,
         },
       ];
 
@@ -10168,8 +9941,7 @@
           solution: `• 신청 전 금융재산 직접 조회: 금융감독원 파인(fine.fss.or.kr) → 내보험찾아줌 / 잔액조회<br>
     • 보험 해약환급금도 포함됨 — 오래된 보험 해약환급금 미리 확인<br>
     • 부채(대출) 있으면 차감 가능 — 금융부채 잔액 확인서 준비<br>
-    • 금융재산은 <strong>생활준비금 500만원 + 주거·일반재산에서 안 쓴 기본재산공제(서울 9,900만원 등) 잔액</strong>까지 함께 공제되므로, 실제 한도는 500만원보다 훨씬 큰 경우가 많음 — 정확한 한도는 "신청 전 체크리스트 → 금융재산 정리" 참고<br>
-    • 그래도 초과한다면 생활비 지출 등 정상적 소비로 줄인 뒤 재신청 타이밍 계산`,
+    • 500만원 기준으로 생활비 지출 후 재신청 타이밍 계산`,
         },
         {
           icon: "🚗",
@@ -10911,102 +10683,6 @@
         ic_calc();
       }
 
-      // ── 카톡/커뮤니티 소문 팩트체크 ──
-      // family=1(1인가구) 기준, 각 대화 속 조건 그대로 매핑해 실제 공제식으로 재계산
-      const FACTCHECK_CASES = {
-        q1: {
-          family: 1,
-          ageType: "youth",
-          albaPay: 700000,
-          claimTitle:
-            '"청년은 알바해서 70만원 벌어도 적정금액까지 생계급여 100% 나온다"',
-        },
-        q2: {
-          family: 1,
-          ageType: "general",
-          albaPay: 700000,
-          claimTitle:
-            '"청년 아닌 수급자는 알바하면 생계급여에서 다 깎이나요?"',
-        },
-        q3: {
-          family: 1,
-          ageType: "disabled",
-          albaPay: 500000,
-          claimTitle:
-            '"35세 이상 장애인은 알바하면 생계급여 다 깎이나요? 120만원까지 소득 인정된다던데?"',
-        },
-      };
-
-      function ic_factCheck(id) {
-        const c = FACTCHECK_CASES[id];
-        if (!c) return;
-
-        // 1) 계산기 입력값을 해당 케이스로 세팅하고 아래 계산기도 함께 갱신
-        document.getElementById("ic_family").value = c.family;
-        document.getElementById("ic_type").value = "life";
-        document.getElementById("ic_age").value = c.ageType;
-        document.getElementById("ic_hourly").value = "";
-        document.getElementById("ic_alba_pay").value = addComma(c.albaPay);
-        document.getElementById("ic_other_pay").value = "";
-        document.getElementById("ic_jahwal_pay").value = "";
-        document.getElementById("ic_conditional").checked = false;
-        const benefitEl = document.getElementById("ic_benefit");
-        delete benefitEl.dataset.manual;
-        ic_updateBenefit(); // 기준액 자동 채움 + ic_calc() 자동 실행
-
-        // 2) 실제 공제식으로 직접 검증 계산
-        const benefitMax = BENEFIT_2026[c.family];
-        let recognized, deductLabel, threshold;
-        if (c.ageType === "youth") {
-          recognized = Math.max(0, c.albaPay - 600000) * 0.7;
-          deductLabel = "60만원 공제 후 잔여액의 30% 인정(70%는 계속 공제)";
-          threshold = 600000;
-        } else if (c.ageType === "disabled") {
-          recognized = Math.max(0, c.albaPay - 200000) * 0.7;
-          deductLabel = "20만원 공제 후 잔여액의 30% 인정(연령 무관)";
-          threshold = 200000;
-        } else {
-          recognized = c.albaPay * 0.7;
-          deductLabel = "소득의 30% 인정(70%는 공제)";
-          threshold = 0;
-        }
-        const newBenefit = Math.max(0, benefitMax - recognized);
-        const keptPct = ((newBenefit / benefitMax) * 100).toFixed(1);
-        const netGain = c.albaPay - (benefitMax - newBenefit);
-
-        let verdict, label, body;
-        if (id === "q1") {
-          const fullyProtected = c.albaPay <= threshold;
-          verdict = fullyProtected ? "true" : "partial";
-          label = fullyProtected
-            ? "✅ 사실"
-            : "🟡 부분적으로만 사실 (문턱값이 다름)";
-          body = `청년(19~34세) 공제는 <b>월 60만원까지는 소득으로 전혀 잡히지 않아 생계급여 100% 그대로</b> 나옵니다. 다만 대화에서 말한 <b>70만원</b>은 60만원 문턱을 넘은 금액이라, 초과분 10만원의 30%인 <b>${fmt(recognized)}</b>만 소득으로 인정돼 생계급여가 그만큼 줄어듭니다.<br><br>
-            → 70만원 벌면: 생계급여 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b> (기준액의 ${keptPct}%), 총수입은 알바+급여 합쳐 <b>${fmt(c.albaPay + newBenefit)}</b>원으로 순증가 ${fmt(netGain)}원.<br>
-            <b>정확히는 "70만원"이 아니라 "60만원까지"가 100% 보장 구간입니다.</b>`;
-        } else if (id === "q2") {
-          verdict = "false";
-          label = "❌ 사실 아님";
-          body = `일반(기초) 수급자도 근로소득의 <b>30%는 공제</b>되어, 70%만 소득으로 잡힙니다. "다 깎인다"는 사실이 아닙니다.<br><br>
-            → 70만원 벌면: 소득 인정액 <b>${fmt(recognized)}</b>만 늘어나 생계급여는 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b>로 줄지만, 알바 소득 70만원은 그대로 받으므로 총수입은 <b>${fmt(c.albaPay + newBenefit)}</b>원, 일 안 했을 때보다 <b>+${fmt(netGain)}</b>원 순이익입니다.`;
-        } else if (id === "q3") {
-          verdict = "false";
-          label = "❌ 사실 아님 (근거 없는 '120만원 기준')";
-          body = `<b>"120만원까지 소득 인정"이라는 특례는 존재하지 않습니다.</b> 등록장애인은 연령과 무관하게 <b>20만원 공제 후 잔여액의 30%</b>만 소득으로 잡히는 방식(70%는 공제)입니다. "다 깎인다"는 것도 사실이 아닙니다.<br><br>
-            → 50만원 벌면: 20만원 공제 후 남은 30만원의 30%인 <b>${fmt(recognized)}</b>만 소득 인정 → 생계급여 ${fmt(benefitMax)} → <b>${fmt(newBenefit)}</b>로 소폭 감소. 알바 50만원은 그대로 받으므로 총수입은 <b>${fmt(c.albaPay + newBenefit)}</b>원, 순이익 <b>+${fmt(netGain)}</b>원입니다.`;
-        }
-
-        const box = document.getElementById("ic_fc_result");
-        box.innerHTML = `
-      <div class="ic-fc-verdict-box ${verdict}">
-        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">검증 대상 발언: ${c.claimTitle}</div>
-        <div class="ic-fc-verdict-label">${label}</div>
-        <div class="ic-fc-verdict-body">${body}</div>
-        <div style="margin-top:10px;font-size:11px;color:var(--text3)">공제 방식: ${deductLabel} · 1인 가구 기준액 ${fmt(benefitMax)}원 기준 · 아래 계산기에도 동일 조건이 반영되어 상세 내역을 볼 수 있습니다.</div>
-      </div>`;
-        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-
       function ic_updateBenefit() {
         const family = Math.min(
           Math.max(
@@ -11107,33 +10783,26 @@
         );
         const benefitMax = BENEFIT_2026[family] || BENEFIT_2026[6];
 
-        // 근로소득 공제: 알바 + 자활 소득을 먼저 합산한 후, 특례공제(청년 60만원·장애인 20만원)를
-        // 그 합산액에서 딱 한 번만 차감하고 잔여액의 70%를 소득으로 인정합니다.
-        // (일반수급자는 특례공제 없이 합산액의 70%를 그대로 인정 — 자활장려금도 일반 근로소득과
-        //  동일하게 30% 공제가 적용되므로 별도 계산이든 합산 계산이든 결과는 같습니다.)
-        const totalLaborPay = albaPay + jahwalPay;
-        let laborRecognized = 0;
-        let laborDeductLabel = "";
-        let categoryLabel = "";
+        // 근로소득 공제 (알바 + 자활은 별도 특례 — 여기선 알바만 공제 적용)
+        let albaRecognized = 0;
+        let albaDeductLabel = "";
         if (ageType === "youth") {
-          laborRecognized = Math.max(0, totalLaborPay - 600000) * 0.7;
-          laborDeductLabel = `청년공제: 알바+자활 합산액에서 60만원 차감 후 ×70%`;
-          categoryLabel = "청년수급자 (만 19~34세)";
-        } else if (ageType === "disabled") {
-          laborRecognized = Math.max(0, totalLaborPay - 200000) * 0.7;
-          laborDeductLabel = `등록장애인공제: 알바+자활 합산액에서 20만원 차감 후 ×70%`;
-          categoryLabel = "등록장애인 (연령 무관)";
+          albaRecognized = Math.max(0, albaPay - 600000) * 0.7;
+          albaDeductLabel = `청년공제: 60만원 차감 후 ×70%`;
+        } else if (ageType === "elder") {
+          albaRecognized = Math.max(0, albaPay - 200000) * 0.7;
+          albaDeductLabel = `노인·장애인: 20만원 차감 후 ×70%`;
         } else {
-          laborRecognized = totalLaborPay * 0.7;
-          laborDeductLabel = `일반 30% 공제 (알바+자활 합산액 기준)`;
-          categoryLabel = "기초수급자(일반)";
+          albaRecognized = albaPay * 0.7;
+          albaDeductLabel = `일반 30% 공제`;
         }
 
-        const isConditional =
-          document.getElementById("ic_conditional")?.checked || false;
+        // 자활 참여수당 → 조건부수급자 특례: 자활급여는 소득인정액 산입 제외 (특례)
+        // 단, 일반 수급자 자원 참여 시 소득 인정 가능 → 보수적으로 70% 인정으로 계산
+        const jahwalRecognized = jahwalPay * 0.7;
 
-        // 소득인정액 증가분 (알바+자활 합산 인정액 + 기타소득)
-        const incomeRecognized = laborRecognized + otherPay;
+        // 소득인정액 증가분
+        const incomeRecognized = albaRecognized + jahwalRecognized + otherPay;
 
         // 생계급여 변화: 소득인정액만큼 급여 감소
         const newBenefit = Math.max(0, benefitMax - incomeRecognized);
@@ -11172,18 +10841,7 @@
           verdict = `<div class="ic-alert warn"><strong>⚠️ 총 수입 감소 가능성</strong>계산 기준상 소득인정액 증가로 수급비가 줄어 실질 수입이 감소할 수 있습니다. 주민센터에 정확한 산정 확인을 권장합니다.</div>`;
         }
 
-        // 선정(수급 유지) 여부 판정 — 조건별(기초수급자/청년/장애인/자활/조건부) 공통 체크
-        const isDropout = incomeRecognized >= benefitMax;
-        const isNearDropout = !isDropout && incomeRecognized >= benefitMax * 0.8;
-        const eligBadge = isDropout
-          ? `<div class="ic-elig-badge" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.4);color:#f87171">🚨 수급 탈락 — 소득인정액이 기준액을 초과합니다</div>`
-          : isNearDropout
-            ? `<div class="ic-elig-badge" style="background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.4);color:#fbbf24">⚠️ 탈락 위험 구간 — 수급은 유지되나 기준액의 80% 이상 소진</div>`
-            : `<div class="ic-elig-badge" style="background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.4);color:#4ade80">🟢 수급 유지 가능 — 생계급여 계속 지급</div>`;
-
         resultEl.innerHTML = `
-    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">적용 유형: <strong style="color:var(--text2)">${categoryLabel}</strong>${isConditional ? ' · <strong style="color:#fbbf24">조건부 수급자</strong>' : ""}</div>
-    ${eligBadge}
     <div class="ic-total-banner">
       <div class="banner-label">근로 후 예상 월 총 수입</div>
       <div class="banner-amount">${fmt(totalIncome)}</div>
@@ -11249,21 +10907,12 @@
     <div class="ic-breakdown">
       <div class="ic-breakdown-title">🕐 근로소득 공제 계산</div>
       ${
-        jahwalPay > 0
-          ? `<div class="ic-row"><div class="ic-row-label">자활 참여수당 원액</div><div class="ic-row-val neu">${fmt(jahwalPay)}</div></div>`
-          : ""
-      }
-      ${
         albaPay > 0
-          ? `<div class="ic-row"><div class="ic-row-label">알바 소득 원액</div><div class="ic-row-val neu">${fmt(albaPay)}</div></div>`
+          ? `<div class="ic-row"><div class="ic-row-label">알바 소득 원액</div><div class="ic-row-val neu">${fmt(albaPay)}</div></div>
+      <div class="ic-row"><div class="ic-row-label">알바 인정 소득액 <small style="color:var(--text3)">${albaDeductLabel}</small></div><div class="ic-row-val neu">${fmt(albaRecognized)}</div></div>`
           : ""
       }
-      ${
-        jahwalPay > 0 && albaPay > 0
-          ? `<div class="ic-row"><div class="ic-row-label">알바+자활 합산액 <small style="color:var(--text3)">(공제는 합산액 기준 1회만 적용)</small></div><div class="ic-row-val neu">${fmt(totalLaborPay)}</div></div>`
-          : ""
-      }
-      <div class="ic-row"><div class="ic-row-label">근로소득 인정액 <small style="color:var(--text3)">${laborDeductLabel}</small></div><div class="ic-row-val neu">${fmt(laborRecognized)}</div></div>
+      ${jahwalPay > 0 ? `<div class="ic-row"><div class="ic-row-label">자활수당 인정 소득액 <small style="color:var(--text3)">70% 인정 (조건부특례 여부는 담당자 확인)</small></div><div class="ic-row-val neu">${fmt(jahwalRecognized)}</div></div>` : ""}
       <div class="ic-row total-row"><div class="ic-row-label">총 소득인정액 증가분</div><div class="ic-row-val neg">+${fmt(incomeRecognized)}</div></div>
       ${
         totalWorkHrs > 0
@@ -11300,18 +10949,25 @@
           "근로소득이 150만원 이상입니다. <strong>소득 신고 의무</strong>가 있으며 미신고 시 급여 환수 및 불이익이 발생할 수 있습니다.",
         );
       }
-      if (isConditional && ic_jahwalType === "none") {
-        warnLines.push(
-          '<strong style="color:#f87171">🚨 조건부 수급자 자활 미참여</strong> — 조건부 수급자는 원칙적으로 자활사업(또는 국민취업지원제도 Ⅱ유형 연계)에 참여해야 생계급여를 받을 수 있습니다. 참여하지 않으면 근로소득 유무와 무관하게 생계급여가 중단될 수 있습니다.',
-        );
-      }
       if (warnLines.length === 0) return "";
       return `<div class="ic-alert warn"><strong>⚠️ 수급 탈락 위험 알림</strong><br><div style="margin-top:6px;line-height:1.8">${warnLines.join("<br>")}</div><div style="margin-top:8px;font-size:11px;color:var(--text3)">소득 발생 즉시 주민센터에 신고하면 처벌 없이 정상 처리됩니다. 신고 안 하다 적발 시 최대 3배 환수 및 수급 자격 박탈 가능.</div></div>`;
     })()}
 
     <div class="ic-alert info">
       <strong>💡 희망저축계좌 활용 팁</strong>
-      일하는 수급자라면 <strong>희망저축계좌 I</strong> (생계수급자, 월 10만원 적립 시 정부 30만원 매칭, 3년 후 최대 1,440만원)에 가입하면 실질 수익이 대폭 상승합니다. 주민센터 또는 복지로에서 신청하세요.
+      일하는 수급자라면 <strong>희망저축계좌 I</strong> (생계·의료급여 수급가구, 월 10만원 적립 시 정부 30만원 매칭, 3년 후 최대 1,440만원)에 가입하면 실질 수익이 대폭 상승합니다. 주민센터 또는 복지로에서 신청하세요.
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:12px;line-height:1.7;color:var(--text2)">
+        <strong style="color:#4ade80">✅ 팩트체크: 자활근로를 해야만 가입 가능한가?</strong><br>
+        아니요. 희망저축계좌 I·II는 <strong>'일하는' 생계·의료(I) / 주거·교육·차상위(II) 수급가구</strong>가 대상이며, 반드시 자활근로에 참여해야 하는 건 아닙니다. 일반 아르바이트·상용근로·사업소득만 있어도 소득 하한 기준을 충족하면 가입할 수 있습니다.<br><br>
+        다만 <strong>자활근로사업단에 실제 참여 중인 가입자</strong>는 희망저축계좌 본매칭(월 30만원)과 별개로 <strong>내일키움장려금(전월 12일 이상 성실 참여 시 월 20만원)</strong>과 <strong>내일키움수익금(월 최대 15만원)</strong>을 추가로 받을 수 있습니다. 즉, 자활근로가 가입 조건은 아니지만 자활근로 참여자에게는 별도의 추가 인센티브가 붙는 구조입니다.
+      </div>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-size:12px;line-height:1.7;color:var(--text2)">
+        <strong style="color:#fbbf24">✅ 팩트체크: 3년 만기 때 탈수급 못하면 정부지원금이 전액 소멸(국고환수)되나요?</strong><br>
+        <strong>경우에 따라 다릅니다.</strong> (희망저축계좌 Ⅰ 기준)<br>
+        • 3년간 근로·저축을 성실히 지속했지만 <u>만기 후 6개월 유예기간 내 탈수급에만 실패</u>한 경우 → 정부매칭 전액이 아니라 <strong>매칭 누적액의 5%(+이자)</strong>는 받습니다. 완전히 0원은 아닙니다.<br>
+        • 반면 소득이 <u>6개월 연속 하한 미달</u>, 본인적립금 <u>12개월 누적 미납</u>, 중도 임의해지, 압류 등으로 <u>가입 유지 조건 자체를 어겨 환수해지</u>되는 경우에는 본인 저축분만 돌려받고 <strong>정부매칭분은 전액 국고환수(0원)</strong>됩니다.<br>
+        즉 "탈수급 실패=전액 소멸"이 아니라 "가입조건 위반(환수해지)=전액 소멸"이 정확한 설명입니다.
+      </div>
     </div>
 
     <div class="ic-alert warn">
@@ -11499,7 +11155,7 @@
         if (hasWork || laborRaw > 0 || bizRaw > 0) {
           benefits.push({
             name: "희망저축계좌 II",
-            val: "정부 월 10만 매칭 → 3년 최대 720만원",
+            val: "정부 연차별 10만→30만 매칭 → 3년 최대 1,080만원",
             color: "#fbbf24",
           });
         }
@@ -11961,31 +11617,30 @@
         },
         {
           id: "energy_voucher",
-          cat: "energy",
+          cat: "voucher",
           icon: "⚡",
           iconBg: "rgba(245,158,11,0.18)",
           name: "에너지바우처",
-          sub: "기초수급자 연 최대 70만 1,300원(4인 이상) · 하·동절기 통합 사용 · 전기·가스·등유·LPG·연탄",
+          sub: "기초수급자 연 최대 70만원 (4인) · 2025년부터 하·동절기 통합 운영 · 전기·가스·등유·연탄",
           tags: [
-            { text: "연 최대 70만원", cls: "tag-yellow" },
+            { text: "연 최대 73만원", cls: "tag-yellow" },
             { text: "노인·장애인·영유아", cls: "tag-green" },
           ],
           target: [
             "소득기준: 기초생활수급자 (생계·의료·주거·교육급여)",
-            "가구원 특성: 노인·영유아·장애인·임산부·중증(희귀·난치)질환자·한부모가족·소년소녀가정·다자녀(2인 이상) 세대 중 1인 이상 포함 가구",
-            "※ 소득기준 + 세대원 특성기준 둘 다 충족해야 지원 (수급자라도 특성기준 미충족 시 지원 제외)",
+            "가구원 특성: 노인(65세 이상)·영유아(6세 미만)·장애인·임산부·중증질환자·희귀질환자·한부모가족·소년소녀가장 중 1인 이상 포함 가구",
+            "※ 소득+특성 요건 모두 충족해야 지원",
           ],
-          amount: `<strong>하·동절기 통합 → 사용기간 내 자유롭게 사용</strong><br>
+          amount: `<strong>2025년부터 하·동절기 통합 → 연간 한 번에 지급</strong><br>
     1인 가구: <strong>295,200원</strong> / 2인: <strong>407,500원</strong> / 3인: <strong>532,700원</strong> / 4인 이상: <strong>701,300원</strong><br>
-    2026년 신청기간: 6월 15일 ~ 12월 31일 / 사용기간: 2026년 7월 1일 ~ 2027년 5월 31일`,
+    사용기간: 2025년 7월 1일 ~ 2026년 5월 25일 (여름에 안 쓰면 겨울에 몰아 사용 가능)`,
           desc: `에너지 취약계층의 냉·난방비를 국가에서 직접 지원하는 제도입니다.<br><br>
     <strong>지원 방법</strong><br>
-    • <strong>국민행복카드</strong>: 등유·LPG·연탄 구입 또는 전기·도시가스·지역난방 요금 결제<br>
-    • <strong>요금차감</strong>: 전기·도시가스·지역난방 중 1개 선택해 고지서에서 자동 차감<br><br>
-    <strong>하절기</strong>: 전기요금에만 사용 가능<br>
-    <strong>동절기</strong>: 전기·도시가스·지역난방·등유·연탄·LPG 모두 가능<br><br>
-    ⚠️ 연탄쿠폰·등유바우처 등 <strong>정부의 다른 에너지비용 지원을 이미 받고 있으면 중복 지원 불가</strong> (하나만 선택)<br>
-    ⚠️ 잔여 바우처는 다음 해로 이월 불가`,
+    • <strong>국민행복카드</strong>: 전기·도시가스·지역난방·등유·LPG·연탄 결제<br>
+    • <strong>요금차감</strong>: 전기 또는 도시가스 요금에서 자동 차감<br><br>
+    <strong>하절기</strong>: 전기요금만 사용 가능 (7월~9월)<br>
+    <strong>동절기</strong>: 전기·도시가스·지역난방·등유·연탄·LPG 모두 가능 (10월~익년 4월)<br><br>
+    ⚠️ 잔여 바우처는 다음 기간으로 이월 불가`,
           how: [
             "주민센터(읍·면·동) 방문 신청 — 신분증 지참",
             "복지로(bokjiro.go.kr) 온라인 신청",
@@ -12009,153 +11664,6 @@
               type: "secondary",
             },
           ],
-        },
-        {
-          id: "coal_conversion_voucher",
-          cat: "energy",
-          icon: "🔄",
-          iconBg: "rgba(245,158,11,0.18)",
-          name: "연탄전환 에너지바우처 (2026 신설)",
-          sub: "연탄쿠폰 사용 중인 가구가 비연탄 보일러로 교체 시 에너지 구입비 추가 지원",
-          tags: [
-            { text: "2026 신설", cls: "tag-green" },
-            { text: "연탄쿠폰 사용자만", cls: "tag-yellow" },
-          ],
-          target: [
-            "기존에 연탄쿠폰(저소득층 연탄보조사업)을 사용 중인 에너지 이용 소외계층",
-            "한국에너지재단 연탄전환 의향조사에 참여해 비연탄 보일러로 교체하는 가구",
-          ],
-          amount:
-            "연탄보일러 → 비연탄 보일러(기름·가스 등) 교체 비용 지원 + 교체 후 <strong>난방연료 구입비를 에너지바우처로 추가 지원</strong> (금액은 세대원 수·교체 보일러 종류에 따라 상이, 상담 시 안내)",
-          desc: `2026년 새로 시행된 사업으로, 기존에 연탄으로 난방하며 연탄쿠폰을 받던 가구가 연탄보일러를 비연탄 보일러로 교체하면 그 이후 필요한 난방연료(기름·가스 등) 구입비를 에너지바우처 형태로 지원합니다.<br><br>
-    연탄은 일산화탄소 중독 등 안전사고 위험이 있어, 정부가 친환경 보일러 전환을 유도하기 위해 만든 제도입니다. 보일러 교체 자체는 아래 "저소득층 에너지효율개선사업"과 연계해서 진행됩니다.`,
-          how: [
-            "한국에너지재단 연탄전환 의향조사 통합센터에 문의·신청",
-            "거주지 행정복지센터에서도 안내 가능",
-            "의향조사 후 보일러 교체 절차 진행 → 교체 완료 시 에너지바우처 지급",
-          ],
-          links: [
-            {
-              label: "🔗 한국에너지재단",
-              url: "https://www.energy.or.kr",
-              type: "primary",
-            },
-            { label: "📞 1600-3190 (에너지바우처 통합상담)", url: "", type: "secondary" },
-          ],
-        },
-        {
-          id: "coal_coupon",
-          cat: "energy",
-          icon: "🖤",
-          iconBg: "rgba(100,116,139,0.18)",
-          name: "저소득층 연탄쿠폰 (연탄보조사업)",
-          sub: "연탄보일러 사용 가구 대상 디지털 연탄쿠폰 지원 · 주관: 한국광해광업공단",
-          tags: [
-            { text: "연탄보일러 사용자만", cls: "tag-yellow" },
-            { text: "에너지바우처와 중복 불가", cls: "tag-rose" },
-          ],
-          target: [
-            "생계·주거·의료·교육급여 수급자",
-            "차상위계층",
-            "만 65세 이상 독거노인·장애인·중위소득 52% 이하 한부모가구·소년소녀가정 등 소외계층",
-            "※ 실제 연탄보일러로 난방하는 가구만 해당 (연탄난로는 지원 제외)",
-          ],
-          amount: "디지털 연탄쿠폰으로 연탄 구입비 지원 (지원 물량·단가는 연도별 공고 기준, 지자체 문의)",
-          desc: `한국광해광업공단이 주관하는 사업으로, 실제로 연탄보일러를 사용하는 저소득 가구에 디지털 연탄쿠폰을 지급합니다. 에너지바우처와는 <strong>중복 수급이 불가</strong>하므로, 동절기 에너지바우처를 이미 연탄으로 받았다면 이 쿠폰은 신청할 수 없습니다 — 둘 중 유리한 쪽으로 하나만 선택하세요.`,
-          how: [
-            "거주지 읍·면·동 행정복지센터 또는 시·군·구청 문의",
-            "신청서 + 저소득층 증빙서류 + 개인정보 수집·이용 동의서 제출",
-            "매년 지원 시기가 공고되므로 가을철(9~10월경) 지자체 공지 확인",
-          ],
-          links: [],
-        },
-        {
-          id: "energy_efficiency",
-          cat: "energy",
-          icon: "🏚️",
-          iconBg: "rgba(34,197,94,0.18)",
-          name: "저소득층 에너지효율개선사업 (보일러·단열·에어컨)",
-          sub: "가구당 최대 330만원 이내 · 보일러 교체·창호단열 시공·에어컨 무상설치까지 한번에",
-          tags: [
-            { text: "최대 330만원", cls: "tag-yellow" },
-            { text: "무상 시공", cls: "tag-green" },
-          ],
-          target: [
-            "국민기초생활수급자 (생계·의료·주거·교육급여)",
-            "차상위계층 (한부모·장애인·자활대상자 등)",
-            "복지 사각지대 저소득가구 (지자체장 추천 필요)",
-            "사회복지시설",
-          ],
-          amount: `가구당 <strong>최대 330만원</strong> 이내 (시설은 최대 1,100만원 이내), 자부담 없음<br>
-    • 노후 보일러 → 친환경 보일러 교체: 저소득층 대당 <strong>최대 60만원</strong> 보조<br>
-    • 창호·단열 시공<br>
-    • 8년 이상 노후 에어컨 → 벽걸이형 에어컨 무상 설치·교체 (약 72만원 상당)`,
-          desc: `한국에너지재단이 운영하는 사업으로, 난방(보일러 교체·단열·창호 시공)과 냉방(에어컨 무상설치)을 함께 신청할 수 있습니다. 단열·보일러 노후로 냉난방비 부담이 큰 저소득 가구가 활용하면 매년 관리비를 크게 줄일 수 있습니다.<br><br>
-    ⚠️ 예산이 한정돼 있어 <strong>지자체 추천을 받아야 하는 경우가 많고, 신청 시기(보통 2~4월경 냉방, 연중 난방)가 정해져 있어 예산 소진 시 조기 마감</strong>됩니다. 매년 신청 시기가 달라지므로 미리 확인 필수.`,
-          how: [
-            "거주지 읍·면·동 행정복지센터 방문해 대상 여부 상담·추천 요청",
-            "한국에너지재단 냉난방 효율개선 지원안내센터(min24.energy.or.kr)에서 사업 공고 확인",
-            "방문조사(시공업체) → 지원내역 승인(에너지재단) → 시공 진행",
-          ],
-          links: [
-            {
-              label: "🔗 냉난방 효율개선 지원안내센터",
-              url: "https://min24.energy.or.kr",
-              type: "primary",
-            },
-          ],
-        },
-        {
-          id: "sarang_on",
-          cat: "energy",
-          icon: "🤝",
-          iconBg: "rgba(236,72,153,0.18)",
-          name: "사랑ON·희망ON 난방비 지원 (민간)",
-          sub: "한국지역난방공사 + 굿네이버스 운영 · 정부 수급자 기준에 못 미쳐도 신청 가능한 민간 지원",
-          tags: [
-            { text: "민간 지원", cls: "tag-blue" },
-            { text: "최대 50만원", cls: "tag-yellow" },
-            { text: "나이 제한 없음", cls: "tag-green" },
-          ],
-          target: [
-            "기초생활수급자가 아니어도 신청 가능 — 정부 지원 기준에는 못 미치지만 실제로는 어려운 '복지 사각지대' 가구가 주 대상",
-            "개인 가구뿐 아니라 사회복지시설·사회적기업도 신청 가능",
-          ],
-          amount: "가구당 최대 50만원 (예산·심사 결과에 따라 변동될 수 있음)",
-          desc: `<strong>정부 공식 에너지바우처와는 별개인 민간 지원사업</strong>입니다. 한국지역난방공사와 굿네이버스가 함께 운영하며, 기초수급자 기준에는 해당하지 않지만 실제로 난방비 부담이 큰 사각지대 가구를 지원 대상으로 합니다. 소득 요건뿐 아니라 실제 주거·난방 환경(노후 보일러 등)도 함께 심사합니다.<br><br>
-    ※ 선착순이 아니라 정해진 접수 기간(통상 10~11월) 내 신청 후 심사로 선정되며, 매년 정확한 일정은 홈페이지 공지를 확인해야 합니다.`,
-          how: [
-            "'사랑 ON(溫) 난방비' 공식 홈페이지에서 회원가입 후 온라인 신청",
-            "필수 서류: 주민등록등본, 주거·난방 환경이 보이는 사진(보일러·온도조절기 등), 개인정보 수집·이용 동의서",
-            "접수 완료 후 홈페이지에서 선정 결과 확인",
-            "행정복지센터에서도 이 사업을 안내받을 수 있으니 다른 신청과 함께 문의해보면 좋음",
-          ],
-          links: [{ label: "📞 1555-6029 (사랑ON 상담)", url: "", type: "secondary" }],
-        },
-        {
-          id: "local_gov_energy",
-          cat: "energy",
-          icon: "🏘️",
-          iconBg: "rgba(96,165,250,0.18)",
-          name: "지자체 자체 냉난방비 지원사업",
-          sub: "시·군·구별 조례에 따른 자체 예산 지원 — 정부 기준 미달자도 대상이 될 수 있음",
-          tags: [
-            { text: "지역마다 다름", cls: "tag-yellow" },
-            { text: "주민센터 상담 필수", cls: "tag-blue" },
-          ],
-          target: [
-            "거주 지자체 조례에서 정한 대상자 (지역별로 상이)",
-            "예: 경기도 '햇살하우징사업'(중위소득 50% 이하 자가·임차 가구 단열·시설개선), 각 시·군·구별 동절기 연료비 지원 등",
-          ],
-          amount: "지자체별 상이 — 현금 지원, 연료비 바우처, 방한용품(내복·이불 등) 지급 등 형태도 다양",
-          desc: `국가 사업인 에너지바우처와는 별도로, <strong>각 시·군·구가 자체 예산과 조례로 운영하는 냉난방 지원사업</strong>이 많습니다. 정부 기준(중위소득 등)에는 못 미치더라도 지자체 자체 기준으로 별도 지원받을 수 있는 경우가 있어, 국가 바우처만 확인하고 끝내지 말고 반드시 거주지 행정복지센터에 "우리 동네 자체 난방비·냉방비 지원사업 있나요?"라고 직접 물어보는 게 중요합니다.<br><br>
-    사회복지공동모금회, 대한적십자사, 초록우산어린이재단, 굿네이버스 등 <strong>민간 복지재단의 위기가구 긴급 지원</strong>도 행정복지센터의 통합사례관리를 통해 연계 신청되는 경우가 많습니다 — 직접 재단에 연락하기보다 주민센터 사회복지담당 공무원에게 상담하는 것이 가장 빠릅니다.`,
-          how: [
-            "거주지 읍·면·동 행정복지센터 방문 (사회복지담당 공무원에게 상담)",
-            "\"국가 에너지바우처 외에 우리 지역 자체 난방비/냉방비 지원 있나요?\"라고 직접 질문",
-            "필요 시 통합사례관리 대상으로 등록되면 민간 복지재단 연계 지원까지 함께 검토받을 수 있음",
-          ],
-          links: [],
         },
         {
           id: "edu_voucher",
@@ -12215,7 +11723,7 @@
         },
         {
           id: "appliance2026",
-          cat: "energy",
+          cat: "voucher",
           icon: "🏷️",
           iconBg: "rgba(34,197,94,0.18)",
           name: "고효율 가전제품 구매 환급",
@@ -12543,7 +12051,7 @@
         // ────────────── 생활요금 감면 ──────────────
         {
           id: "electricity",
-          cat: "energy",
+          cat: "discount",
           icon: "💡",
           iconBg: "rgba(245,158,11,0.18)",
           name: "전기요금 할인",
@@ -12590,7 +12098,7 @@
         },
         {
           id: "gas",
-          cat: "energy",
+          cat: "discount",
           icon: "🔥",
           iconBg: "rgba(239,68,68,0.18)",
           name: "도시가스 요금 감면",
@@ -12988,7 +12496,10 @@
     • 시장진입형·인턴도우미형: 일 62,080원 (약 1,242,000원)<br><br>
     <strong>희망저축계좌 Ⅰ (생계·의료급여)</strong><br>
     • 매월 10만원 저축 시 정부 30만원 추가 → 3년 후 최대 1,440만원<br>
-    • 3년 만기 + 자격 유지 + 탈수급 조건 충족 시 지급<br><br>
+    • 3년 만기 + 자격 유지 + 유예기간(6개월) 내 탈수급 시 매칭 전액 지급 / 탈수급 실패해도 성실 유지자는 매칭액의 5% 지급 / 저축·소득 조건 자체를 못 지키면(환수해지) 매칭 전액 소멸<br><br>
+    <strong>희망저축계좌 Ⅱ (주거·교육급여 / 차상위)</strong><br>
+    • 매월 10만원 저축 시 정부가 가입연차별로 10만→20만→30만원 매칭('25년~ 가입자) → 3년 후 최대 1,080만원<br><br>
+    <strong style="color:#4ade80">✅ 팩트체크</strong> 희망저축계좌 Ⅰ·Ⅱ는 자활근로를 반드시 해야 가입되는 통장이 <u>아닙니다</u>. '일하는' 수급가구(일반 알바·상용근로·사업소득 포함)면 신청 가능합니다. 다만 <strong>자활근로사업단에 실제 참여 중인 가입자</strong>는 내일키움장려금(월 20만원)·내일키움수익금(월 최대 15만원)을 별도로 더 받을 수 있어, 자활근로를 병행하면 총수령액이 더 커집니다.<br><br>
     <strong>취업성공패키지</strong><br>
     • 취업상담 → 직업훈련 → 취업알선 → 취업성공수당<br>
     • 훈련참여 수당 월 최대 284,000원 + 취업성공수당 최대 150만원`,
@@ -13033,11 +12544,18 @@
     • 생계·의료급여 수급 가구 중 근로·사업소득이 월 10만원 이상<br>
     • 본인 매월 10만원 적립 의무 (미적립 월은 정부 매칭 없음)<br>
     • 3년 동안 수급자 자격 유지 + 탈수급 달성 조건<br><br>
+    <strong style="color:#4ade80">✅ 팩트체크: 자활근로 필수인가요?</strong><br>
+    아닙니다. '일하는' 생계·의료수급가구면 가입 대상이며, 근로 형태는 자활근로·일반 아르바이트·상용근로·사업소득 모두 인정됩니다. 자활근로 참여가 가입 조건은 아닙니다.<br>
+    단, <strong>자활근로사업단에 실제 참여 중인 가입자</strong>는 전월 12일 이상 성실 참여 시 <strong>내일키움장려금(월 20만원)</strong>과 <strong>내일키움수익금(월 최대 15만원)</strong>을 희망저축계좌 매칭과 별도로 추가 지급받을 수 있습니다(근로유지형·인턴도우미형 제외).<br><br>
     <strong>지급 방식</strong><br>
     • 본인 저축 360만원 + 정부 매칭 1,080만원 = 최대 1,440만원<br>
     • 3년 만기 시 일시 수령 (중도 해지 시 정부 매칭분 반환)<br><br>
-    <strong>탈수급 조건</strong><br>
-    3년 이내 자립(탈수급)하지 못해도 성실 저축자에 한해 일부 지급<br><br>
+    <strong>만기 시점 지급 방식 (탈수급 여부별로 완전히 다름) ⚠️</strong><br>
+    • <strong style="color:#4ade80">① 전액 지급</strong>: 3년간 근로활동·저축 성실 유지 + <strong>만기 후 6개월 유예기간 내 탈수급</strong>(생계·의료수급 모두 벗어남) → 본인저축 + 정부매칭 1,080만원 + 추가장려금 전액 수령<br>
+    • <strong style="color:#fbbf24">② 일부 지급(탈수급 실패)</strong>: 3년간 근로활동·저축은 성실히 했지만 유예기간 내 <strong>탈수급을 못 한 경우</strong> → 정부매칭 전액이 아니라 "만기성공금"(정부매칭 누적액의 <strong>5%</strong> + 이자)만 지급, 나머지 매칭분은 소멸<br>
+    • <strong style="color:#f87171">③ 환수해지(0원)</strong>: 소득이 6개월 연속 하한 미달, 본인적립금 12개월 누적 미납, 중도 임의해지, 압류·가압류 등 <strong>가입 조건 자체를 못 지킨 경우</strong> → 본인저축(+이자)만 돌려받고 정부매칭분은 <strong>전액 국고환수(0원)</strong><br><br>
+    <strong style="color:#4ade80">✅ 팩트체크: "탈수급 못하면 정부지원금 한 푼도 못 받고 소멸"이 맞나요?</strong><br>
+    절반만 맞는 말입니다. 3년간 성실히 저축·근로활동을 지속했는데 <u>탈수급에만 실패</u>한 경우는 정부매칭 전액이 아니라 <strong>5%(+이자)는 받습니다</strong> — 완전히 0원은 아닙니다. 반면 애초에 <u>저축을 12개월 이상 밀리거나 소득 하한을 6개월 연속 못 채우는 등 가입 유지 조건 자체를 어겨 환수해지</u>되면 그때는 실제로 정부매칭분이 전액 국고로 환수되어 한 푼도 못 받습니다. 즉 "탈수급 실패 = 전액 소멸"이 아니라 "가입 조건 위반으로 인한 환수해지 = 전액 소멸"이 정확한 표현입니다.<br><br>
     <span style="color:#fbbf24">⚠️ 매년 상반기(3~4월)에만 신청 모집 — 미리 준비하세요!</span>`,
           how: [
             "매년 3~4월 복지로(bokjiro.go.kr) 또는 읍·면·동 주민센터 신청",
@@ -13060,25 +12578,27 @@
           icon: "🏦",
           iconBg: "rgba(245,158,11,0.18)",
           name: "희망저축계좌 II (주거·교육급여 / 차상위)",
-          sub: "월 10만원 적립 시 정부 10만원 매칭 → 3년 최대 720만원",
+          sub: "월 10만원 적립 시 정부가 가입연차별로 10만→20만→30만원 매칭 → 3년 최대 1,080만원",
           tags: [
             { text: "차상위·주거·교육수급", cls: "tag-yellow" },
-            { text: "3년 최대 720만원", cls: "tag-green" },
+            { text: "3년 최대 1,080만원", cls: "tag-green" },
             { text: "상반기 모집", cls: "tag-blue" },
           ],
           target: [
             "주거·교육급여 수급 가구",
-            "차상위계층 (중위소득 50% 이하)",
-            "근로 또는 사업소득 있는 경우",
+            "차상위계층 (소득인정액 중위소득 50% 이하)",
+            "가입일 현재 근로 활동 중인 가구 (자활근로 여부 무관, 일반 근로·사업소득도 인정)",
           ],
           amount:
-            "본인 월 <strong>100,000원</strong> 저축 시 정부 매칭 <strong>100,000원</strong> → 3년 만기 시 최대 <strong>720만원</strong> + 이자",
+            "본인 월 <strong>100,000원</strong> 저축 시 정부가 <strong>가입연차별로 1년차 10만원 → 2년차 20만원 → 3년차 30만원</strong>을 매칭('25년 이후 가입자 기준) → 3년 만기 시 최대 <strong>1,080만원</strong> + 이자",
           desc: `<strong>희망저축계좌 I과 차이점</strong><br>
     • 대상: 주거·교육급여 또는 차상위계층 (생계·의료는 희망저축 I 신청)<br>
-    • 정부 매칭: 월 10만원 (희망저축 I의 30만원보다 낮음)<br>
-    • 탈수급 조건 완화 (이미 차상위 이하 수준이므로)<br><br>
-    <strong>지급 방식</strong><br>
-    본인 360만원 + 정부 매칭 360만원 = 최대 720만원<br><br>
+    • 정부 매칭: 정액이 아니라 가입연차별 차등 지급 — 1년차 월 10만원, 2년차 월 20만원, 3년차 월 30만원('25년~ 가입자). 과거(~'24년 가입자)에는 월 10만원 정액 매칭(3년 최대 720만원)이었던 것이 개편된 것으로, 아직 인터넷에는 옛 720만원 기준이 남아있는 경우가 많으니 주의하세요.<br>
+    • 교육(총 10시간) 및 사례관리(총 6회) 이수, 자금사용계획서 제출 등 조건 충족 시 전액 지급 — <strong>희망저축계좌 Ⅰ과 달리 '탈수급'이 지급 요건이 아닙니다.</strong> 주거·교육수급가구는 원래 생계·의료수급이 아니므로 탈수급 개념 자체가 적용되지 않습니다.<br><br>
+    <strong style="color:#4ade80">✅ 팩트체크: 자활근로를 해야만 가입 가능한가?</strong><br>
+    아닙니다. 희망저축계좌 II는 '가입일 현재 근로 활동을 하고 있는' 주거·교육급여 수급가구·차상위계층이 대상이며, 자활근로가 아닌 일반 아르바이트·상용근로·사업소득이어도 요건을 충족하면 가입할 수 있습니다. (자활근로사업단 참여자는 내일키움장려금·수익금 등 별도 인센티브를 추가로 받을 수 있습니다.)<br><br>
+    <strong>지급 방식(3년 만기 기준)</strong><br>
+    본인 저축 360만원(월 10만원×36개월) + 정부 매칭 720만원(10+20+30만원×12개월) = 최대 1,080만원 + 이자<br><br>
     <span style="color:#fbbf24">⚠️ 매년 상반기(3~4월) 신청 모집</span>`,
           how: [
             "3~4월 복지로 또는 주민센터 신청",
@@ -13457,7 +12977,7 @@
         container.innerHTML = list
           .map(
             (s) => `
-    <div class="svc-card${["appliance2026", "geunyangdrim", "edu_voucher", "coal_conversion_voucher"].includes(s.id) ? " new2026" : ""}" id="svc-${s.id}">
+    <div class="svc-card${["appliance2026", "geunyangdrim", "edu_voucher"].includes(s.id) ? " new2026" : ""}" id="svc-${s.id}">
       <div class="svc-header" onclick="toggleSvc('${s.id}')">
         <div class="svc-icon" style="background:${s.iconBg}">${s.icon}</div>
         <div class="svc-meta">
@@ -13744,7 +13264,9 @@
         let ctcEligible = false;
         let ctcRaw = 0;
         let ctcAssetNote = "";
-        if (childCount <= 0) {
+        if (livelihood) {
+          ctcNote = "생계급여 수급 가구는 자녀장려금 신청 대상에서 제외됩니다.";
+        } else if (childCount <= 0) {
           ctcNote = "18세 미만 부양자녀가 없어 자녀장려금 대상이 아닙니다.";
         } else if (totalIncome >= 7000) {
           ctcNote = "연소득 7,000만원 이상으로 자녀장려금 대상이 아닙니다.";
