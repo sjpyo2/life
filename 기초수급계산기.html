@@ -10,19 +10,19 @@
     />
     <style>
       :root {
-        --bg: #0f1117;
-        --surface: #191d27;
-        --surface2: #22283a;
-        --border: #2e3650;
-        --accent: #3b82f6;
-        --accent2: #60a5fa;
-        --green: #22c55e;
-        --yellow: #f59e0b;
-        --red: #ef4444;
-        --text: #e2e8f0;
-        --text2: #94a3b8;
-        --text3: #64748b;
-        --radius: 12px;
+        --bg: #0a1113;
+        --surface: #121c1f;
+        --surface2: #1a2a2e;
+        --border: #263739;
+        --accent: #06b6d4;
+        --accent2: #22d3ee;
+        --green: #34d399;
+        --yellow: #fbbf24;
+        --red: #fb7185;
+        --text: #eef5f6;
+        --text2: #9bb2b8;
+        --text3: #64878f;
+        --radius: 14px;
       }
 
       * {
@@ -41,7 +41,7 @@
 
       /* Header */
       .header {
-        background: linear-gradient(135deg, #1a2340 0%, #0f1117 60%);
+        background: linear-gradient(135deg, #123138 0%, #0a1113 60%);
         border-bottom: 1px solid var(--border);
         padding: 40px 20px 30px;
         text-align: center;
@@ -58,15 +58,15 @@
         height: 200px;
         background: radial-gradient(
           ellipse,
-          rgba(59, 130, 246, 0.18) 0%,
+          rgba(6, 182, 212, 0.18) 0%,
           transparent 70%
         );
         pointer-events: none;
       }
       .header-badge {
         display: inline-block;
-        background: rgba(59, 130, 246, 0.15);
-        border: 1px solid rgba(59, 130, 246, 0.4);
+        background: rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.4);
         color: var(--accent2);
         font-size: 11px;
         font-weight: 700;
@@ -95,8 +95,8 @@
           background 0.2s;
       }
       .em-crisis-item:hover {
-        border-color: rgba(239, 68, 68, 0.5) !important;
-        background: rgba(239, 68, 68, 0.05) !important;
+        border-color: rgba(251, 113, 133, 0.5) !important;
+        background: rgba(251, 113, 133, 0.05) !important;
       }
       .detail-toggle-body.open {
         display: block !important;
@@ -153,10 +153,10 @@
       }
       .step-btn.done {
         color: var(--green);
-        border-color: rgba(34, 197, 94, 0.3);
+        border-color: rgba(52, 211, 153, 0.3);
       }
       .step-btn.done .num {
-        background: rgba(34, 197, 94, 0.2);
+        background: rgba(52, 211, 153, 0.2);
       }
 
       /* Container */
@@ -186,7 +186,7 @@
       .card-title .icon {
         width: 28px;
         height: 28px;
-        background: rgba(59, 130, 246, 0.15);
+        background: rgba(6, 182, 212, 0.15);
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -246,7 +246,7 @@
       .field select:focus {
         outline: none;
         border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
       }
       .field input.mono {
         font-family: "IBM Plex Mono", monospace;
@@ -275,7 +275,7 @@
         color: var(--text);
       }
       .chip.on {
-        background: rgba(59, 130, 246, 0.2);
+        background: rgba(6, 182, 212, 0.2);
         border-color: var(--accent);
         color: var(--accent2);
       }
@@ -316,8 +316,8 @@
 
       /* Info box */
       .info-box {
-        background: rgba(59, 130, 246, 0.07);
-        border: 1px solid rgba(59, 130, 246, 0.2);
+        background: rgba(6, 182, 212, 0.07);
+        border: 1px solid rgba(6, 182, 212, 0.2);
         border-radius: 8px;
         padding: 12px 14px;
         font-size: 12px;
@@ -392,23 +392,23 @@
         flex: 1;
       }
       .btn-primary:hover {
-        background: #2563eb;
+        background: #0891b2;
         transform: translateY(-1px);
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
       }
       .btn-calc {
-        background: linear-gradient(135deg, #22c55e, #16a34a);
+        background: linear-gradient(135deg, #34d399, #16a34a);
         color: #fff;
         padding: 14px 36px;
         font-size: 16px;
         border-radius: 10px;
         width: 100%;
         margin-top: 20px;
-        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+        box-shadow: 0 4px 20px rgba(52, 211, 153, 0.3);
       }
       .btn-calc:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+        box-shadow: 0 8px 30px rgba(52, 211, 153, 0.4);
       }
 
       /* Section visibility */
@@ -484,8 +484,8 @@
         overflow: hidden;
       }
       .benefit-card.eligible {
-        background: rgba(34, 197, 94, 0.07);
-        border-color: rgba(34, 197, 94, 0.3);
+        background: rgba(52, 211, 153, 0.07);
+        border-color: rgba(52, 211, 153, 0.3);
       }
       .benefit-card.ineligible {
         background: rgba(100, 116, 139, 0.07);
@@ -507,7 +507,7 @@
         margin-bottom: 8px;
       }
       .eligible .b-status {
-        background: rgba(34, 197, 94, 0.2);
+        background: rgba(52, 211, 153, 0.2);
         color: var(--green);
       }
       .ineligible .b-status {
@@ -693,7 +693,7 @@
         background: var(--accent);
         border-color: var(--accent);
         color: #fff;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35);
       }
 
       /* ── 혜택 필터 ── */
@@ -737,7 +737,7 @@
         transition: border-color 0.2s;
       }
       .svc-card:hover {
-        border-color: #3e4d6e;
+        border-color: #3a5459;
       }
       .svc-header {
         display: flex;
@@ -788,12 +788,12 @@
         letter-spacing: 0.5px;
       }
       .tag-green {
-        background: rgba(34, 197, 94, 0.15);
+        background: rgba(52, 211, 153, 0.15);
         color: #4ade80;
       }
       .tag-blue {
-        background: rgba(59, 130, 246, 0.15);
-        color: #60a5fa;
+        background: rgba(6, 182, 212, 0.15);
+        color: #22d3ee;
       }
       .tag-yellow {
         background: rgba(245, 158, 11, 0.15);
@@ -808,13 +808,68 @@
         color: #fb7185;
       }
 
+      /* 내 조건 해당여부 배지 & 카드 강조 */
+      .elig-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 11px;
+        font-weight: 800;
+        padding: 3px 9px;
+        border-radius: 20px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .elig-badge.yes {
+        background: rgba(52, 211, 153, 0.18);
+        color: #34d399;
+      }
+      .elig-badge.partial {
+        background: rgba(251, 191, 36, 0.18);
+        color: #fbbf24;
+      }
+      .elig-badge.no {
+        background: rgba(148, 163, 184, 0.15);
+        color: var(--text3);
+      }
+      .elig-badge.universal {
+        background: rgba(6, 182, 212, 0.18);
+        color: #22d3ee;
+      }
+      .svc-card.elig-yes {
+        border-color: rgba(52, 211, 153, 0.55);
+        background: linear-gradient(
+          135deg,
+          rgba(52, 211, 153, 0.07) 0%,
+          var(--surface) 55%
+        );
+      }
+      .svc-card.elig-partial {
+        border-color: rgba(251, 191, 36, 0.45);
+      }
+      .svc-card.elig-universal {
+        border-color: rgba(6, 182, 212, 0.4);
+      }
+      .svc-card.elig-no {
+        opacity: 0.48;
+      }
+      .svc-card.elig-no:hover {
+        opacity: 0.8;
+      }
+      .cond-panel-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text2);
+        margin: 0 0 7px;
+      }
+
       /* 2026 신설 카드 강조 */
       .svc-card.new2026 {
-        border-color: rgba(34, 197, 94, 0.35);
+        border-color: rgba(52, 211, 153, 0.35);
         background: linear-gradient(
           135deg,
           var(--surface) 85%,
-          rgba(34, 197, 94, 0.04) 100%
+          rgba(52, 211, 153, 0.04) 100%
         );
       }
       .svc-card.new2026 .svc-header::after {
@@ -822,8 +877,8 @@
         font-size: 10px;
         font-weight: 700;
         color: var(--green);
-        background: rgba(34, 197, 94, 0.12);
-        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: rgba(52, 211, 153, 0.12);
+        border: 1px solid rgba(52, 211, 153, 0.3);
         border-radius: 4px;
         padding: 2px 7px;
         margin-left: auto;
@@ -923,12 +978,12 @@
         border: none;
       }
       .svc-link.primary {
-        background: rgba(59, 130, 246, 0.15);
-        border: 1px solid rgba(59, 130, 246, 0.3);
+        background: rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.3);
         color: var(--accent2);
       }
       .svc-link.primary:hover {
-        background: rgba(59, 130, 246, 0.25);
+        background: rgba(6, 182, 212, 0.25);
       }
       .svc-link.secondary {
         background: var(--surface2);
@@ -942,8 +997,8 @@
 
       .amount-highlight {
         display: inline-block;
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.25);
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.25);
         border-radius: 6px;
         padding: 2px 8px;
         font-family: "IBM Plex Mono", monospace;
@@ -967,9 +1022,9 @@
         color: var(--text2);
       }
       .epill.highlight {
-        border-color: rgba(59, 130, 246, 0.4);
+        border-color: rgba(6, 182, 212, 0.4);
         color: var(--accent2);
-        background: rgba(59, 130, 246, 0.08);
+        background: rgba(6, 182, 212, 0.08);
       }
 
       @media (max-width: 500px) {
@@ -1001,8 +1056,8 @@
       .prop-rate-badge {
         font-size: 10px;
         font-weight: 600;
-        background: rgba(59, 130, 246, 0.12);
-        border: 1px solid rgba(59, 130, 246, 0.25);
+        background: rgba(6, 182, 212, 0.12);
+        border: 1px solid rgba(6, 182, 212, 0.25);
         color: var(--accent2);
         border-radius: 4px;
         padding: 2px 7px;
@@ -1077,7 +1132,7 @@
       }
       .ic-type-card.selected {
         border-color: var(--accent);
-        background: rgba(59, 130, 246, 0.12);
+        background: rgba(6, 182, 212, 0.12);
       }
       .ict-icon {
         font-size: 22px;
@@ -1139,8 +1194,8 @@
       }
 
       .ic-total-banner {
-        background: linear-gradient(135deg, #1a3a2a, #1a2340);
-        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: linear-gradient(135deg, #1a3a2a, #123138);
+        border: 1px solid rgba(52, 211, 153, 0.3);
         border-radius: var(--radius);
         padding: 24px;
         text-align: center;
@@ -1253,8 +1308,8 @@
         margin-top: 4px;
       }
       .ic-compare-box.highlight {
-        border-color: rgba(34, 197, 94, 0.3);
-        background: rgba(34, 197, 94, 0.06);
+        border-color: rgba(52, 211, 153, 0.3);
+        background: rgba(52, 211, 153, 0.06);
       }
       .ic-compare-box.highlight .cb-val {
         color: var(--green);
@@ -1273,13 +1328,13 @@
         color: #d97706;
       }
       .ic-alert.info {
-        background: rgba(59, 130, 246, 0.08);
-        border: 1px solid rgba(59, 130, 246, 0.2);
+        background: rgba(6, 182, 212, 0.08);
+        border: 1px solid rgba(6, 182, 212, 0.2);
         color: var(--accent2);
       }
       .ic-alert.good {
-        background: rgba(34, 197, 94, 0.08);
-        border: 1px solid rgba(34, 197, 94, 0.2);
+        background: rgba(52, 211, 153, 0.08);
+        border: 1px solid rgba(52, 211, 153, 0.2);
         color: #4ade80;
       }
       .ic-alert strong {
@@ -1330,7 +1385,7 @@
     <div class="header">
       <div class="header-badge">2026년 기준</div>
       <h1>기초생활보장 종합 안내</h1>
-      <p style="color: #ef4444; font-weight: 600">만든이: 핏빛초콜릿</p>
+      <p style="color: #fb7185; font-weight: 600">만든이: 핏빛초콜릿</p>
     </div>
 
     <!-- 메인 탭 -->
@@ -1405,10 +1460,10 @@
           style="
             background: linear-gradient(
               135deg,
-              rgba(239, 68, 68, 0.12),
+              rgba(251, 113, 133, 0.12),
               rgba(245, 158, 11, 0.08)
             );
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(251, 113, 133, 0.3);
             border-radius: 14px;
             padding: 20px 22px;
             margin-bottom: 20px;
@@ -1436,8 +1491,8 @@
           >
             <div
               style="
-                background: rgba(239, 68, 68, 0.15);
-                border: 1px solid rgba(239, 68, 68, 0.3);
+                background: rgba(251, 113, 133, 0.15);
+                border: 1px solid rgba(251, 113, 133, 0.3);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
@@ -1466,8 +1521,8 @@
             </div>
             <div
               style="
-                background: rgba(34, 197, 94, 0.12);
-                border: 1px solid rgba(34, 197, 94, 0.25);
+                background: rgba(52, 211, 153, 0.12);
+                border: 1px solid rgba(52, 211, 153, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
@@ -1481,15 +1536,15 @@
             </div>
             <div
               style="
-                background: rgba(59, 130, 246, 0.12);
-                border: 1px solid rgba(59, 130, 246, 0.25);
+                background: rgba(6, 182, 212, 0.12);
+                border: 1px solid rgba(6, 182, 212, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
                 text-align: center;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; font-size: 16px">
+              <div style="font-weight: 700; color: #22d3ee; font-size: 16px">
                 중위소득 75%
               </div>
               <div style="color: var(--text3)">소득기준 (1인 약 192만원)</div>
@@ -1973,10 +2028,10 @@
             margin-top: 16px;
             background: linear-gradient(
               135deg,
-              rgba(59, 130, 246, 0.06),
+              rgba(6, 182, 212, 0.06),
               rgba(168, 85, 247, 0.04)
             );
-            border-color: rgba(59, 130, 246, 0.2);
+            border-color: rgba(6, 182, 212, 0.2);
           "
         >
           <div class="card-title">
@@ -1985,8 +2040,8 @@
           <div style="display: grid; gap: 10px">
             <div
               style="
-                background: rgba(239, 68, 68, 0.1);
-                border: 1px solid rgba(239, 68, 68, 0.25);
+                background: rgba(251, 113, 133, 0.1);
+                border: 1px solid rgba(251, 113, 133, 0.25);
                 border-radius: 10px;
                 padding: 14px 16px;
               "
@@ -2014,8 +2069,8 @@
             </div>
             <div
               style="
-                background: rgba(59, 130, 246, 0.08);
-                border: 1px solid rgba(59, 130, 246, 0.2);
+                background: rgba(6, 182, 212, 0.08);
+                border: 1px solid rgba(6, 182, 212, 0.2);
                 border-radius: 10px;
                 padding: 14px 16px;
               "
@@ -2023,7 +2078,7 @@
               <div
                 style="
                   font-weight: 700;
-                  color: #60a5fa;
+                  color: #22d3ee;
                   font-size: 14px;
                   margin-bottom: 4px;
                 "
@@ -2039,8 +2094,8 @@
             </div>
             <div
               style="
-                background: rgba(34, 197, 94, 0.07);
-                border: 1px solid rgba(34, 197, 94, 0.2);
+                background: rgba(52, 211, 153, 0.07);
+                border: 1px solid rgba(52, 211, 153, 0.2);
                 border-radius: 10px;
                 padding: 14px 16px;
               "
@@ -2523,7 +2578,7 @@
               ><br /><br />
               <span
                 style="
-                  background: rgba(34, 197, 94, 0.1);
+                  background: rgba(52, 211, 153, 0.1);
                   padding: 3px 8px;
                   border-radius: 6px;
                   font-size: 12px;
@@ -2536,7 +2591,7 @@
               부양의무자 소득·재산 무관<br />
               <span
                 style="
-                  background: rgba(34, 197, 94, 0.1);
+                  background: rgba(52, 211, 153, 0.1);
                   padding: 3px 8px;
                   border-radius: 6px;
                   font-size: 12px;
@@ -2651,10 +2706,10 @@
           style="
             background: linear-gradient(
               135deg,
-              rgba(59, 130, 246, 0.08),
+              rgba(6, 182, 212, 0.08),
               rgba(168, 85, 247, 0.08)
             );
-            border: 1px solid rgba(59, 130, 246, 0.25);
+            border: 1px solid rgba(6, 182, 212, 0.25);
             border-radius: 14px;
             padding: 18px 20px;
             margin-bottom: 20px;
@@ -2679,8 +2734,8 @@
           >
             <div
               style="
-                background: rgba(34, 197, 94, 0.08);
-                border: 1px solid rgba(34, 197, 94, 0.2);
+                background: rgba(52, 211, 153, 0.08);
+                border: 1px solid rgba(52, 211, 153, 0.2);
                 border-radius: 10px;
                 padding: 10px 12px;
               "
@@ -2713,13 +2768,13 @@
             </div>
             <div
               style="
-                background: rgba(59, 130, 246, 0.08);
-                border: 1px solid rgba(59, 130, 246, 0.2);
+                background: rgba(6, 182, 212, 0.08);
+                border: 1px solid rgba(6, 182, 212, 0.2);
                 border-radius: 10px;
                 padding: 10px 12px;
               "
             >
-              <div style="font-size: 11px; color: #60a5fa; margin-bottom: 4px">
+              <div style="font-size: 11px; color: #22d3ee; margin-bottom: 4px">
                 📱 통신비 감면
               </div>
               <div style="font-weight: 700; color: var(--text)">
@@ -2779,6 +2834,77 @@
           </div>
         </div>
 
+        <!-- 내 조건 선택 -->
+        <div class="card" id="myCondCard" style="margin-bottom: 14px">
+          <div class="card-title">
+            <span class="icon">🙋</span> 내 조건 선택하기
+          </div>
+          <div style="font-size: 12px; color: var(--text3); margin-bottom: 12px">
+            해당하는 항목을 선택하면 아래 각 서비스 카드에
+            <strong style="color: var(--text2)">해당 여부가 바로 표시</strong>됩니다. 읽지
+            않고도 한눈에 판단할 수 있어요. (복수 선택 가능, 몰라도 넘어가도 됩니다)
+          </div>
+          <div class="cond-panel-title">받고 있는 급여 · 자격</div>
+          <div class="chip-group" id="condGroupIncome" style="margin-bottom: 14px">
+            <button class="chip" data-tag="ls" onclick="toggleCond(this)">생계급여</button>
+            <button class="chip" data-tag="ma" onclick="toggleCond(this)">의료급여</button>
+            <button class="chip" data-tag="ha" onclick="toggleCond(this)">주거급여</button>
+            <button class="chip" data-tag="ea" onclick="toggleCond(this)">교육급여</button>
+            <button class="chip" data-tag="nearpoor" onclick="toggleCond(this)">차상위계층</button>
+          </div>
+          <div class="cond-panel-title">가구 특성 (해당 시 선택)</div>
+          <div class="chip-group" id="condGroupFeature">
+            <button class="chip" data-tag="age65" onclick="toggleCond(this)">65세 이상 가구원</button>
+            <button class="chip" data-tag="disabled" onclick="toggleCond(this)">장애인 가구원</button>
+            <button class="chip" data-tag="infant" onclick="toggleCond(this)">영유아(6세 이하)</button>
+            <button class="chip" data-tag="pregnant" onclick="toggleCond(this)">임신·출산 6개월 이내</button>
+            <button class="chip" data-tag="child718" onclick="toggleCond(this)">7~18세 자녀</button>
+            <button class="chip" data-tag="youth" onclick="toggleCond(this)">만 19~34세 청년 본인</button>
+            <button class="chip" data-tag="singleparent" onclick="toggleCond(this)">한부모가족</button>
+            <button class="chip" data-tag="student" onclick="toggleCond(this)">대학생 본인·자녀</button>
+            <button class="chip" data-tag="working" onclick="toggleCond(this)">근로·사업소득 있음</button>
+            <button class="chip" data-tag="multichild" onclick="toggleCond(this)">다자녀(자녀 2인 이상)</button>
+            <button class="chip" data-tag="crisis" onclick="toggleCond(this)">최근 위기상황(실직·화재·질병 등)</button>
+          </div>
+          <div
+            style="
+              margin-top: 12px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 8px;
+            "
+          >
+            <div id="condSummary" style="font-size: 12px; color: var(--text3)">
+              조건을 선택하면 아래 카드에 해당 여부가 표시됩니다.
+            </div>
+            <button
+              class="btn btn-secondary"
+              style="padding: 6px 14px; font-size: 12px; flex: none"
+              onclick="resetCond()"
+            >
+              초기화
+            </button>
+          </div>
+          <div
+            style="
+              margin-top: 10px;
+              font-size: 11px;
+              color: var(--text3);
+              line-height: 1.6;
+              border-top: 1px solid var(--border);
+              padding-top: 8px;
+            "
+          >
+            <span class="elig-badge yes">✅ 해당 가능성 높음</span>
+            <span class="elig-badge partial">🔶 일부 조건만 충족</span>
+            <span class="elig-badge universal">🙌 누구나 가능</span>
+            <span class="elig-badge no">⬜ 해당 안 될 가능성</span>
+            — 실제 지원 여부는 소득·재산 등 세부 기준에 따라 달라질 수 있어 참고용입니다.
+          </div>
+        </div>
+
         <!-- 카테고리 필터 -->
         <div class="benefit-filter" id="benefitFilter">
           <button class="bcat-btn active" onclick="filterBenefit('all', this)">
@@ -2804,6 +2930,9 @@
           </button>
           <button class="bcat-btn" onclick="filterBenefit('job', this)">
             💼 취업·자립·저축
+          </button>
+          <button class="bcat-btn" onclick="filterBenefit('cash', this)">
+            🛡️ 안심통장(압류방지)
           </button>
           <button class="bcat-btn" onclick="filterBenefit('food', this)">
             🍱 식품·긴급
@@ -3160,7 +3289,7 @@
                 <div
                   style="
                     font-size: 11px;
-                    background: rgba(34, 197, 94, 0.15);
+                    background: rgba(52, 211, 153, 0.15);
                     color: #4ade80;
                     padding: 3px 8px;
                     border-radius: 20px;
@@ -3188,7 +3317,7 @@
                 background: var(--surface2);
                 border-radius: 12px;
                 padding: 14px 16px;
-                border-left: 4px solid #60a5fa;
+                border-left: 4px solid #22d3ee;
                 cursor: pointer;
               "
               onclick="rentalTab('national')"
@@ -3201,14 +3330,14 @@
                   margin-bottom: 8px;
                 "
               >
-                <div style="font-weight: 700; font-size: 14px; color: #60a5fa">
+                <div style="font-weight: 700; font-size: 14px; color: #22d3ee">
                   🏢 국민임대
                 </div>
                 <div
                   style="
                     font-size: 11px;
-                    background: rgba(96, 165, 250, 0.15);
-                    color: #60a5fa;
+                    background: rgba(34, 211, 238, 0.15);
+                    color: #22d3ee;
                     padding: 3px 8px;
                     border-radius: 20px;
                   "
@@ -3333,8 +3462,8 @@
           </div>
           <div
             style="
-              background: rgba(34, 197, 94, 0.08);
-              border: 1px solid rgba(34, 197, 94, 0.2);
+              background: rgba(52, 211, 153, 0.08);
+              border: 1px solid rgba(52, 211, 153, 0.2);
               border-radius: 10px;
               padding: 14px;
               margin-bottom: 14px;
@@ -3421,10 +3550,10 @@
             </div>
             <div
               style="
-                background: rgba(96, 165, 250, 0.08);
+                background: rgba(34, 211, 238, 0.08);
                 border-radius: 10px;
                 padding: 12px;
-                border: 1px solid rgba(96, 165, 250, 0.2);
+                border: 1px solid rgba(34, 211, 238, 0.2);
                 font-size: 11px;
                 color: var(--text3);
                 line-height: 1.7;
@@ -3453,7 +3582,7 @@
                 padding: 12px;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                 ✅ 입주 자격
               </div>
               <div style="color: var(--text2); line-height: 1.9">
@@ -3476,7 +3605,7 @@
                 padding: 12px;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                 💰 임대 조건
               </div>
               <div style="color: var(--text2); line-height: 1.9">
@@ -3772,10 +3901,10 @@
                 background: var(--surface2);
                 border-radius: 12px;
                 padding: 14px 16px;
-                border-left: 4px solid #60a5fa;
+                border-left: 4px solid #22d3ee;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                 🏦 버팀목 전세자금대출 (저소득층용)
               </div>
               <div style="color: var(--text2); line-height: 1.9">
@@ -3912,8 +4041,8 @@
           </div>
           <div
             style="
-              background: rgba(96, 165, 250, 0.08);
-              border: 1px solid rgba(96, 165, 250, 0.2);
+              background: rgba(34, 211, 238, 0.08);
+              border: 1px solid rgba(34, 211, 238, 0.2);
               border-radius: 10px;
               padding: 14px;
               margin-bottom: 14px;
@@ -3922,7 +4051,7 @@
             "
           >
             기초생활수급자 중
-            <strong style="color: #60a5fa">18세 이상 64세 이하</strong>는
+            <strong style="color: #22d3ee">18세 이상 64세 이하</strong>는
             원칙적으로 근로능력이 있다고 봅니다.<br />
             단, 질병·부상 등으로 <strong>근로능력 없음</strong> 판정을 받으면
             자활사업 참여 의무 없이
@@ -4474,9 +4603,9 @@
             >
               <div
                 style="
-                  background: rgba(96, 165, 250, 0.15);
+                  background: rgba(34, 211, 238, 0.15);
                   padding: 10px 14px;
-                  border-left: 4px solid #60a5fa;
+                  border-left: 4px solid #22d3ee;
                   cursor: pointer;
                 "
                 onclick="toggleWaDis(this)"
@@ -4488,7 +4617,7 @@
                     align-items: center;
                   "
                 >
-                  <div style="font-weight: 700; color: #60a5fa">
+                  <div style="font-weight: 700; color: #22d3ee">
                     🧠 2. 중추신경기능계 질환
                   </div>
                   <span style="color: var(--text3); font-size: 10px"
@@ -4611,9 +4740,9 @@
             >
               <div
                 style="
-                  background: rgba(34, 197, 94, 0.15);
+                  background: rgba(52, 211, 153, 0.15);
                   padding: 10px 14px;
-                  border-left: 4px solid #22c55e;
+                  border-left: 4px solid #34d399;
                   cursor: pointer;
                 "
                 onclick="toggleWaDis(this)"
@@ -4625,7 +4754,7 @@
                     align-items: center;
                   "
                 >
-                  <div style="font-weight: 700; color: #22c55e">
+                  <div style="font-weight: 700; color: #34d399">
                     👁️ 4. 감각기능계 질환
                   </div>
                   <span style="color: var(--text3); font-size: 10px"
@@ -4669,9 +4798,9 @@
             >
               <div
                 style="
-                  background: rgba(239, 68, 68, 0.15);
+                  background: rgba(251, 113, 133, 0.15);
                   padding: 10px 14px;
-                  border-left: 4px solid #ef4444;
+                  border-left: 4px solid #fb7185;
                   cursor: pointer;
                 "
                 onclick="toggleWaDis(this)"
@@ -4683,7 +4812,7 @@
                     align-items: center;
                   "
                 >
-                  <div style="font-weight: 700; color: #ef4444">
+                  <div style="font-weight: 700; color: #fb7185">
                     ❤️ 5. 심혈관계 질환
                   </div>
                   <span style="color: var(--text3); font-size: 10px"
@@ -5103,8 +5232,8 @@
           <div style="display: grid; gap: 14px; font-size: 12px">
             <div
               style="
-                background: rgba(239, 68, 68, 0.08);
-                border: 1px solid rgba(239, 68, 68, 0.25);
+                background: rgba(251, 113, 133, 0.08);
+                border: 1px solid rgba(251, 113, 133, 0.25);
                 border-radius: 10px;
                 padding: 14px;
               "
@@ -5173,7 +5302,7 @@
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border)">
                     <td style="padding: 5px 8px">근골격계·신경기능계</td>
-                    <td style="padding: 5px 8px; color: #60a5fa">
+                    <td style="padding: 5px 8px; color: #22d3ee">
                       <strong>의사 또는 한의사</strong>
                     </td>
                   </tr>
@@ -5198,7 +5327,7 @@
                 padding: 14px;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                 📝 진단서에 반드시 포함되어야 할 내용
               </div>
               <div style="color: var(--text2); line-height: 1.9">
@@ -5245,10 +5374,10 @@
 
             <div
               style="
-                background: rgba(34, 197, 94, 0.08);
+                background: rgba(52, 211, 153, 0.08);
                 border-radius: 10px;
                 padding: 12px;
-                border: 1px solid rgba(34, 197, 94, 0.2);
+                border: 1px solid rgba(52, 211, 153, 0.2);
                 font-size: 11px;
                 color: var(--text3);
                 line-height: 1.7;
@@ -5276,10 +5405,10 @@
                 background: var(--surface2);
                 border-radius: 10px;
                 padding: 12px 14px;
-                border-left: 4px solid #60a5fa;
+                border-left: 4px solid #22d3ee;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 6px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 6px">
                 STEP 1 — 진단서 및 서류 준비
               </div>
               <div style="color: var(--text2); line-height: 1.8">
@@ -5326,10 +5455,10 @@
                 background: var(--surface2);
                 border-radius: 10px;
                 padding: 12px 14px;
-                border-left: 4px solid #ef4444;
+                border-left: 4px solid #fb7185;
               "
             >
-              <div style="font-weight: 700; color: #ef4444; margin-bottom: 6px">
+              <div style="font-weight: 700; color: #fb7185; margin-bottom: 6px">
                 STEP 4 — 의학적 평가 (국민연금공단)
               </div>
               <div style="color: var(--text2); line-height: 1.8">
@@ -5362,10 +5491,10 @@
                 background: var(--surface2);
                 border-radius: 10px;
                 padding: 12px 14px;
-                border-left: 4px solid #22c55e;
+                border-left: 4px solid #34d399;
               "
             >
-              <div style="font-weight: 700; color: #22c55e; margin-bottom: 6px">
+              <div style="font-weight: 700; color: #34d399; margin-bottom: 6px">
                 STEP 6 — 최종 판정 (시·군·구청)
               </div>
               <div style="color: var(--text2); line-height: 1.8">
@@ -5421,13 +5550,13 @@
           <div style="display: grid; gap: 12px; font-size: 12px">
             <div
               style="
-                background: rgba(96, 165, 250, 0.08);
-                border: 1px solid rgba(96, 165, 250, 0.2);
+                background: rgba(34, 211, 238, 0.08);
+                border: 1px solid rgba(34, 211, 238, 0.2);
                 border-radius: 10px;
                 padding: 14px;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                 ① 재판정 신청 (가장 빠른 방법)
               </div>
               <div style="color: var(--text2); line-height: 1.9">
@@ -5491,10 +5620,10 @@
             </div>
             <div
               style="
-                background: rgba(34, 197, 94, 0.08);
+                background: rgba(52, 211, 153, 0.08);
                 border-radius: 10px;
                 padding: 12px;
-                border: 1px solid rgba(34, 197, 94, 0.2);
+                border: 1px solid rgba(52, 211, 153, 0.2);
                 font-size: 11px;
                 color: var(--text3);
                 line-height: 1.7;
@@ -5794,8 +5923,8 @@
             </div>
             <div
               style="
-                background: rgba(34, 197, 94, 0.1);
-                border: 1px solid rgba(34, 197, 94, 0.25);
+                background: rgba(52, 211, 153, 0.1);
+                border: 1px solid rgba(52, 211, 153, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
@@ -5824,15 +5953,15 @@
             </div>
             <div
               style="
-                background: rgba(59, 130, 246, 0.1);
-                border: 1px solid rgba(59, 130, 246, 0.25);
+                background: rgba(6, 182, 212, 0.1);
+                border: 1px solid rgba(6, 182, 212, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
                 text-align: center;
               "
             >
-              <div style="font-weight: 700; color: #60a5fa; font-size: 14px">
+              <div style="font-weight: 700; color: #22d3ee; font-size: 14px">
                 월 최대 30만원
               </div>
               <div style="color: var(--text3)">저축계좌 정부매칭</div>
@@ -6211,7 +6340,7 @@
             background: linear-gradient(
               135deg,
               rgba(245, 158, 11, 0.06),
-              rgba(59, 130, 246, 0.04)
+              rgba(6, 182, 212, 0.04)
             );
             border-color: rgba(245, 158, 11, 0.2);
           "
@@ -6222,7 +6351,7 @@
           <div style="font-size: 12px; color: var(--text2); line-height: 1.8">
             <strong style="color: #fbbf24">신청 방법:</strong> 읍·면·동
             행정복지센터 방문 / 복지로(bokjiro.go.kr) / 정부24(gov.kr)<br />
-            <strong style="color: #60a5fa">유형별 신청처:</strong>
+            <strong style="color: #22d3ee">유형별 신청처:</strong>
             본인부담경감→건강보험공단 1577-1000 / 자활→지역자활센터 /
             장애인→주민센터<br />
             <span style="color: #94a3b8; font-size: 11px"
@@ -6241,10 +6370,10 @@
           style="
             background: linear-gradient(
               135deg,
-              rgba(34, 197, 94, 0.1),
-              rgba(59, 130, 246, 0.06)
+              rgba(52, 211, 153, 0.1),
+              rgba(6, 182, 212, 0.06)
             );
-            border: 1px solid rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(52, 211, 153, 0.25);
             border-radius: 14px;
             padding: 20px 22px;
             margin-bottom: 20px;
@@ -6271,8 +6400,8 @@
           >
             <div
               style="
-                background: rgba(34, 197, 94, 0.12);
-                border: 1px solid rgba(34, 197, 94, 0.25);
+                background: rgba(52, 211, 153, 0.12);
+                border: 1px solid rgba(52, 211, 153, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
@@ -6297,8 +6426,8 @@
             </div>
             <div
               style="
-                background: rgba(239, 68, 68, 0.1);
-                border: 1px solid rgba(239, 68, 68, 0.25);
+                background: rgba(251, 113, 133, 0.1);
+                border: 1px solid rgba(251, 113, 133, 0.25);
                 border-radius: 8px;
                 padding: 8px 14px;
                 font-size: 12px;
@@ -6740,8 +6869,8 @@
             </div>
             <div
               style="
-                background: rgba(96, 165, 250, 0.08);
-                border: 1px solid rgba(96, 165, 250, 0.2);
+                background: rgba(34, 211, 238, 0.08);
+                border: 1px solid rgba(34, 211, 238, 0.2);
                 border-radius: 10px;
                 padding: 14px;
                 margin-bottom: 14px;
@@ -6750,7 +6879,7 @@
               "
             >
               고용보험 밖에 있는
-              <strong style="color: #60a5fa">저소득·취업취약계층</strong>에게
+              <strong style="color: #22d3ee">저소득·취업취약계층</strong>에게
               구직촉진수당 등 생계 지원과 함께 1:1 취업지원서비스를 제공하는
               <strong style="color: var(--text)">한국형 실업부조</strong>
               입니다.<br />
@@ -6812,8 +6941,8 @@
             </div>
             <div
               style="
-                background: rgba(239, 68, 68, 0.08);
-                border: 1px solid rgba(239, 68, 68, 0.25);
+                background: rgba(251, 113, 133, 0.08);
+                border: 1px solid rgba(251, 113, 133, 0.25);
                 border-radius: 10px;
                 padding: 12px 14px;
                 margin-top: 12px;
@@ -6840,8 +6969,8 @@
             <div style="display: grid; gap: 12px; font-size: 12px">
               <div
                 style="
-                  background: rgba(239, 68, 68, 0.08);
-                  border: 1px solid rgba(239, 68, 68, 0.3);
+                  background: rgba(251, 113, 133, 0.08);
+                  border: 1px solid rgba(251, 113, 133, 0.3);
                   border-radius: 10px;
                   padding: 14px;
                 "
@@ -6886,8 +7015,8 @@
             <div
               style="
                 margin-top: 12px;
-                background: rgba(96, 165, 250, 0.08);
-                border: 1px solid rgba(96, 165, 250, 0.25);
+                background: rgba(34, 211, 238, 0.08);
+                border: 1px solid rgba(34, 211, 238, 0.25);
                 border-radius: 10px;
                 padding: 12px 14px;
                 font-size: 12px;
@@ -6895,7 +7024,7 @@
                 line-height: 1.9;
               "
             >
-              <strong style="color: #60a5fa"
+              <strong style="color: #22d3ee"
                 >💡 조건부수급자(자활)라면?</strong
               ><br />
               생계급여를 받는 <strong>조건부수급자</strong>가 국취
@@ -7042,8 +7171,8 @@
                   style="
                     margin-top: 8px;
                     font-size: 11px;
-                    background: rgba(239, 68, 68, 0.1);
-                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    background: rgba(251, 113, 133, 0.1);
+                    border: 1px solid rgba(251, 113, 133, 0.3);
                     border-radius: 8px;
                     padding: 8px 10px;
                     color: #fca5a5;
@@ -7135,8 +7264,8 @@
                   style="
                     margin-top: 8px;
                     font-size: 11px;
-                    background: rgba(239, 68, 68, 0.1);
-                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    background: rgba(251, 113, 133, 0.1);
+                    border: 1px solid rgba(251, 113, 133, 0.3);
                     border-radius: 8px;
                     padding: 8px 10px;
                     color: #fca5a5;
@@ -7342,8 +7471,8 @@
               <!-- 제외 대상 -->
               <div
                 style="
-                  background: rgba(239, 68, 68, 0.08);
-                  border: 1px solid rgba(239, 68, 68, 0.25);
+                  background: rgba(251, 113, 133, 0.08);
+                  border: 1px solid rgba(251, 113, 133, 0.25);
                   border-radius: 12px;
                   padding: 14px 16px;
                 "
@@ -7420,7 +7549,7 @@
                         padding: 10px;
                         text-align: right;
                         border-bottom: 1px solid var(--border);
-                        color: #60a5fa;
+                        color: #22d3ee;
                       "
                     >
                       120% (Ⅰ유형 청년특례)
@@ -7491,7 +7620,7 @@
                 <div
                   style="
                     font-weight: 800;
-                    color: #60a5fa;
+                    color: #22d3ee;
                     min-width: 74px;
                     font-size: 12px;
                   "
@@ -7519,7 +7648,7 @@
                 <div
                   style="
                     font-weight: 800;
-                    color: #60a5fa;
+                    color: #22d3ee;
                     min-width: 74px;
                     font-size: 12px;
                   "
@@ -7546,7 +7675,7 @@
                 <div
                   style="
                     font-weight: 800;
-                    color: #60a5fa;
+                    color: #22d3ee;
                     min-width: 74px;
                     font-size: 12px;
                   "
@@ -7574,7 +7703,7 @@
                 <div
                   style="
                     font-weight: 800;
-                    color: #60a5fa;
+                    color: #22d3ee;
                     min-width: 74px;
                     font-size: 12px;
                   "
@@ -7639,7 +7768,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -7655,7 +7784,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -7671,7 +7800,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -7687,7 +7816,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -7733,8 +7862,8 @@
           </div>
           <div
             style="
-              background: rgba(239, 68, 68, 0.08);
-              border: 1px solid rgba(239, 68, 68, 0.25);
+              background: rgba(251, 113, 133, 0.08);
+              border: 1px solid rgba(251, 113, 133, 0.25);
               border-radius: 12px;
               padding: 14px 16px;
               font-size: 12px;
@@ -7801,8 +7930,8 @@
             </div>
             <div
               style="
-                background: rgba(96, 165, 250, 0.08);
-                border: 1px solid rgba(96, 165, 250, 0.2);
+                background: rgba(34, 211, 238, 0.08);
+                border: 1px solid rgba(34, 211, 238, 0.2);
                 border-radius: 10px;
                 padding: 14px;
                 margin-bottom: 14px;
@@ -7823,16 +7952,16 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 14px;
-                  border-left: 4px solid #60a5fa;
+                  border-left: 4px solid #22d3ee;
                 "
               >
-                <div style="font-weight: 700; color: #60a5fa; margin-bottom: 8px">
+                <div style="font-weight: 700; color: #22d3ee; margin-bottom: 8px">
                   👪 한부모가족
                 </div>
                 <div style="color: var(--text2); line-height: 1.9">
                   만 18세 미만(취학 시 만 22세 미만) 자녀를 양육하는 모(母) 또는
                   부(父)로 이루어진 가족<br />
-                  선정기준: <strong style="color: #60a5fa">기준 중위소득 65% 이하</strong>
+                  선정기준: <strong style="color: #22d3ee">기준 중위소득 65% 이하</strong>
                 </div>
               </div>
               <div
@@ -7919,24 +8048,24 @@
               </div>
               <div
                 style="
-                  background: rgba(96, 165, 250, 0.08);
-                  border: 1px solid rgba(96, 165, 250, 0.3);
+                  background: rgba(34, 211, 238, 0.08);
+                  border: 1px solid rgba(34, 211, 238, 0.3);
                   border-radius: 10px;
                   padding: 14px;
                 "
               >
                 <div
-                  style="font-weight: 800; color: #60a5fa; margin-bottom: 6px"
+                  style="font-weight: 800; color: #22d3ee; margin-bottom: 6px"
                 >
                   💰 한부모가구 근로소득 추가 공제
                 </div>
                 <div style="color: var(--text2); line-height: 1.9">
                   한부모가족 소득인정액을 산정할 때는 근로·사업소득에서
-                  <strong style="color: #60a5fa">기본 30%를 공제</strong
+                  <strong style="color: #22d3ee">기본 30%를 공제</strong
                   >합니다.<br />
                   <strong>청소년한부모(만 24세 이하)</strong>는 근로·사업소득
-                  중 <strong style="color: #60a5fa">40만원을 우선 공제</strong>한
-                  나머지 금액에 대해 <strong style="color: #60a5fa"
+                  중 <strong style="color: #22d3ee">40만원을 우선 공제</strong>한
+                  나머지 금액에 대해 <strong style="color: #22d3ee"
                     >30%를 추가로 한 번 더 공제</strong
                   >받습니다.<br />
                   <span style="font-size: 11px; color: var(--text3)"
@@ -7975,7 +8104,7 @@
                         padding: 10px;
                         text-align: right;
                         border-bottom: 1px solid var(--border);
-                        color: #60a5fa;
+                        color: #22d3ee;
                       "
                     >
                       65% (한부모·조손가족)
@@ -8030,7 +8159,7 @@
                     만 18세 미만 자녀 1인당
                   </div>
                 </div>
-                <div style="font-weight: 800; color: #60a5fa; white-space: nowrap">
+                <div style="font-weight: 800; color: #22d3ee; white-space: nowrap">
                   약 월 21만원
                 </div>
               </div>
@@ -8150,7 +8279,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -8166,7 +8295,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -8181,7 +8310,7 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #3b82f6;
+                  border-left: 4px solid #06b6d4;
                 "
               >
                 <div style="font-weight: 700; margin-bottom: 4px">
@@ -8267,10 +8396,10 @@
                   background: var(--surface2);
                   border-radius: 10px;
                   padding: 12px 14px;
-                  border-left: 4px solid #60a5fa;
+                  border-left: 4px solid #22d3ee;
                 "
               >
-                <div style="font-weight: 700; color: #60a5fa; margin-bottom: 4px">
+                <div style="font-weight: 700; color: #22d3ee; margin-bottom: 4px">
                   🏘️ 공공임대주택 우선공급 / 전세임대 지원
                 </div>
                 <div style="color: var(--text2); line-height: 1.8">
@@ -8387,8 +8516,8 @@
             margin-bottom: 16px;
             padding: 14px 16px;
             border-radius: 12px;
-            background: rgba(34, 197, 94, 0.08);
-            border: 1.5px solid rgba(34, 197, 94, 0.35);
+            background: rgba(52, 211, 153, 0.08);
+            border: 1.5px solid rgba(52, 211, 153, 0.35);
             font-size: 13.5px;
             line-height: 1.8;
           "
@@ -9320,16 +9449,16 @@
         <div class="detail-row"><span class="d-label">근로소득 인정액 <small style="color:var(--text3)">${laborDeductionDesc}</small></span><span class="d-val">${fmt(laborRecognized)}</span></div>
         <div class="detail-row"><span class="d-label">사업소득 인정액</span><span class="d-val">${fmt(bizRecognized)}</span></div>
         <div class="detail-row"><span class="d-label">재산소득·이전소득</span><span class="d-val">${fmt(assetIncome + transferIncome)}</span></div>
-        <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">🏠 주거용재산 합계 (주택+보증금)</span><span class="d-val">${fmt(residenceTotal)}</span></div>
+        <div class="detail-row" style="background:rgba(6, 182, 212,0.04)"><span class="d-label">🏠 주거용재산 합계 (주택+보증금)</span><span class="d-val">${fmt(residenceTotal)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 지역 한도액 (${getRegionLabel(region)})</span><span class="d-val">${fmt(houseLimit)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 기본재산공제 <small style="color:var(--text3)">(기초생활보장 기준 — 기초연금 1억3,500만원과 다른 별도 기준)</small></span><span class="d-val minus">−${fmt(basicDed)}</span></div>
         ${residenceOverLimit > 0 ? `<div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 한도 초과분 (일반재산 편입)</span><span class="d-val minus">${fmt(residenceOverLimit)}</span></div>` : ""}
-        <div class="detail-row" style="${residenceAfterDed === 0 ? "background:rgba(34,197,94,0.06)" : ""}"><span class="d-label">&nbsp;&nbsp;↳ 공제 후 과세 대상 <small style="color:var(--text3)">${fmt(Math.min(residenceTotal, houseLimit))} − ${fmt(basicDed)} = ${residenceAfterDed <= 0 ? "0원 (기본재산공제 이하)" : fmt(residenceAfterDed)}</small></span><span class="d-val">${fmt(residenceAfterDed)}</span></div>
+        <div class="detail-row" style="${residenceAfterDed === 0 ? "background:rgba(52, 211, 153,0.06)" : ""}"><span class="d-label">&nbsp;&nbsp;↳ 공제 후 과세 대상 <small style="color:var(--text3)">${fmt(Math.min(residenceTotal, houseLimit))} − ${fmt(basicDed)} = ${residenceAfterDed <= 0 ? "0원 (기본재산공제 이하)" : fmt(residenceAfterDed)}</small></span><span class="d-val">${fmt(residenceAfterDed)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 주거용재산 환산소득 (×1.04%/월)</span><span class="d-val">${housingIncome === 0 ? "0원" : fmt(housingIncome)}</span></div>
         ${
           residenceTotal > 0 && housingIncome === 0
             ? `
-        <div class="detail-row" style="background:rgba(34,197,94,0.05);border-left:3px solid #22c55e">
+        <div class="detail-row" style="background:rgba(52, 211, 153,0.05);border-left:3px solid #34d399">
           <span class="d-label" style="color:#4ade80;font-size:12px;line-height:1.7">
             ✅ 주거용재산 ${fmt(residenceTotal)} ≤ ${getRegionLabel(region)} 기본재산공제 ${fmt(basicDed)}<br>
             &nbsp;&nbsp;&nbsp;&nbsp;→ <strong>환산소득 0원</strong>이 2026년 기초생활보장법 기준상 정확한 계산입니다.<br>
@@ -9340,7 +9469,7 @@
         </div>`
             : ""
         }
-        <div class="detail-row" style="background:rgba(59,130,246,0.04)"><span class="d-label">🏗️ 일반재산 (비거주+기타+부채차감)</span><span class="d-val">${fmt(generalRaw)}</span></div>
+        <div class="detail-row" style="background:rgba(6, 182, 212,0.04)"><span class="d-label">🏗️ 일반재산 (비거주+기타+부채차감)</span><span class="d-val">${fmt(generalRaw)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 잔여 기본재산공제</span><span class="d-val minus">−${fmt(remainDed)}</span></div>
         <div class="detail-row"><span class="d-label">&nbsp;&nbsp;↳ 일반재산 환산소득 (×4.17%/월)</span><span class="d-val">${fmt(generalIncome)}</span></div>
         <div class="detail-row"><span class="d-label">💳 금융재산 환산소득 <small style="color:var(--text3)">(금융재산−500만원 생활준비금 후 ×6.26%/월)</small></span><span class="d-val">${fmt(financialIncome)}</span></div>
@@ -9509,7 +9638,7 @@
         result.style.display = "block";
 
         if (checkedCount > 0) {
-          result.innerHTML = `<div style="background:rgba(34,197,94,0.12);border:2px solid #22c55e;border-radius:12px;padding:16px 18px">
+          result.innerHTML = `<div style="background:rgba(52, 211, 153,0.12);border:2px solid #34d399;border-radius:12px;padding:16px 18px">
       <div style="font-size:16px;font-weight:900;color:#4ade80;margin-bottom:8px">✅ 근로능력평가 면제 대상 해당 가능</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.8">
         체크한 항목(${checkedCount}개)이 있습니다. 해당 증빙 서류를 가지고 <strong>주소지 주민센터 복지팀</strong>에 방문하면<br>
@@ -9698,7 +9827,7 @@
 
         const benGrades = [
           { key: "생계급여", pct: "32%", thresh: T.life, color: "#4ade80" },
-          { key: "의료급여", pct: "40%", thresh: T.medical, color: "#60a5fa" },
+          { key: "의료급여", pct: "40%", thresh: T.medical, color: "#22d3ee" },
           { key: "주거급여", pct: "48%", thresh: T.housing, color: "#a855f7" },
           { key: "교육급여", pct: "50%", thresh: T.edu, color: "#fbbf24" },
         ];
@@ -9730,7 +9859,7 @@
             planHtml = `<div style="margin-top:6px;font-size:11px;color:#f87171">재산 환산소득 외 근로·이전소득이 기준 초과 — 소득 자체를 줄이거나 다른 급여 검토 필요</div>`;
           }
           html += `
-    <div style="background:${eligible ? "rgba(34,197,94,0.06)" : "rgba(239,68,68,0.06)"};border:1px solid ${g.color}33;border-radius:10px;padding:11px 14px">
+    <div style="background:${eligible ? "rgba(52, 211, 153,0.06)" : "rgba(251, 113, 133,0.06)"};border:1px solid ${g.color}33;border-radius:10px;padding:11px 14px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
         <span style="font-weight:700;color:${g.color}">${eligible ? "✅" : "❌"} ${g.key} (${g.pct})</span>
         <span style="font-size:11px;color:var(--text3)">기준: ${fmt(g.thresh)}원</span>
@@ -9746,7 +9875,7 @@
         });
 
         html += `</div>
-  <div style="margin-top:12px;padding:10px 14px;background:rgba(96,165,250,0.06);border:1px solid rgba(96,165,250,0.2);border-radius:10px;font-size:11px;color:var(--text3);line-height:1.7">
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(34, 211, 238,0.06);border:1px solid rgba(34, 211, 238,0.2);border-radius:10px;font-size:11px;color:var(--text3);line-height:1.7">
     ⚠️ 이 계산은 소득·재산만 반영한 추정값입니다. 부양의무자·근로능력 여부 등 추가 심사가 있으며 실제 결과는 주민센터 확인 필요<br>
     💡 <strong>주거급여 신청이 가장 유리한 첫 단계</strong> — 기준이 가장 넓고(48%), 생계와 달리 자활 조건 없음
   </div>`;
@@ -9759,7 +9888,7 @@
         {
           icon: "💳",
           label: "금융재산 정리",
-          color: "#60a5fa",
+          color: "#22d3ee",
           urgent: true,
           summary:
             "금융재산 500만원은 공제 기준일 뿐 — 초과분이 월 6.26%로 환산 (초과해도 환산소득이 급여기준 이하면 수급 가능)",
@@ -9810,7 +9939,7 @@
         {
           icon: "🏠",
           label: "주거 실태 확인 (전·월세 계약서)",
-          color: "#22c55e",
+          color: "#34d399",
           urgent: false,
           summary:
             "임차거주자는 임대차계약서 필수 — 주소지와 실거주지 일치 여부 확인",
@@ -9881,7 +10010,7 @@
         <input type="checkbox" id="cl_cb_${i}" onchange="cl_score()" onclick="event.stopPropagation()" style="flex-shrink:0;width:16px;height:16px;cursor:pointer">
         <span style="font-size:16px">${item.icon}</span>
         <div style="flex:1">
-          <div style="font-weight:700;font-size:12px">${item.label} ${item.urgent ? '<span style="font-size:10px;background:rgba(239,68,68,0.2);color:#f87171;padding:1px 6px;border-radius:10px;margin-left:4px">중요</span>' : ""}</div>
+          <div style="font-weight:700;font-size:12px">${item.label} ${item.urgent ? '<span style="font-size:10px;background:rgba(251, 113, 133,0.2);color:#f87171;padding:1px 6px;border-radius:10px;margin-left:4px">중요</span>' : ""}</div>
           <div style="font-size:11px;color:var(--text3);margin-top:2px">${item.summary}</div>
         </div>
         <span id="cl_arrow_${i}" style="color:var(--text3);font-size:10px;flex-shrink:0">▾</span>
@@ -9977,7 +10106,7 @@
         {
           icon: "💼",
           title: "가구원 소득 누락·오산",
-          color: "#60a5fa",
+          color: "#22d3ee",
           cause:
             "같이 사는 가구원 소득이 합산되는 줄 몰랐거나, 용돈·이전소득 누락",
           solution: `• 가구원 범위 재확인: 같은 주소에 주민등록된 가족 전원이 가구원<br>
@@ -10041,7 +10170,7 @@
         container.innerHTML = `
   <div style="display:grid;gap:12px">
 
-    <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:14px">
+    <div style="background:rgba(251, 113, 133,0.08);border:1px solid rgba(251, 113, 133,0.25);border-radius:10px;padding:14px">
       <div style="font-weight:700;color:#f87171;margin-bottom:8px">📌 공통 필수 서류 (모든 급여 공통)</div>
       <div style="color:var(--text2);line-height:2.0;font-size:12px">
         ① <strong>사회보장급여 신청서</strong> — 주민센터 비치, 현장 작성<br>
@@ -10097,8 +10226,8 @@
       </div>
     </div>
 
-    <div style="background:rgba(96,165,250,0.06);border:1px solid rgba(96,165,250,0.2);border-radius:10px;padding:14px">
-      <div style="font-weight:700;color:#60a5fa;margin-bottom:8px">💡 신청 팁</div>
+    <div style="background:rgba(34, 211, 238,0.06);border:1px solid rgba(34, 211, 238,0.2);border-radius:10px;padding:14px">
+      <div style="font-weight:700;color:#22d3ee;margin-bottom:8px">💡 신청 팁</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.9">
         • <strong>오전 방문 권장</strong> — 담당자 여유 시간 확보, 당일 처리 가능성 높음<br>
         • <strong>첫 방문 전 전화 문의</strong> — "기초수급 신청하려는데 필요 서류가 뭔가요?" 한 마디로 최신 서류 목록 확인<br>
@@ -10312,7 +10441,7 @@
           id: "housing",
           icon: "🏠",
           name: "주거지원",
-          color: "#60a5fa",
+          color: "#22d3ee",
           limit: "최대 3개월 (1개월씩 2회 연장)",
           note: "화재·퇴거 등으로 거처를 잃은 경우 임시 주거비 지원",
           extra: "국가·지자체 소유 임시거소 제공 또는 임시 주거비 현금 지급",
@@ -10422,10 +10551,10 @@
           check.textContent = "";
         } else {
           em_selectedCrisis.add(id);
-          el.style.borderColor = "#ef4444";
-          el.style.background = "rgba(239,68,68,0.08)";
-          check.style.background = "#ef4444";
-          check.style.borderColor = "#ef4444";
+          el.style.borderColor = "#fb7185";
+          el.style.background = "rgba(251, 113, 133,0.08)";
+          check.style.background = "#fb7185";
+          check.style.borderColor = "#fb7185";
           check.textContent = "✓";
           check.style.color = "#fff";
         }
@@ -10500,7 +10629,7 @@
           extraItems.push({
             name: "주거지원",
             amt: fmt(housingAmt) + "/월 (최대 3개월)",
-            color: "#60a5fa",
+            color: "#22d3ee",
           });
         if (hasWinter)
           extraItems.push({
@@ -10538,20 +10667,20 @@
         }
 
         const statusColor = eligible
-          ? "#22c55e"
+          ? "#34d399"
           : maybeElig
             ? "#f59e0b"
-            : "#ef4444";
+            : "#fb7185";
         const statusText = eligible
           ? "✅ 긴급복지지원 신청 가능"
           : maybeElig
             ? "⚠️ 조건 부분 충족 — 주민센터 상담 권장"
             : "❌ 소득·재산 기준 초과 — 지자체 조례 지원 문의";
         const statusBg = eligible
-          ? "rgba(34,197,94,0.08)"
+          ? "rgba(52, 211, 153,0.08)"
           : maybeElig
             ? "rgba(245,158,11,0.08)"
-            : "rgba(239,68,68,0.08)";
+            : "rgba(251, 113, 133,0.08)";
 
         resultEl.innerHTML = `
     <div style="border:2px solid ${statusColor};border-radius:14px;overflow:hidden;margin-bottom:16px">
@@ -10574,7 +10703,7 @@
         <div style="background:var(--surface2);border-radius:10px;padding:14px 16px;margin-bottom:14px">
           <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">📊 예상 지원 금액</div>
           <div style="display:grid;gap:8px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(239,68,68,0.08);border-radius:8px;border-left:3px solid #ef4444">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(251, 113, 133,0.08);border-radius:8px;border-left:3px solid #fb7185">
               <div>
                 <div style="font-size:13px;font-weight:600">🛒 생계지원 (${members}인 가구)</div>
                 <div style="font-size:11px;color:var(--text3)">최대 ${maxMonths}개월 수령 가능</div>
@@ -10587,7 +10716,7 @@
             ${extraItems
               .map(
                 (item) => `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(59,130,246,0.06);border-radius:8px;border-left:3px solid ${item.color}">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(6, 182, 212,0.06);border-radius:8px;border-left:3px solid ${item.color}">
               <div style="font-size:13px;font-weight:600">${item.name}</div>
               <div style="font-size:13px;font-weight:700;color:${item.color}">${item.amt}</div>
             </div>`,
@@ -10597,7 +10726,7 @@
         </div>
 
         <!-- 신청 안내 -->
-        <div style="font-size:12px;color:var(--text2);line-height:1.7;background:rgba(59,130,246,0.06);border-radius:8px;padding:12px 14px">
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;background:rgba(6, 182, 212,0.06);border-radius:8px;padding:12px 14px">
           <strong style="color:var(--accent2)">📍 선택하신 위기사유:</strong> ${[...em_selectedCrisis].map((id) => EM_CRISIS.find((c) => c.id === id)?.label || "").join(", ")}<br>
           <strong style="color:#f87171">📞 지금 바로:</strong> <strong>129</strong>에 전화하거나 <strong>주민센터 방문</strong>하여 긴급복지지원을 신청하세요.
         </div>
@@ -10606,8 +10735,8 @@
       }
 
       function em_badge(label, ok, okText, failText) {
-        const c = ok ? "#22c55e" : "#ef4444";
-        const bg = ok ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
+        const c = ok ? "#34d399" : "#fb7185";
+        const bg = ok ? "rgba(52, 211, 153,0.08)" : "rgba(251, 113, 133,0.08)";
         return `<div style="background:${bg};border:1px solid ${c}40;border-radius:8px;padding:8px 10px">
     <div style="font-size:11px;font-weight:700;color:${c};margin-bottom:2px">${ok ? "✅" : "❌"} ${label}</div>
     <div style="font-size:11px;color:var(--text2)">${ok ? okText : failText}</div>
@@ -10869,7 +10998,7 @@
         jahwalPay > 0
           ? `
       <div class="ic-row">
-        <div class="ic-row-label"><span class="dot" style="background:#60a5fa"></span> 자활 참여수당 (${jahwalRate.label})</div>
+        <div class="ic-row-label"><span class="dot" style="background:#22d3ee"></span> 자활 참여수당 (${jahwalRate.label})</div>
         <div class="ic-row-val pos">+${fmt(jahwalPay)}</div>
       </div>`
           : ""
@@ -10893,7 +11022,7 @@
           : ""
       }
       <div class="ic-row">
-        <div class="ic-row-label"><span class="dot" style="background:#22c55e"></span> 수급비 (변화 후) <small style="color:var(--text3);font-size:10px">= 기준액${fmt(benefitMax)} - 소득인정액${fmt(incomeRecognized)}</small></div>
+        <div class="ic-row-label"><span class="dot" style="background:#34d399"></span> 수급비 (변화 후) <small style="color:var(--text3);font-size:10px">= 기준액${fmt(benefitMax)} - 소득인정액${fmt(incomeRecognized)}</small></div>
         <div class="ic-row-val ${newBenefit < benefitBase ? "neg" : "pos"}">${fmt(newBenefit)}
           ${benefitChange !== 0 ? `<small>(${sign(benefitChange)}${fmt(Math.abs(benefitChange))})</small>` : ""}
         </div>
@@ -11068,7 +11197,7 @@
             rows += `
       <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding:3px 0">
         <span>근로소득 (세전 ${fmt(laborRaw)})</span>
-        <span style="font-family:'IBM Plex Mono',monospace;color:#60a5fa">${laborDeductLabel}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;color:#22d3ee">${laborDeductLabel}</span>
       </div>`;
           if (bizRaw > 0)
             rows += `
@@ -11104,10 +11233,10 @@
 
         const el = document.getElementById("nr_result");
 
-        const statusColor = isNear ? "#22c55e" : "#ef4444";
+        const statusColor = isNear ? "#34d399" : "#fb7185";
         const statusBg = isNear
-          ? "rgba(34,197,94,0.08)"
-          : "rgba(239,68,68,0.08)";
+          ? "rgba(52, 211, 153,0.08)"
+          : "rgba(251, 113, 133,0.08)";
         const statusText = isNear
           ? "✅ 차상위계층 소득 기준 충족"
           : "❌ 소득 기준 초과";
@@ -11145,7 +11274,7 @@
         benefits.push({
           name: "통신비 감면",
           val: "월 최대 21,500원",
-          color: "#60a5fa",
+          color: "#22d3ee",
         });
         benefits.push({
           name: "의료비 본인부담 경감",
@@ -11185,7 +11314,7 @@
         function gaugeBadge(label, thresh, eligible, desc) {
           const pctBar = Math.min(Math.round((income / thresh) * 100), 120);
           const color = eligible ? "#4ade80" : "#f87171";
-          const bg = eligible ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
+          const bg = eligible ? "rgba(52, 211, 153,0.08)" : "rgba(251, 113, 133,0.08)";
           const icon = eligible ? "✅" : "❌";
           const gap = thresh - income;
           const gapText = eligible
@@ -11207,10 +11336,10 @@
         }
 
         el.innerHTML = `
-    <div style="border-radius:12px;overflow:hidden;border:2px solid ${eligible_near ? "#22c55e" : income <= thresh_housing ? "#fbbf24" : "#ef4444"}">
+    <div style="border-radius:12px;overflow:hidden;border:2px solid ${eligible_near ? "#34d399" : income <= thresh_housing ? "#fbbf24" : "#fb7185"}">
       <!-- 헤더: 소득인정액 요약 -->
-      <div style="background:${eligible_near ? "rgba(34,197,94,0.08)" : income <= thresh_housing ? "rgba(245,158,11,0.08)" : "rgba(239,68,68,0.08)"};padding:14px 16px;border-bottom:1px solid var(--border)">
-        <div style="font-size:15px;font-weight:800;color:${eligible_near ? "#22c55e" : income <= thresh_housing ? "#fbbf24" : "#ef4444"}">
+      <div style="background:${eligible_near ? "rgba(52, 211, 153,0.08)" : income <= thresh_housing ? "rgba(245,158,11,0.08)" : "rgba(251, 113, 133,0.08)"};padding:14px 16px;border-bottom:1px solid var(--border)">
+        <div style="font-size:15px;font-weight:800;color:${eligible_near ? "#34d399" : income <= thresh_housing ? "#fbbf24" : "#fb7185"}">
           ${eligible_life ? "🟢 기초수급 가능 구간" : eligible_housing ? "🟡 일부 급여 가능 구간" : eligible_near ? "🟠 차상위계층 구간" : "🔴 기준 초과"}
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px">
@@ -11482,8 +11611,8 @@
         const typeLabel = type === "1" ? "1종" : "2종";
 
         resultEl.innerHTML = `
-    <div style="border:2px solid #22c55e;border-radius:14px;overflow:hidden;margin-bottom:16px">
-      <div style="background:rgba(34,197,94,0.08);padding:14px 18px;border-bottom:1px solid rgba(34,197,94,0.2)">
+    <div style="border:2px solid #34d399;border-radius:14px;overflow:hidden;margin-bottom:16px">
+      <div style="background:rgba(52, 211, 153,0.08);padding:14px 18px;border-bottom:1px solid rgba(52, 211, 153,0.2)">
         <div style="font-size:12px;color:var(--text2);margin-bottom:4px">의료급여 ${typeLabel} — ${rateLabel}</div>
         <div style="font-size:22px;font-weight:900;color:#4ade80">${fmt(totalBurden)}</div>
         <div style="font-size:12px;color:var(--text2);margin-top:2px">급여 본인부담 ${fmt(cappedBurden)} + 비급여 ${fmt(noncovFinal)}</div>
@@ -11498,7 +11627,7 @@
             <span style="color:var(--text2)">급여 본인부담 (${rateLabel})</span>
             <span style="color:#4ade80">${fmt(coveredBurden)}</span>
           </div>
-          ${capExhausted ? `<div style="display:flex;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;border:1px solid rgba(34,197,94,0.3);font-size:12px;color:#4ade80;font-weight:700;margin-bottom:8px">🎉 올해 연간 상한(${fmt(annualCap)})을 이미 초과하여 <strong>급여 진료비 전액 면제</strong> 상태입니다. 비급여만 부담하세요.</div>` : ""}
+          ${capExhausted ? `<div style="display:flex;padding:10px;background:rgba(52, 211, 153,0.1);border-radius:8px;border:1px solid rgba(52, 211, 153,0.3);font-size:12px;color:#4ade80;font-weight:700;margin-bottom:8px">🎉 올해 연간 상한(${fmt(annualCap)})을 이미 초과하여 <strong>급여 진료비 전액 면제</strong> 상태입니다. 비급여만 부담하세요.</div>` : ""}
     ${
       capApplied && !capExhausted
         ? `<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border);background:rgba(245,158,11,0.06)">
@@ -11561,6 +11690,7 @@
         // ────────────── 바우처·카드 ──────────────
         {
           id: "culturevoucher",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "voucher",
           icon: "🎭",
           iconBg: "rgba(168,85,247,0.18)",
@@ -11617,6 +11747,7 @@
         },
         {
           id: "energy_voucher",
+          elig: { need: ["ls", "ma", "ha", "ea"], extra: ["age65", "infant", "disabled", "pregnant", "singleparent"] },
           cat: "voucher",
           icon: "⚡",
           iconBg: "rgba(245,158,11,0.18)",
@@ -11667,9 +11798,10 @@
         },
         {
           id: "edu_voucher",
+          elig: { need: ["ea"] },
           cat: "voucher",
           icon: "📚",
-          iconBg: "rgba(59,130,246,0.18)",
+          iconBg: "rgba(6, 182, 212,0.18)",
           name: "교육급여 바우처",
           sub: "2026년 인상 · 초등 487,000원 / 중학 679,000원 / 고등 860,000원",
           tags: [
@@ -11723,9 +11855,10 @@
         },
         {
           id: "appliance2026",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "disabled"] },
           cat: "voucher",
           icon: "🏷️",
-          iconBg: "rgba(34,197,94,0.18)",
+          iconBg: "rgba(52, 211, 153,0.18)",
           name: "고효율 가전제품 구매 환급",
           sub: "2026 신설 · 기초수급자 구매가의 30% 환급, 최대 30만원",
           tags: [
@@ -11764,9 +11897,10 @@
 
         {
           id: "sports_voucher",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "singleparent", "disabled"] },
           cat: "voucher",
           icon: "⚽",
-          iconBg: "rgba(34,197,94,0.18)",
+          iconBg: "rgba(52, 211, 153,0.18)",
           name: "스포츠강좌이용권 / 장애인스포츠강좌이용권",
           sub: "유·청소년 월 10만 5천원 · 장애인 월 11만원 · 2026년 1월~12월 연중 지원",
           tags: [
@@ -11818,9 +11952,10 @@
         // ────────────── 먹거리·육아 바우처 ──────────────
         {
           id: "agrifood_voucher",
+          elig: { need: ["ls"], extra: ["pregnant", "infant", "child718", "youth"] },
           cat: "voucher",
           icon: "🥦",
-          iconBg: "rgba(34,197,94,0.18)",
+          iconBg: "rgba(52, 211, 153,0.18)",
           name: "농식품바우처 (먹거리 지원)",
           sub: "2026년 생계급여 수급 가구 · 임산부·영유아·아동·청년 포함 가구 · 월 최대 10만원",
           tags: [
@@ -11863,6 +11998,7 @@
 
         {
           id: "diaper_voucher",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "singleparent", "disabled", "multichild"], extra: ["infant"] },
           cat: "voucher",
           icon: "👶",
           iconBg: "rgba(244,63,94,0.18)",
@@ -11918,9 +12054,10 @@
         // ────────────── 통신·문화 ──────────────
         {
           id: "telecom",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "telecom",
           icon: "📱",
-          iconBg: "rgba(34,197,94,0.18)",
+          iconBg: "rgba(52, 211, 153,0.18)",
           name: "이동통신 요금 감면",
           sub: "생계·의료급여: 월 최대 33,500원 / 주거·교육급여: 월 최대 21,500원",
           tags: [
@@ -11966,6 +12103,7 @@
         },
         {
           id: "tv_license",
+          elig: { need: ["ls", "ma"] },
           cat: "telecom",
           icon: "📺",
           iconBg: "rgba(100,116,139,0.18)",
@@ -12003,9 +12141,10 @@
         // ────────────── 주거·에너지 ──────────────
         {
           id: "housing_rental",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "singleparent", "youth"] },
           cat: "housing",
           icon: "🏠",
-          iconBg: "rgba(59,130,246,0.18)",
+          iconBg: "rgba(6, 182, 212,0.18)",
           name: "공공임대주택 우선 공급",
           sub: "LH·SH 영구임대 1순위 / 시중 임대료 30% 수준",
           tags: [
@@ -12051,6 +12190,7 @@
         // ────────────── 생활요금 감면 ──────────────
         {
           id: "electricity",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "discount",
           icon: "💡",
           iconBg: "rgba(245,158,11,0.18)",
@@ -12098,9 +12238,10 @@
         },
         {
           id: "gas",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "disabled"] },
           cat: "discount",
           icon: "🔥",
-          iconBg: "rgba(239,68,68,0.18)",
+          iconBg: "rgba(251, 113, 133,0.18)",
           name: "도시가스 요금 감면",
           sub: "동절기 취사·난방요금 월 최대 24,000원 감면",
           tags: [
@@ -12146,6 +12287,7 @@
         },
         {
           id: "resident_tax",
+          elig: { need: ["ls", "ma", "ha", "ea"] },
           cat: "discount",
           icon: "🧾",
           iconBg: "rgba(100,116,139,0.18)",
@@ -12197,9 +12339,10 @@
         },
         {
           id: "water",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "discount",
           icon: "💧",
-          iconBg: "rgba(59,130,246,0.15)",
+          iconBg: "rgba(6, 182, 212,0.15)",
           name: "상·하수도 요금 감면",
           sub: "지자체 조례에 따라 수도요금 감면 (지역별 상이)",
           tags: [
@@ -12229,9 +12372,10 @@
         },
         {
           id: "grain",
+          elig: { need: ["ls", "ma"] },
           cat: "discount",
           icon: "🌾",
-          iconBg: "rgba(34,197,94,0.15)",
+          iconBg: "rgba(52, 211, 153,0.15)",
           name: "정부양곡 할인 공급",
           sub: "기초수급자 시중가보다 저렴하게 쌀 구매 가능",
           tags: [
@@ -12268,6 +12412,7 @@
         {
           id: "medical",
           cat: "health",
+          elig: { need: ["ls", "ma"] },
           icon: "🏥",
           iconBg: "rgba(244,63,94,0.18)",
           name: "의료급여 (1종·2종)",
@@ -12317,6 +12462,7 @@
         },
         {
           id: "dental",
+          elig: { need: ["ma"], extra: ["age65"] },
           cat: "health",
           icon: "🦷",
           iconBg: "rgba(244,63,94,0.15)",
@@ -12352,7 +12498,7 @@
           id: "mental",
           cat: "health",
           icon: "🧘",
-          iconBg: "rgba(34,197,94,0.15)",
+          iconBg: "rgba(52, 211, 153,0.15)",
           name: "정신건강 복지서비스",
           sub: "정신건강복지센터 무료 상담·치료비 지원 연 최대 36만원",
           tags: [
@@ -12391,9 +12537,10 @@
         // ────────────── 교육·아동 ──────────────
         {
           id: "childcare",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "singleparent"], extra: ["child718", "infant"] },
           cat: "edu",
           icon: "🧒",
-          iconBg: "rgba(59,130,246,0.15)",
+          iconBg: "rgba(6, 182, 212,0.15)",
           name: "아동급식카드 (결식아동 지원)",
           sub: "방학 중·위기 가정 아동 1식 최대 8,000원",
           tags: [
@@ -12432,6 +12579,7 @@
         },
         {
           id: "scholarship",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"], extra: ["student"] },
           cat: "edu",
           icon: "🎓",
           iconBg: "rgba(168,85,247,0.15)",
@@ -12475,6 +12623,7 @@
         // ────────────── 취업·자립 ──────────────
         {
           id: "job_support",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "job",
           icon: "💼",
           iconBg: "rgba(245,158,11,0.18)",
@@ -12523,9 +12672,10 @@
         // ────────────── 저축·자립 ──────────────
         {
           id: "savings1",
+          elig: { need: ["ls", "ma"], extra: ["working"] },
           cat: "job",
           icon: "🏦",
-          iconBg: "rgba(34,197,94,0.18)",
+          iconBg: "rgba(52, 211, 153,0.18)",
           name: "희망저축계좌 I (생계·의료급여)",
           sub: "월 10만원 적립 시 정부 30만원 매칭 → 3년 최대 1,440만원",
           tags: [
@@ -12574,6 +12724,7 @@
         },
         {
           id: "savings2",
+          elig: { need: ["ha", "ea", "nearpoor"], extra: ["working"] },
           cat: "job",
           icon: "🏦",
           iconBg: "rgba(245,158,11,0.18)",
@@ -12616,6 +12767,7 @@
         },
         {
           id: "savings_youth",
+          elig: { need: ["youth"], extra: ["working"] },
           cat: "job",
           icon: "🌱",
           iconBg: "rgba(168,85,247,0.18)",
@@ -12662,6 +12814,7 @@
         },
         {
           id: "savings_child",
+          elig: { need: ["ls", "ma", "ha", "ea"], extra: ["child718", "infant"] },
           cat: "edu",
           icon: "🌻",
           iconBg: "rgba(244,63,94,0.18)",
@@ -12714,6 +12867,7 @@
         // ────────────── 식품·긴급 ──────────────
         {
           id: "birth_death",
+          elig: { need: ["ls", "ma", "ha"] },
           cat: "food",
           icon: "🌸",
           iconBg: "rgba(244,63,94,0.15)",
@@ -12790,9 +12944,10 @@
         },
         {
           id: "foodbank",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "food",
           icon: "🍱",
-          iconBg: "rgba(34,197,94,0.15)",
+          iconBg: "rgba(52, 211, 153,0.15)",
           name: "푸드뱅크·푸드마켓",
           sub: "월 1~2회 식품 꾸러미 무상 지원",
           tags: [
@@ -12821,9 +12976,10 @@
         },
         {
           id: "winter",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor", "crisis"] },
           cat: "food",
           icon: "🧥",
-          iconBg: "rgba(59,130,246,0.15)",
+          iconBg: "rgba(6, 182, 212,0.15)",
           name: "긴급복지지원·사회복지공동모금회",
           sub: "위기 상황 즉시 생계비·의료비 지원",
           tags: [
@@ -12866,6 +13022,7 @@
         // ────────────── 명절 특별 지원 ──────────────
         {
           id: "holiday_gift",
+          elig: { need: ["ls", "ma", "ha", "ea", "nearpoor"] },
           cat: "cash",
           icon: "🎁",
           iconBg: "rgba(245,158,11,0.18)",
@@ -12910,44 +13067,48 @@
           ],
         },
 
-        // ────────────── 압류방지통장 ──────────────
+        // ────────────── 압류방지통장 (행복지킴이통장 + 생계비계좌) ──────────────
         {
           id: "safe_account",
           cat: "cash",
           icon: "🛡️",
-          iconBg: "rgba(96,165,250,0.18)",
-          name: "압류방지통장 (생계비 계좌·안심통장)",
-          sub: "2026.2.1 시행 · 전국민 1인 1계좌 · 월 250만원 보호 · 체크카드 사용 가능",
+          iconBg: "rgba(34, 211, 238,0.18)",
+          name: "행복지킴이통장 · 압류방지 생계비 계좌",
+          sub: "수급비 받는 기본 통장(행복지킴이통장, 전액보호) + 2026.2.1 신설 생계비계좌(월 250만원 보호)",
           tags: [
-            { text: "전국민", cls: "tag-blue" },
-            { text: "월 250만원 보호", cls: "tag-green" },
+            { text: "수급자 필수 개설", cls: "tag-blue" },
+            { text: "행복지킴이통장: 전액보호", cls: "tag-green" },
+            { text: "생계비계좌: 월250만원", cls: "tag-yellow" },
             { text: "2026년 신설", cls: "tag-rose" },
-            { text: "체크카드", cls: "tag-yellow" },
           ],
           target: [
-            "전국민 1인 1계좌 개설 가능 (소득·자격 무관)",
-            "채무자·압류 위험 있는 분, 기초수급자, 근로 취약계층 모두 해당",
+            "기초생활수급자, 기초연금·장애인연금·한부모급여 등 복지급여 수급자 (행복지킴이통장)",
+            "채무·압류 위험이 있는 전국민 누구나 1인 1계좌 (생계비계좌, 소득·자격 무관)",
           ],
-          amount: `<strong>보호 한도:</strong> 1개월 생계비 <strong>월 250만원</strong>까지 압류·추심 불가<br>
-    체크카드 발급: ✅ 가능 (일반 체크카드처럼 사용)<br>
-    계좌 제한: 1인 1계좌, 입금 후 30일 내 사용 원칙`,
-          desc: `<strong>압류방지통장(생계비 계좌) 상세</strong><br><br>
-    2026년 2월 1일부터 시행된 신규 제도입니다. 채권자가 법원을 통해 계좌를 압류하더라도 <strong>월 250만원</strong>까지는 강제 추심이 불가능하여 최소한의 생계비를 보호받을 수 있습니다.<br><br>
-    <strong>주요 특징</strong><br>
-    • 전국민 누구나 1인 1계좌 개설 가능<br>
-    • 압류·가압류·추심 명령이 있어도 월 250만원은 보호<br>
-    • <strong>체크카드 발급 가능</strong> → 일반 은행 계좌처럼 사용<br>
-    • 한 달치 생계비 개념으로 운영 (월별 갱신)<br><br>
-    <strong>기존 제도와의 차이</strong><br>
-    • 기존: 급여·기초수급비 등 입금 후 압류 가능 (90일 이내 이의신청 필요)<br>
-    • 변경: 처음부터 250만원까지 자동 보호 (이의신청 불필요)<br><br>
+          amount: `<strong>① 행복지킴이통장(압류방지 전용통장)</strong><br>
+    복지급여만 입금 가능, 입금된 금액 <strong>전액</strong> 압류·추심 금지<br><br>
+    <strong>② 생계비계좌(신규, 2026.2.1 시행)</strong><br>
+    모든 소득(근로소득·사업소득 등) 입금 가능, 월 <strong>250만원</strong>까지만 압류 보호 · 체크카드 발급 가능`,
+          desc: `<strong style="color:#4ade80">✅ 팩트체크: '행복저축통장'이라는 이름이 맞나요?</strong><br>
+    공식 명칭은 <strong>'행복저축통장'이 아니라 '행복지킴이통장'</strong>입니다(정식 용어: 압류방지 전용통장). 저축·매칭 상품인 희망저축계좌와 이름이 비슷해 혼동하기 쉽지만, 행복지킴이통장은 <u>돈을 불려주는 저축상품이 아니라</u> 수급비 등 복지급여를 안전하게 받기 위한 <strong>입출금 계좌</strong>입니다. 말씀하신 대로 대부분의 수급자가 급여를 받기 위해 가장 먼저 개설하는 '기본 통장'이 맞습니다.<br><br>
+    <strong>① 행복지킴이통장이란</strong><br>
+    기초생활보장급여(생계·의료·주거·교육급여), 기초연금, 장애인연금, 장애(아동)수당, 한부모가족복지급여, 요양비, 긴급지원금, 실업급여, 구직촉진수당, 자립정착금 등 정부 복지급여 전용으로 만들어진 입출금 통장입니다. 2024년 9월부터 여러 사업별 압류방지통장이 이 통장 하나로 통합됐습니다.<br>
+    • 이 통장에는 <strong>해당 복지급여만 입금 가능</strong>하고, 본인이 직접 현금을 넣거나 타인이 송금하는 것은 원칙적으로 제한됩니다.<br>
+    • 입금된 급여는 <strong>전액</strong> 압류·가압류·추심이 금지되어, 빚이 있어도 수급비만큼은 안전하게 지킬 수 있습니다.<br>
+    • 입출금은 자유롭고, 체크카드 발급도 가능한 은행이 많습니다.<br><br>
+    <strong>② 생계비계좌(압류방지 생계비 보호계좌)와 차이</strong><br>
+    2026년 2월 1일 새로 시행된 별도 제도로, 행복지킴이통장을 대체하는 게 아니라 <strong>보완하는 제도</strong>입니다.<br>
+    • 행복지킴이통장: <u>복지급여만</u> 입금 가능 / 입금액 <u>전액</u> 보호<br>
+    • 생계비계좌: 근로소득·사업소득 등 <u>모든 소득</u> 입금 가능 / <u>월 250만원까지만</u> 보호(그 이상은 압류 가능)<br>
+    → 복지급여만 받는 수급자는 행복지킴이통장 하나로 충분하고, 근로소득 등 다른 돈도 함께 관리하며 압류를 막고 싶다면 생계비계좌를 별도로 개설하는 것이 유리합니다. 두 계좌는 <strong>중복 개설도 가능</strong>합니다.<br><br>
     <strong>주의사항</strong><br>
-    • 1인 1계좌만 허용 → 다른 은행에 중복 개설 불가<br>
-    • 세금·사회보험료 공제는 압류방지 대상에서 제외될 수 있음`,
+    • 행복지킴이통장은 은행마다 보호 적용 급여 범위가 다를 수 있어 개설 시 확인이 필요합니다.<br>
+    • 생계비계좌는 1인 1계좌만 허용되며, 다른 은행에 중복 개설할 수 없습니다.<br>
+    • 세금·사회보험료 등 공제는 압류방지 대상에서 제외될 수 있습니다.`,
           how: [
-            "시중 은행 영업점 방문 신청 (국민·우리·신한·하나·농협 등)",
-            "일부 은행은 앱(모바일뱅킹)으로도 개설 가능",
-            "신분증 지참 → 압류방지통장 개설 요청",
+            "행복지킴이통장: 수급자 증명서(수급자확인서)와 신분증 지참 → 국민·신한·우리·하나·농협 등 은행 영업점에서 개설",
+            "생계비계좌: 시중 은행 영업점 또는 일부 은행 앱에서 개설, 소득·자격 요건 없이 누구나 가능",
+            "복지급여 신청 시 주민센터에서 행복지킴이통장 개설을 함께 안내받는 경우가 많음",
           ],
           links: [
             {
@@ -12960,6 +13121,60 @@
       ];
 
       let currentFilter = "all";
+      let myCond = new Set();
+
+      function toggleCond(btn) {
+        const tag = btn.dataset.tag;
+        if (myCond.has(tag)) {
+          myCond.delete(tag);
+          btn.classList.remove("on");
+        } else {
+          myCond.add(tag);
+          btn.classList.add("on");
+        }
+        updateCondSummary();
+        renderBenefits(currentFilter);
+      }
+
+      function resetCond() {
+        myCond.clear();
+        document
+          .querySelectorAll("#myCondCard .chip")
+          .forEach((c) => c.classList.remove("on"));
+        updateCondSummary();
+        renderBenefits(currentFilter);
+      }
+
+      function updateCondSummary() {
+        const el = document.getElementById("condSummary");
+        if (!el) return;
+        el.textContent =
+          myCond.size === 0
+            ? "조건을 선택하면 아래 카드에 해당 여부가 표시됩니다."
+            : `선택한 조건 ${myCond.size}개 기준으로 해당 여부를 표시 중`;
+      }
+
+      function getEligStatus(s) {
+        if (myCond.size === 0) return "neutral";
+        if (!s.elig) return "universal";
+        const hasAny = (arr) => arr.some((t) => myCond.has(t));
+        if (!hasAny(s.elig.need)) return "no";
+        if (s.elig.extra && !hasAny(s.elig.extra)) return "partial";
+        return "yes";
+      }
+
+      const ELIG_BADGE = {
+        yes: ["✅ 해당 가능성 높음", "yes"],
+        partial: ["🔶 일부 조건만 충족", "partial"],
+        no: ["⬜ 해당 안 될 가능성", "no"],
+        universal: ["🙌 누구나 가능", "universal"],
+      };
+
+      function eligBadgeHtml(status) {
+        const item = ELIG_BADGE[status];
+        if (!item) return "";
+        return `<span class="elig-badge ${item[1]}">${item[0]}</span>`;
+      }
 
       function filterBenefit(cat, btn) {
         currentFilter = cat;
@@ -12971,13 +13186,22 @@
       }
 
       function renderBenefits(cat) {
-        const list =
+        let list =
           cat === "all" ? SERVICES : SERVICES.filter((s) => s.cat === cat);
+        if (myCond.size > 0) {
+          const order = { yes: 0, universal: 1, partial: 2, no: 3 };
+          list = list
+            .map((s) => ({ s, st: getEligStatus(s) }))
+            .sort((a, b) => order[a.st] - order[b.st])
+            .map((x) => x.s);
+        }
         const container = document.getElementById("benefitCards");
         container.innerHTML = list
-          .map(
-            (s) => `
-    <div class="svc-card${["appliance2026", "geunyangdrim", "edu_voucher"].includes(s.id) ? " new2026" : ""}" id="svc-${s.id}">
+          .map((s) => {
+            const st = getEligStatus(s);
+            const eligClass = st !== "neutral" ? ` elig-${st}` : "";
+            return `
+    <div class="svc-card${["appliance2026", "geunyangdrim", "edu_voucher"].includes(s.id) ? " new2026" : ""}${eligClass}" id="svc-${s.id}">
       <div class="svc-header" onclick="toggleSvc('${s.id}')">
         <div class="svc-icon" style="background:${s.iconBg}">${s.icon}</div>
         <div class="svc-meta">
@@ -12985,6 +13209,7 @@
           <div class="svc-sub">${s.sub}</div>
         </div>
         <div class="svc-tags">
+          ${st !== "neutral" ? eligBadgeHtml(st) : ""}
           ${s.tags.map((t) => `<span class="svc-tag ${t.cls}">${t.text}</span>`).join("")}
         </div>
         <span class="svc-chevron">▾</span>
@@ -13021,8 +13246,8 @@
         </div>
       </div>
     </div>
-  `,
-          )
+  `;
+          })
           .join("");
       }
 
