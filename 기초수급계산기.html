@@ -665,6 +665,125 @@
         }
       }
 
+      /* ── 통합 검색 ── */
+      #globalSearchWrap {
+        position: relative;
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 16px 16px 0;
+        z-index: 50;
+      }
+      .gsearch-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 30px;
+        padding: 12px 16px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .gsearch-box:focus-within {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+      }
+      .gsearch-glass {
+        font-size: 15px;
+        flex-shrink: 0;
+        opacity: 0.8;
+      }
+      #globalSearchInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: var(--text);
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 14px;
+        min-width: 0;
+      }
+      #globalSearchInput::placeholder {
+        color: var(--text3);
+      }
+      #gsearchClear {
+        border: none;
+        background: var(--surface2);
+        color: var(--text2);
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      #globalSearchResults {
+        display: none;
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: calc(100% + 6px);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        max-height: 420px;
+        overflow-y: auto;
+      }
+      .gsearch-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 14px;
+        cursor: pointer;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.15s;
+      }
+      .gsearch-item:last-child {
+        border-bottom: none;
+      }
+      .gsearch-item:hover {
+        background: var(--surface2);
+      }
+      .gsearch-item .gsearch-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .gsearch-item .gsearch-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .gsearch-item .gsearch-sub {
+        font-size: 11px;
+        color: var(--text3);
+        margin-top: 2px;
+      }
+      .gsearch-item .gsearch-tag {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 20px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+      .gsearch-tag.tab {
+        background: rgba(6, 182, 212, 0.18);
+        color: #22d3ee;
+      }
+      .gsearch-tag.service {
+        background: rgba(52, 211, 153, 0.18);
+        color: #34d399;
+      }
+      .gsearch-empty {
+        padding: 16px 14px;
+        font-size: 12px;
+        color: var(--text3);
+        line-height: 1.7;
+      }
+
       /* ── 메인 탭 ── */
       .main-tabs {
         display: flex;
@@ -1388,6 +1507,30 @@
       <p style="color: #fb7185; font-weight: 600">만든이: 핏빛초콜릿</p>
     </div>
 
+    <!-- 통합 검색 -->
+    <div id="globalSearchWrap">
+      <div class="gsearch-box">
+        <span class="gsearch-glass">🔍</span>
+        <input
+          type="text"
+          id="globalSearchInput"
+          placeholder="원하는 정보를 검색하세요 (예: 넷플릭스, 한부모, 의료비, 임대주택, 근로장려금...)"
+          oninput="onGlobalSearchInput()"
+          onkeydown="if(event.key==='Enter'){onGlobalSearchInput(true)}"
+          autocomplete="off"
+        />
+        <button
+          id="gsearchClear"
+          onclick="clearGlobalSearch()"
+          style="display: none"
+          aria-label="검색어 지우기"
+        >
+          ✕
+        </button>
+      </div>
+      <div id="globalSearchResults"></div>
+    </div>
+
     <!-- 메인 탭 -->
     <div class="main-tabs">
       <button
@@ -1449,6 +1592,9 @@
         id="mtab-hanbumo"
       >
         👨‍👩‍👧 한부모가족
+      </button>
+      <button class="main-tab" onclick="switchMain('cycle')" id="mtab-cycle">
+        🔁 반복수급 가이드
       </button>
     </div>
 
@@ -2167,6 +2313,13 @@
             </div>
             <div class="year-preset">
               <button
+                class="preset-btn"
+                onclick="applyPreset(2027, this)"
+                style="border-color: #fbbf24"
+              >
+                🆕 2027년 (예정)
+              </button>
+              <button
                 class="preset-btn active"
                 onclick="applyPreset(2026, this)"
               >
@@ -2181,6 +2334,37 @@
               <button class="preset-btn" onclick="applyPreset(0, this)">
                 직접입력
               </button>
+            </div>
+            <div
+              id="year2027Notice"
+              style="
+                display: none;
+                background: rgba(251, 191, 36, 0.08);
+                border: 1px solid rgba(251, 191, 36, 0.3);
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-top: 10px;
+                font-size: 12px;
+                line-height: 1.8;
+                color: var(--text2);
+              "
+            >
+              <strong style="color: #fbbf24">✅ 팩트체크: 2027년 기준 중위소득, 실제로 확정됐습니다</strong><br />
+              2026년 7월 28일 제80차 중앙생활보장위원회에서 2027년도 기준
+              중위소득과 급여별 선정기준을 심의·의결했습니다. <strong style="color: var(--text)">4인 가구 기준
+              6.70% 인상</strong>(2015년 기준 중위소득 제도 도입 이후 역대
+              최대 인상률)이며, 관보 고시를 거쳐
+              <strong style="color: var(--text)">2027년 1월 1일부터 적용</strong>될 예정입니다.
+              선정기준 비율(생계32%·의료40%·주거48%·교육50%)은 2026년과
+              동일하게 유지됩니다. 아직 시행 전이므로, 지금 당장의 수급
+              자격은 2026년 기준으로 판단하되 <strong style="color: var(--text)">내년 예산·생활 계획을 세울 때
+              참고</strong>하세요.<br /><br />
+              <strong style="color: #fbbf24">🏠 주거급여 기준임대료(실제 지급 상한액)</strong>:
+              서울(1급지)은 1~6인 전 구간 확정치를 반영했지만, 경기·인천/광역시·세종/그
+              외 지역은 1인·4인(4급지는 6인 포함)만 공식 발표에서 확인되어
+              반영했습니다. 나머지 가구원 수는 아직 공식 발표를 확인하지
+              못해 2026년 금액이 잠정 표시될 수 있으니, 정확한 금액은 신청
+              시 복지로·주민센터에서 다시 확인하세요.
             </div>
             <div class="form-row">
               <div class="field">
@@ -8892,6 +9076,538 @@
     </div>
     <!-- /main-gjang -->
 
+    <!-- ─── 반복수급 가이드 탭 ─── -->
+    <div id="main-cycle" style="display: none">
+      <!-- 소분류 탭 -->
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px"
+      >
+        <button
+          class="step-btn active"
+          onclick="cyTab('overview')"
+          id="cytab-overview"
+        >
+          📋 제도 개요
+        </button>
+        <button
+          class="step-btn"
+          onclick="cyTab('reapply')"
+          id="cytab-reapply"
+        >
+          🔄 수급 재신청
+        </button>
+        <button
+          class="step-btn"
+          onclick="cyTab('deduction')"
+          id="cytab-deduction"
+        >
+          💸 소득공제·장려금
+        </button>
+        <button
+          class="step-btn"
+          onclick="cyTab('savings')"
+          id="cytab-savings"
+        >
+          🏦 자산형성계좌 활용
+        </button>
+        <button class="step-btn" onclick="cyTab('bridge')" id="cytab-bridge">
+          🌉 탈수급 후 공백기 대응
+        </button>
+      </div>
+
+      <!-- ① 제도 개요 -->
+      <div id="cy-overview">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🔁</span> "일 있으면 일하고, 없으면 다시
+            수급" — 이렇게 오가도 괜찮습니다
+          </div>
+          <div
+            style="
+              background: rgba(34, 211, 238, 0.08);
+              border: 1px solid rgba(34, 211, 238, 0.2);
+              border-radius: 10px;
+              padding: 14px;
+              margin-bottom: 14px;
+              font-size: 12px;
+              line-height: 1.9;
+            "
+          >
+            불안정한 일거리(단기 알바·일용직 등)를 오가며 생계를 유지하는
+            분들을 위해, 정부는 <strong style="color: #22d3ee">"소득이 생기면 무조건 수급 박탈"</strong>이
+            아니라
+            <strong style="color: #22d3ee"
+              >일하는 동안의 공백을 메워주는 여러 안전장치</strong
+            >를 만들어 뒀습니다. 아래 5가지를 순서대로 확인하세요.
+          </div>
+          <div style="display: grid; gap: 12px; font-size: 12px">
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 14px;
+                border-left: 4px solid #4ade80;
+              "
+            >
+              <div style="font-weight: 700; color: #4ade80; margin-bottom: 6px">
+                ① 일할 때 — 근로소득공제로 수급이 급격히 끊기지 않게
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                번 돈 전액이 그대로 소득으로 잡히지 않고 일정 비율을
+                공제해줘서, 단기 알바를 해도 바로 수급자격이 날아가지 않는
+                "완충 구간"이 생깁니다. →
+                <span
+                  style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+                  onclick="cyTab('deduction')"
+                  >자세히 보기</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 14px;
+                border-left: 4px solid #22d3ee;
+              "
+            >
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 6px">
+                ② 저축 중일 때 — 적립중지 제도로 통장이 깨지지 않게
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                희망저축계좌·청년내일저축계좌 저축 중에 일이 끊겨도, 사전
+                신청하면 저축을 잠깐 멈춰둘 수 있어 그동안 쌓은 정부매칭금이
+                환수되지 않습니다. →
+                <span
+                  style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+                  onclick="cyTab('savings')"
+                  >자세히 보기</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 14px;
+                border-left: 4px solid #fbbf24;
+              "
+            >
+              <div style="font-weight: 700; color: #fbbf24; margin-bottom: 6px">
+                ③ 탈수급했을 때 — 의료·주거급여가 곧바로 끊기지 않게
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                일해서 생계급여를 벗어나도, 조건에 따라 의료급여·주거급여
+                등을 일정 기간 더 유지해주는 특례 제도가 있습니다. →
+                <span
+                  style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+                  onclick="cyTab('bridge')"
+                  >자세히 보기</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 14px;
+                border-left: 4px solid #fb7185;
+              "
+            >
+              <div style="font-weight: 700; color: #fb7185; margin-bottom: 6px">
+                ④ 다시 무직이 됐을 때 — 재신청 심사 공백을 긴급복지로 메우기
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                재신청하면 소득·재산 조사에 시간이 걸리는데, 그 사이 소득이
+                완전히 끊겼다면 긴급복지지원으로 공백을 메울 수 있습니다. →
+                <span
+                  style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+                  onclick="cyTab('bridge')"
+                  >자세히 보기</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 10px;
+                padding: 14px;
+                border-left: 4px solid #a855f7;
+              "
+            >
+              <div style="font-weight: 700; color: #c084fc; margin-bottom: 6px">
+                ⑤ 재신청할 때 — 필요한 서류와 걸리는 기간 미리 알아두기
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                반복해서 신청해도 불이익은 없습니다. 다만 매번 소득·재산
+                조사가 새로 진행되므로 서류와 절차를 미리 알아두면 훨씬
+                수월합니다. →
+                <span
+                  style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+                  onclick="cyTab('reapply')"
+                  >자세히 보기</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ic-alert info">
+          <strong>💡 이 탭을 만든 이유</strong>
+          일이 불규칙한 분들은 "수급 탈퇴 → 재신청"을 반복하는 과정에서
+          정보가 흩어져 있어 손해를 보기 쉽습니다. 이 탭은 그 흐름 전체를
+          한 곳에 모아, 일하는 동안에도 안전망을 최대한 활용하고 다시
+          수급으로 돌아올 때도 헤매지 않도록 정리했습니다.
+        </div>
+      </div>
+
+      <!-- ② 수급 재신청 -->
+      <div id="cy-reapply" style="display: none">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🔄</span> 다시 수급 신청할 때 뭐가 필요할까?
+          </div>
+          <div style="font-size: 12px; color: var(--text2); line-height: 1.9; margin-bottom: 14px">
+            수급 탈퇴 후 재신청은 <strong style="color: var(--text)">신규 신청과 동일한 절차</strong>로
+            진행됩니다. 이전에 수급자였다는 이유로 절차가 간소화되거나
+            불리해지지 않습니다 — 다만 매번 소득·재산 조사를 처음부터
+            새로 하기 때문에 서류를 다시 준비해야 합니다.
+          </div>
+          <div style="display: grid; gap: 10px; font-size: 12px">
+            <div style="background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px">
+              <div style="font-weight: 700; margin-bottom: 6px">📝 공통 제출 서류</div>
+              <div style="color: var(--text2); line-height: 1.8">
+                • 사회보장급여 신청(변경)서, 신분증<br />
+                • 소득·재산 신고서<br />
+                • 통장 사본 (본인 명의)<br />
+                • 임대차계약서 (전월세 거주 시)<br />
+                • 가족관계증명서 등 (필요 시 요구)
+              </div>
+            </div>
+            <div style="background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px">
+              <div style="font-weight: 700; margin-bottom: 6px">⏱️ 처리 기간</div>
+              <div style="color: var(--text2); line-height: 1.8">
+                신청일로부터 원칙적으로 <strong style="color: #fbbf24">30일 이내</strong>
+                (부양의무자 소득·재산 조사가 추가로 필요한 경우 최대
+                <strong style="color: #fbbf24">60일까지 연장</strong> 가능) 결과가
+                통보됩니다. 이 기간 동안 소득이 없다면 아래 "탈수급 후 공백기
+                대응" 탭의 긴급복지지원을 함께 검토하세요.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🏥</span> 팩트체크: 재신청할 때 병원 3개월
+            진료 받고 진단서를 꼭 내야 하나요?
+          </div>
+          <div
+            style="
+              background: rgba(52, 211, 153, 0.08);
+              border: 1px solid rgba(52, 211, 153, 0.25);
+              border-radius: 10px;
+              padding: 14px;
+              font-size: 12px;
+              line-height: 1.9;
+              color: var(--text2);
+            "
+          >
+            <strong style="color: #4ade80">아니요, 일반적인 재신청 자체에는 필요 없습니다.</strong><br />
+            소득이 다시 줄어서 생계급여를 재신청하는 경우, 기본적으로
+            <strong style="color: var(--text)">소득·재산 조사 서류</strong>만 있으면 되고 병원
+            진료나 진단서는 요구되지 않습니다.<br /><br />
+            병원 진료 기록·진단서가 필요해지는 경우는 아래처럼 <strong style="color: var(--text)">"근로능력 유무"를
+            새로 인정받으려 할 때</strong>뿐입니다.
+            <ul style="margin: 8px 0 0 18px; line-height: 1.8">
+              <li>
+                만 18~64세인데 질병·부상으로 <strong>근로능력 없음</strong> 판정을 받아
+                자활사업 참여 의무를 면제받고 싶은 경우 → 국민연금공단이
+                지정한 의료기관에서 진단서·소견서 등을 제출해 근로능력평가를
+                받아야 합니다. (진단서 유효요건 상 보통 <strong>일정 기간 이상의
+                치료 이력</strong>이 확인돼야 하는 경우가 많아 "3개월 진료"처럼
+                체감되는 경우가 있습니다.)
+              </li>
+              <li>
+                이미 근로능력 없음 판정을 받았던 사람이 <strong>재판정 주기</strong>가
+                도래해 갱신해야 하는 경우
+              </li>
+            </ul>
+            <br />
+            즉, <strong style="color: var(--text)">"일이 없어져서 다시 수급 신청"하는 것 자체는
+            병원 진단서와 무관</strong>하고, "근로 능력이 없다"는 것을 별도로
+            증명하려 할 때만 필요한 절차입니다. 근로능력 판정 기준과 필요
+            서류는 <span
+              style="color: var(--accent2); cursor: pointer; text-decoration: underline"
+              onclick="switchMain('workability')"
+              >⚖️ 근로능력판정 탭</span
+            >에서 자세히 확인할 수 있습니다.
+          </div>
+        </div>
+
+        <div class="warn-box">
+          <strong>⚠️ 반복 재신청 시 유의할 점</strong>
+          잦은 신청·탈락 반복 자체로 불이익을 주는 규정은 없지만, 매번
+          최근 소득 흐름(급여명세서·이체내역 등)을 요구할 수 있어 근로
+          내역을 정리해두면 심사가 빨라집니다. 조건부수급자로 재선정되면
+          자활사업 참여 의무가 다시 발생할 수 있으니, 근로능력 여부도 함께
+          점검하세요.
+        </div>
+      </div>
+
+      <!-- ③ 소득공제·장려금 -->
+      <div id="cy-deduction" style="display: none">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">💸</span> 근로소득공제 — 알바해도 수급이
+            바로 끊기지 않는 이유
+          </div>
+          <div style="font-size: 12px; color: var(--text2); line-height: 1.9; margin-bottom: 12px">
+            버는 돈을 <strong style="color: var(--text)">100% 그대로</strong> 소득으로
+            잡지 않고, 일정 부분을 공제한 뒤 계산합니다. (2026년 기준)
+          </div>
+          <div style="display: grid; gap: 10px; font-size: 12px">
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #22d3ee">
+              <div style="font-weight: 700; color: #22d3ee; margin-bottom: 6px">일반 수급자 (만 35세 이상)</div>
+              <div style="color: var(--text2); line-height: 1.8">
+                근로·사업소득의 <strong>30%를 공제</strong>하고 나머지 70%만 소득으로
+                반영. 예) 월 100만원 근로소득 → 70만원만 소득 인정.
+              </div>
+            </div>
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #4ade80">
+              <div style="font-weight: 700; color: #4ade80; margin-bottom: 6px">
+                청년 특례 (만 19~34세) — 2026년 확대 반영
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                <strong style="color: #fbbf24">60만원을 먼저 공제</strong>하고, 남은 금액의
+                <strong>30%를 추가 공제</strong>합니다. 예) 월 100만원 근로소득 →
+                100만원-60만원=40만원 → 40만원의 30%인 12만원을 다시 공제 →
+                <strong>28만원만 소득으로 인정.</strong><br />
+                <span style="font-size: 11px; color: var(--text3)"
+                  >※ 이 특례는 2024년 24세 이하 → 29세 이하로, 2026년부터
+                  다시 34세 이하로 대상이 넓어지고 공제금도 40만원→60만원으로
+                  올랐습니다. 오래된 글에 "24세 이하·40만원"이라고 나오면
+                  구버전 정보이니 주의하세요.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">💵</span> 근로장려금·자녀장려금도 함께
+            챙기세요
+          </div>
+          <div style="font-size: 12px; color: var(--text2); line-height: 1.9">
+            국세청이 지급하는 근로장려금·자녀장려금은 기초생활수급자와
+            <strong style="color: var(--text)">중복 수급이 가능</strong>합니다 (생계급여
+            수급자는 근로장려금 산정 시 일부 조정이 있을 수 있음). 단기
+            알바로 소득이 생겼다면 다음 해 5월 정기신청 기간에 꼭 신청해
+            보세요.
+          </div>
+          <div style="margin-top: 12px">
+            <button
+              class="btn btn-secondary"
+              style="padding: 8px 16px; font-size: 12px"
+              onclick="switchMain('gjang')"
+            >
+              💵 근로·자녀장려금 계산기로 이동 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ 자산형성계좌 활용 -->
+      <div id="cy-savings" style="display: none">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🏦</span> 적립중지 제도 — 소득이 끊겨도
+            통장을 지키는 법
+          </div>
+          <div
+            style="
+              background: rgba(6, 182, 212, 0.08);
+              border: 1px solid rgba(6, 182, 212, 0.25);
+              border-radius: 10px;
+              padding: 14px;
+              font-size: 12px;
+              line-height: 1.9;
+              color: var(--text2);
+              margin-bottom: 12px;
+            "
+          >
+            <strong style="color: #22d3ee">✅ 팩트체크</strong> "적립 유예가
+            일반 6개월, 청년내일저축계좌만 12개월"이라는 정보는
+            <strong style="color: var(--text)">2025년까지의 옛 기준</strong>입니다.
+            <strong style="color: #fbbf24">2026년 1월 31일 개정 이후</strong>부터는
+            희망저축계좌 Ⅰ·Ⅱ와 청년내일저축계좌 <strong style="color: var(--text)">모두
+            동일하게 최대 12개월</strong>까지 적립을 중지할 수 있도록
+            일괄 확대됐습니다.
+          </div>
+          <div style="display: grid; gap: 10px; font-size: 12px">
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #4ade80">
+              <div style="font-weight: 700; color: #4ade80; margin-bottom: 6px">
+                일반 적립중지 (모든 자산형성계좌 공통, 최대 12개월)
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                실직, 본인·부양가족의 질병·사고 등 사유가 있으면 3년 참여
+                기간 중 누적 <strong>최대 12개월</strong>까지 저축·매칭을 잠깐
+                멈출 수 있습니다. (사전신청 필수, 희망일 최소 7일 전 신청)<br />
+                중지 기간에는 근로소득장려금 등 정부지원금이 쌓이지 않지만,
+                <strong>계좌 자체는 해지되지 않고 유지</strong>됩니다.
+              </div>
+            </div>
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #a855f7">
+              <div style="font-weight: 700; color: #c084fc; margin-bottom: 6px">
+                특별 적립중지 (청년내일저축계좌 한정, 최대 2년)
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                군입대 예정자, 임신·출산으로 인한 퇴직자, 육아휴직 중인
+                가입자는 별도로 <strong>최대 2년</strong>까지 적립을 중지할 수 있고,
+                이 경우 통장 유지 기간 자체가 3년에서 <strong>5년</strong>으로
+                늘어납니다.
+              </div>
+            </div>
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #fb7185">
+              <div style="font-weight: 700; color: #fb7185; margin-bottom: 6px">
+                ⚠️ 반드시 "사전 신청"하세요
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                적립중지를 신청하지 않고 그냥 저축을 안 내면 "미납"으로
+                처리됩니다. <strong>누적 12개월 미납</strong>이 쌓이면 정부매칭금이
+                전액 환수(0원)되니, 일이 끊길 것 같으면 미리 주민센터나
+                복지로에서 적립중지부터 신청하세요.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 4px">
+          <button
+            class="btn btn-secondary"
+            style="padding: 8px 16px; font-size: 12px"
+            onclick="switchMain('benefits'); filterBenefit('job', document.querySelector('.bcat-btn'))"
+          >
+            🏦 희망저축계좌·청년내일저축계좌 상세 안내 보러가기 →
+          </button>
+        </div>
+      </div>
+
+      <!-- ⑤ 탈수급 후 공백기 대응 -->
+      <div id="cy-bridge" style="display: none">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🌉</span> 탈수급했는데 의료비 걱정된다면 —
+            의료급여 특례·자활특례
+          </div>
+          <div
+            style="
+              background: rgba(251, 191, 36, 0.08);
+              border: 1px solid rgba(251, 191, 36, 0.25);
+              border-radius: 10px;
+              padding: 14px;
+              font-size: 12px;
+              line-height: 1.9;
+              color: var(--text2);
+            "
+          >
+            <strong style="color: #fbbf24">⚠️ 중요한 전제 조건</strong> 이 특례는
+            <strong style="color: var(--text)">"자활근로·자활기업·자활인턴 등 자활사업에
+            참여해서 생긴 소득"</strong>으로 탈수급한 경우에 적용되는
+            제도입니다. 자활사업을 거치지 않은 일반 아르바이트만으로
+            탈수급한 경우에는 이 특례가 그대로 적용되지 않을 수 있어,
+            자활사업 참여 여부를 주민센터에 꼭 확인하세요.
+          </div>
+          <div style="display: grid; gap: 10px; font-size: 12px; margin-top: 12px">
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #fbbf24">
+              <div style="font-weight: 700; color: #fbbf24; margin-bottom: 6px">자활특례 / 의료급여 특례</div>
+              <div style="color: var(--text2); line-height: 1.8">
+                자활사업 참여로 소득이 늘어 생계급여 선정기준을 넘겨도,
+                <strong>의료급여·교육급여</strong>는 계속 보장받을 수 있습니다.
+                보장 기간이 기존 3년에서 <strong>5년까지 연장</strong>된 사례가
+                있으나, 지자체·시행 시점에 따라 세부 기간이 달라질 수 있어
+                정확한 현재 적용 기간은 지역자활센터·주민센터에서 확인이
+                필요합니다.
+              </div>
+            </div>
+            <div style="background: var(--surface2); border-radius: 10px; padding: 14px; border-left: 4px solid #fb923c">
+              <div style="font-weight: 700; color: #fb923c; margin-bottom: 6px">
+                이행급여 특례 (일반 근로소득 포함, 참고용)
+              </div>
+              <div style="color: var(--text2); line-height: 1.8">
+                자활사업을 거치지 않은 일반 근로·사업소득이 늘어난
+                경우에도, 늘어난 소득이 선정기준의 <strong>150% 이내</strong>라면
+                일정 기간 수급자격 일부를 유지해주는 취지의 제도가
+                운영되어 왔습니다. 다만 이 제도는 오래전부터 있었던
+                내용이라 <strong style="color: var(--text)">현재도 동일한 명칭·기준으로
+                운영되는지는 지역마다 확인이 필요</strong>합니다 — 재신청 전에
+                주민센터 담당자에게 "이행급여 특례(또는 유사 제도)가 지금도
+                있는지" 꼭 물어보세요.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title">
+            <span class="icon">🚨</span> 재신청 심사 기다리는 동안 소득이
+            0원이라면 — 긴급복지지원
+          </div>
+          <div style="font-size: 12px; color: var(--text2); line-height: 1.9; margin-bottom: 12px">
+            재신청 후 결과가 나오기까지 <strong style="color: var(--text)">약 30~60일</strong>이
+            걸릴 수 있습니다. 그 사이 정말로 소득이 끊긴 상태라면, 수급
+            재신청 결과를 기다리지 말고 <strong style="color: var(--text)">별도로 긴급복지지원
+            (생계지원)을 동시에 신청</strong>하세요. 위기 상황이 확인되면 통상
+            <strong style="color: #fbbf24">1~3개월치 긴급 생계비를 즉시(선지원 후조사 방식으로)
+            지원</strong>받을 수 있습니다.
+          </div>
+          <div
+            style="
+              background: var(--surface2);
+              border-radius: 10px;
+              padding: 14px;
+              font-size: 12px;
+              line-height: 1.8;
+              color: var(--text2);
+            "
+          >
+            • 지원 대상: 실직·휴폐업, 소득 상실 등 갑작스러운 위기 상황에
+            처한 가구<br />
+            • 신청처: 주민센터 방문 또는 129(보건복지상담센터) 전화 상담<br />
+            • 특징: 소득·재산 조사보다 <strong>먼저 지원부터 하고 나중에 조사</strong>하는
+            방식이라 처리 속도가 빠른 편<br />
+            • 주의: 생계급여 수급자는 긴급복지 생계지원과 중복 수령이
+            제한될 수 있지만, 의료·주거·교육 지원은 수급자도 별도 신청
+            가능
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap">
+            <button
+              class="btn btn-secondary"
+              style="padding: 8px 16px; font-size: 12px"
+              onclick="switchMain('emergency')"
+            >
+              🚨 긴급지원 탭에서 자세히 보기 →
+            </button>
+            <button
+              class="btn btn-secondary"
+              style="padding: 8px 16px; font-size: 12px"
+              onclick="switchMain('benefits'); filterBenefit('food', document.querySelector('.bcat-btn'))"
+            >
+              🍱 긴급복지지원 서비스 카드 보기 →
+            </button>
+          </div>
+        </div>
+
+        <div class="warn-box">
+          <strong>⚠️ 이 탭 전체에 대한 안내</strong>
+          이 페이지는 반복적으로 일과 수급을 오가는 분들이 놓치기 쉬운
+          제도를 모아 정리한 참고 자료입니다. 특례 제도 중 일부(이행급여
+          특례 등)는 지자체·시행 시점에 따라 운영 방식이 다를 수 있으니,
+          실제 적용 여부는 반드시 거주지 행정복지센터 또는 129
+          보건복지상담센터에 재확인하시기 바랍니다.
+        </div>
+      </div>
+    </div>
+    <!-- /main-cycle -->
 
     <script>
       // ──────────────────────────────────────────
@@ -8991,6 +9707,7 @@
       const REGION_GRADE = { metro: 1, city: 2, urban: 3, rural: 4 };
 
       const PRESETS = {
+        2027: { median1: 2736042, financialBasic: 5000000 },
         2026: { median1: 2564238, financialBasic: 5000000 },
         2025: { median1: 2392013, financialBasic: 5000000 },
         2024: { median1: 2228445, financialBasic: 5000000 },
@@ -9107,6 +9824,18 @@
         );
       }
 
+      // 2027년 가구원별 기준 중위소득 (2026.7.28 제80차 중앙생활보장위원회
+      // 심의·의결, 2027.1.1 시행 예정 — 관보 고시 전 수치이므로 확정 고시 시
+      // 소폭 조정될 수 있음)
+      const MEDIAN_2027 = {
+        1: 2736042,
+        2: 4480645,
+        3: 5718901,
+        4: 6929885,
+        5: 8063319,
+        6: 9129201,
+      };
+
       // 2026년 가구원별 기준 중위소득 실제 고시값 (원/월)
       const MEDIAN_2026 = {
         1: 2564238,
@@ -9128,22 +9857,54 @@
         7: 3.726,
       };
 
-      // 2026년 주거급여 기준임대료 (급지별, 1~6인)
+      // 2026년 주거급여 기준임대료 (급지별, 1~6인) — 정부/LH 공식 고시값
       const HOUSING_BASE_2026 = {
-        1: [345000, 388000, 462000, 535000, 554000, 654000], // 1급지 서울
-        2: [268000, 300000, 358000, 414000, 428000, 507000], // 2급지 경기·인천
-        3: [216000, 242000, 287000, 333000, 344000, 406000], // 3급지 광역시·세종
-        4: [178000, 199000, 236000, 273000, 283000, 333000], // 4급지 그 외
+        1: [369000, 414000, 492000, 571000, 591000, 699000], // 1급지 서울
+        2: [300000, 335000, 401000, 463000, 479000, 569000], // 2급지 경기·인천
+        3: [247000, 275000, 327000, 381000, 394000, 468000], // 3급지 광역시·세종
+        4: [212000, 238000, 283000, 328000, 340000, 402000], // 4급지 그 외
+      };
+
+      // 2027년 주거급여 기준임대료 (2026.7.28 확정 발표, 2027.1.1 시행 예정)
+      // 1급지(서울)는 6개 가구원 수 전부 공식 확정치. 2~4급지는 1인·4인(그리고
+      // 4급지는 6인)만 공식 발표에서 확인되어 그 값을 반영했고, 나머지 칸은
+      // 아직 공식 발표를 찾지 못해 2026년 값을 그대로 두었습니다(과소 추정
+      // 가능성 있음 — UI 안내 문구 참고).
+      const HOUSING_BASE_2027 = {
+        1: [381000, 431000, 514000, 596000, 618000, 731000], // 1급지 서울 (전부 확정)
+        2: [313000, 335000, 401000, 488000, 479000, 569000], // 2급지 — 1·4인만 확정
+        3: [259000, 275000, 327000, 403000, 394000, 468000], // 3급지 — 1·4인만 확정
+        4: [234000, 238000, 283000, 369000, 340000, 452000], // 4급지 — 1·4·6인 확정
+      };
+
+      // 2027년 급지별로 공식 발표에서 확인된 가구원 수(그 외는 2026년 값 유지)
+      const HOUSING_2027_CONFIRMED = {
+        1: [1, 2, 3, 4, 5, 6],
+        2: [1, 4],
+        3: [1, 4],
+        4: [1, 4, 6],
       };
 
       function getHousingBase(region, family) {
         const grade = REGION_GRADE[region] || 4;
-        const arr = HOUSING_BASE_2026[grade];
         const idx = Math.min(Math.max(family, 1), 6) - 1;
-        return arr[idx];
+        const table =
+          selectedYear === 2027 ? HOUSING_BASE_2027 : HOUSING_BASE_2026;
+        return table[grade][idx];
+      }
+
+      function isHousing2027Confirmed(region, family) {
+        const grade = REGION_GRADE[region] || 4;
+        return (HOUSING_2027_CONFIRMED[grade] || []).includes(
+          Math.min(Math.max(family, 1), 6),
+        );
       }
 
       function getFamilyMedian(median1, family) {
+        // 2027년 프리셋 (2026.7.28 확정, 2027.1.1 시행 예정)
+        if (Math.abs(median1 - 2736042) < 100 && MEDIAN_2027[family]) {
+          return MEDIAN_2027[family];
+        }
         // 2026년 프리셋: 실제 고시값 직접 사용
         if (Math.abs(median1 - 2564238) < 100 && MEDIAN_2026[family]) {
           return MEDIAN_2026[family];
@@ -9166,12 +9927,17 @@
         return median1 * ratio;
       }
 
+      let selectedYear = 2026;
+
       function applyPreset(year, btn) {
         document
           .querySelectorAll(".preset-btn")
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
+        const notice = document.getElementById("year2027Notice");
+        if (notice) notice.style.display = year === 2027 ? "" : "none";
         if (year === 0) return;
+        selectedYear = year;
         const p = PRESETS[year];
         document.getElementById("median1").value = addComma(p.median1);
         document.getElementById("financialBasic").value = addComma(
@@ -9579,6 +10345,7 @@
           "gwork",
           "gjang",
           "hanbumo",
+          "cycle",
         ].forEach((t) => {
           const el = document.getElementById("main-" + t);
           const btn = document.getElementById("mtab-" + t);
@@ -9595,6 +10362,7 @@
         if (tab === "gwork") gw_init();
         if (tab === "gjang") gj_init();
         if (tab === "hanbumo") hp_init();
+        if (tab === "cycle") cy_init();
       }
 
       // ──────────────────────────────────────────
@@ -13257,6 +14025,263 @@
       }
 
       // ──────────────────────────────────────────
+      // 통합 검색
+      // ──────────────────────────────────────────
+      const TAB_SEARCH_META = [
+        {
+          tab: "emergency",
+          icon: "🚨",
+          title: "긴급지원 (긴급복지지원제도)",
+          keywords:
+            "긴급복지 긴급지원 위기가구 실직 휴폐업 화재 갑작스러운 생계지원 의료지원 주거지원 연료비 해산비 장제비",
+        },
+        {
+          tab: "calc",
+          icon: "🧮",
+          title: "수급자격 계산기",
+          keywords:
+            "수급자격 계산기 생계급여 의료급여 주거급여 교육급여 기준중위소득 소득인정액 재산 2026 2027",
+        },
+        {
+          tab: "near",
+          icon: "🔶",
+          title: "차상위계층 계산기",
+          keywords: "차상위 차상위계층 희망저축계좌2 차상위본인부담경감",
+        },
+        {
+          tab: "medical",
+          icon: "🏥",
+          title: "의료비 계산기",
+          keywords:
+            "의료비 병원비 본인부담금 의료급여 1종 2종 건강생활유지비 입원 외래",
+        },
+        {
+          tab: "benefits",
+          icon: "🎁",
+          title: "복지서비스 안내 (전체 목록)",
+          keywords:
+            "복지서비스 혜택 목록 전체보기 지원금 감면 바우처",
+        },
+        {
+          tab: "income",
+          icon: "💰",
+          title: "자활·알바 계산기",
+          keywords:
+            "자활 알바 아르바이트 근로소득공제 소득신고 소득발생 희망저축계좌",
+        },
+        {
+          tab: "rental",
+          icon: "🏘️",
+          title: "임대주택 안내",
+          keywords:
+            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약",
+        },
+        {
+          tab: "workability",
+          icon: "⚖️",
+          title: "근로능력판정",
+          keywords:
+            "근로능력 근로무능력 진단서 소견서 병원 국민연금공단 근로능력평가 조건부수급자 자활면제",
+        },
+        {
+          tab: "plan",
+          icon: "📋",
+          title: "수급 준비 플랜",
+          keywords: "수급 준비 재산 역산 계획 사전 정리 증여",
+        },
+        {
+          tab: "gwork",
+          icon: "💼",
+          title: "자활/취업(국민취업지원제도)",
+          keywords:
+            "국민취업지원제도 국취 자활사업 취업지원 구직촉진수당 취업활동계획",
+        },
+        {
+          tab: "gjang",
+          icon: "💵",
+          title: "근로·자녀장려금",
+          keywords: "근로장려금 자녀장려금 EITC 국세청 5월 정기신청",
+        },
+        {
+          tab: "hanbumo",
+          icon: "👨‍👩‍👧",
+          title: "한부모가족 지원",
+          keywords:
+            "한부모 한부모가족 미혼모 미혼부 청소년한부모 아동양육비 양육비 이혼 사별",
+        },
+        {
+          tab: "cycle",
+          icon: "🔁",
+          title: "반복수급 가이드",
+          keywords:
+            "반복수급 재신청 탈수급 적립중지 유예 이행급여특례 자활특례 병원진단서 알바반복",
+        },
+      ];
+
+      function stripHtmlToText(html) {
+        return (html || "")
+          .replace(/<[^>]*>/g, " ")
+          .replace(/&nbsp;/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      let SEARCH_INDEX_CACHE = null;
+
+      function buildSearchIndex() {
+        const idx = TAB_SEARCH_META.map((t) => ({ type: "tab", ...t }));
+        if (typeof SERVICES !== "undefined") {
+          SERVICES.forEach((s) => {
+            const tagText = (s.tags || []).map((t) => t.text).join(" ");
+            const descText = stripHtmlToText(s.desc).slice(0, 400);
+            const targetText = (s.target || []).join(" ");
+            idx.push({
+              type: "service",
+              id: s.id,
+              icon: s.icon,
+              title: s.name,
+              sub: s.sub,
+              keywords: [s.name, s.sub, tagText, targetText, descText].join(
+                " ",
+              ),
+            });
+          });
+        }
+        return idx;
+      }
+
+      function scoreSearchItem(item, terms) {
+        const title = (item.title || "").toLowerCase();
+        const sub = (item.sub || "").toLowerCase();
+        const kw = (item.keywords || "").toLowerCase();
+        let score = 0;
+        terms.forEach((term) => {
+          if (!term) return;
+          if (title.includes(term)) score += 12;
+          if (sub.includes(term)) score += 5;
+          if (kw.includes(term)) score += 3;
+        });
+        // 모든 검색어가 최소 한 군데는 매칭돼야 인정 (완전 무관 결과 배제)
+        const allMatched = terms.every(
+          (term) => !term || title.includes(term) || sub.includes(term) || kw.includes(term),
+        );
+        return allMatched ? score : 0;
+      }
+
+      function globalSearch(query) {
+        if (!SEARCH_INDEX_CACHE) SEARCH_INDEX_CACHE = buildSearchIndex();
+        const terms = query
+          .trim()
+          .toLowerCase()
+          .split(/\s+/)
+          .filter(Boolean);
+        if (terms.length === 0) return [];
+        return SEARCH_INDEX_CACHE
+          .map((item) => ({ item, score: scoreSearchItem(item, terms) }))
+          .filter((x) => x.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 8)
+          .map((x) => x.item);
+      }
+
+      function escapeHtml(str) {
+        return (str || "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+
+      let _gsearchResults = [];
+
+      function onGlobalSearchInput() {
+        const input = document.getElementById("globalSearchInput");
+        const q = input.value;
+        document.getElementById("gsearchClear").style.display = q
+          ? ""
+          : "none";
+        const box = document.getElementById("globalSearchResults");
+        if (!q.trim()) {
+          box.style.display = "none";
+          box.innerHTML = "";
+          return;
+        }
+        _gsearchResults = globalSearch(q);
+        if (_gsearchResults.length === 0) {
+          box.innerHTML = `<div class="gsearch-empty">"${escapeHtml(q)}"에 대한 결과를 찾지 못했어요.<br>다른 단어로 검색해 보시거나, 위쪽 탭을 직접 둘러봐 주세요.</div>`;
+        } else {
+          box.innerHTML = _gsearchResults
+            .map((r, i) => {
+              const tagHtml =
+                r.type === "tab"
+                  ? '<span class="gsearch-tag tab">탭</span>'
+                  : '<span class="gsearch-tag service">복지서비스</span>';
+              const subText =
+                r.type === "tab"
+                  ? "탭 바로가기"
+                  : r.sub || "복지서비스 카드로 이동";
+              return `
+        <div class="gsearch-item" onclick="goToSearchResult(${i})">
+          <span class="gsearch-icon">${r.icon || "📄"}</span>
+          <div>
+            <div class="gsearch-title">${r.title}${tagHtml}</div>
+            <div class="gsearch-sub">${subText}</div>
+          </div>
+        </div>`;
+            })
+            .join("");
+        }
+        box.style.display = "block";
+      }
+
+      function goToSearchResult(i) {
+        const r = _gsearchResults[i];
+        if (!r) return;
+        document.getElementById("globalSearchResults").style.display =
+          "none";
+        document.getElementById("globalSearchInput").value = "";
+        document.getElementById("gsearchClear").style.display = "none";
+        if (r.type === "tab") {
+          switchMain(r.tab);
+        } else if (r.type === "service") {
+          switchMain("benefits");
+          const allBtn = document.querySelector(
+            "#benefitFilter .bcat-btn, .bcat-btn",
+          );
+          if (allBtn) filterBenefit("all", allBtn);
+          setTimeout(() => {
+            const card = document.getElementById("svc-" + r.id);
+            if (card) {
+              card.classList.add("open");
+              card.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }, 60);
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function clearGlobalSearch() {
+        document.getElementById("globalSearchInput").value = "";
+        document.getElementById("gsearchClear").style.display = "none";
+        document.getElementById("globalSearchResults").style.display =
+          "none";
+      }
+
+      document.addEventListener("click", (e) => {
+        const wrap = document.getElementById("globalSearchWrap");
+        if (wrap && !wrap.contains(e.target)) {
+          const box = document.getElementById("globalSearchResults");
+          if (box) box.style.display = "none";
+        }
+      });
+
+      // ──────────────────────────────────────────
       // 자활/취업(국취) 탭
       // ──────────────────────────────────────────
       const GW_TABS = [
@@ -13339,6 +14364,33 @@
         hp_initialized = true;
         hpTab("overview");
         hp_renderIncomeTable();
+      }
+
+      // ──────────────────────────────────────────
+      // 반복수급 가이드 탭 전환
+      // ──────────────────────────────────────────
+      const CY_TABS = [
+        "overview",
+        "reapply",
+        "deduction",
+        "savings",
+        "bridge",
+      ];
+      let cy_initialized = false;
+
+      function cyTab(id) {
+        CY_TABS.forEach((t) => {
+          const el = document.getElementById("cy-" + t);
+          const btn = document.getElementById("cytab-" + t);
+          if (el) el.style.display = t === id ? "" : "none";
+          if (btn) btn.classList.toggle("active", t === id);
+        });
+      }
+
+      function cy_init() {
+        if (cy_initialized) return;
+        cy_initialized = true;
+        cyTab("overview");
       }
 
       function hp_renderIncomeTable() {
