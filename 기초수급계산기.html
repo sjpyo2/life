@@ -5876,6 +5876,13 @@
       >
         <button
           class="step-btn active"
+          onclick="planTab('roadmap')"
+          id="plantab-roadmap"
+        >
+          🧭 긴급지원→수급 로드맵
+        </button>
+        <button
+          class="step-btn"
           onclick="planTab('reverse')"
           id="plantab-reverse"
         >
@@ -5900,8 +5907,184 @@
         </button>
       </div>
 
+      <!-- ⓪ 긴급지원 → 기초수급 로드맵 -->
+      <div id="plan-roadmap">
+        <style>
+          .rm-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:16px}
+          .rm-h{font-size:15px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+          .rm-sub{font-size:12px;color:var(--text2);line-height:1.8}
+          .rm-box{border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.85;color:var(--text2)}
+          .rm-box strong{color:var(--text)}
+          .rm-info{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.25)}
+          .rm-warn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3)}
+          .rm-danger{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.3)}
+          .rm-ok{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3)}
+          .rm-say{background:var(--surface2);border-left:3px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.8;color:var(--text)}
+          .rm-tl{position:relative;margin:6px 0 4px}
+          .rm-scale{position:relative;height:16px;margin-left:0;font-size:10px;color:var(--text3)}
+          .rm-scale span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+          .rm-scale span:first-child{transform:none}
+          .rm-scale span:last-child{transform:translateX(-100%)}
+          .rm-row{margin-top:10px}
+          .rm-rowlabel{font-size:12px;font-weight:700;margin-bottom:4px}
+          .rm-track{position:relative;height:26px;background:var(--surface2);border-radius:7px;overflow:hidden}
+          .rm-bar{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#06121a;white-space:nowrap;overflow:hidden}
+          .rm-b-green{background:#34d399}
+          .rm-b-green2{background:repeating-linear-gradient(45deg,#34d399 0 6px,#2bb383 6px 12px)}
+          .rm-b-cyan{background:#22d3ee}
+          .rm-b-yellow{background:#fbbf24}
+          .rm-b-red{background:repeating-linear-gradient(45deg,#fb7185 0 6px,#e5586f 6px 12px);color:#2a0a10}
+          .rm-mark{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--text)}
+          .rm-legend{font-size:11px;color:var(--text3);line-height:1.7;margin-top:10px}
+          .rm-qgrp{margin-bottom:12px}
+          .rm-q{font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text)}
+          .rm-chips{display:flex;flex-wrap:wrap;gap:6px}
+          .rm-chip{padding:7px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-size:12px;cursor:pointer;font-family:inherit}
+          .rm-chip.on{background:rgba(6,182,212,.18);border-color:var(--accent);color:var(--accent2);font-weight:700}
+          .rm-prog{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+          .rm-prog>div{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0;transition:width .25s}
+          .rm-step{border:1px solid var(--border);border-radius:12px;background:var(--surface);margin-bottom:10px;overflow:hidden}
+          .rm-step.open{border-color:var(--accent)}
+          .rm-sh{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer}
+          .rm-num{flex:none;width:30px;height:30px;border-radius:50%;background:rgba(6,182,212,.18);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+          .rm-st{flex:1;min-width:0}
+          .rm-st b{display:block;font-size:13px}
+          .rm-st span{display:block;font-size:11px;color:var(--text3);margin-top:2px}
+          .rm-chev{flex:none;color:var(--text3);transition:transform .2s}
+          .rm-step.open .rm-chev{transform:rotate(180deg)}
+          .rm-sb{display:none;padding:2px 14px 16px;font-size:12px;line-height:1.85;color:var(--text2)}
+          .rm-step.open .rm-sb{display:block}
+          .rm-sb h4{font-size:12px;color:var(--text);margin:14px 0 6px}
+          .rm-ck{display:flex;gap:8px;align-items:flex-start;padding:5px 0;cursor:pointer}
+          .rm-ck input{margin-top:4px;flex:none;accent-color:var(--accent)}
+          .rm-ck.done span{color:var(--text3);text-decoration:line-through}
+          .rm-ul{padding-left:18px;margin:0}
+          .rm-ul li{margin:2px 0}
+          .rm-linkrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+          .rm-lk{padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--accent2);font-size:12px;cursor:pointer;font-family:inherit;text-decoration:none}
+          .rm-fork{display:grid;gap:10px;margin-top:8px}
+          .rm-faq{border-bottom:1px solid var(--border);padding:10px 0;font-size:12px}
+          .rm-faq:last-child{border-bottom:none}
+          .rm-faq .q{font-weight:700;cursor:pointer;color:var(--text);display:flex;justify-content:space-between;gap:10px}
+          .rm-faq .a{display:none;margin-top:8px;line-height:1.85;color:var(--text2)}
+          .rm-faq.open .a{display:block}
+        </style>
+
+        <!-- 머리말 -->
+        <div class="rm-card">
+          <div class="rm-h"><span>🧭</span> 긴급지원 → 기초수급 신청 로드맵</div>
+          <div class="rm-sub">
+            갑자기 소득이 끊겼을 때 <strong style="color:var(--text)">① 긴급복지지원으로 당장 생활비를 확보</strong>하고,
+            <strong style="color:var(--text)">② 그 기간에 기초생활수급 신청·심사를 진행</strong>하는 순서를
+            <strong style="color:var(--text)">오늘 할 일부터 결과 통지 후 분기까지</strong> 차례대로 정리했습니다.
+            단계를 펼쳐 체크리스트를 따라 하면 됩니다.
+          </div>
+          <div class="rm-box rm-info" style="margin-top:12px">
+            <strong>핵심 3줄 요약</strong><br />
+            1) 긴급복지는 <strong>선지원 후조사</strong> — 위기사유가 확인되면 소득·재산 조사보다 먼저 지원하고, 생계지원은 <strong>기본 3개월(심의 시 총 6개월)</strong>까지 이어질 수 있습니다.<br />
+            2) 기초수급은 <strong>원칙 30일, 특별 사유 시 최대 60일</strong> 안에 통지되지만, 실제로는 이보다 더 걸리는 사례도 있어 <strong>2~3개월을 버틸 계획</strong>이 필요합니다.<br />
+            3) 두 제도는 <strong>별개 신청</strong>입니다. 긴급지원을 받는다고 기초수급이 자동 신청되지 않으니, <strong>긴급지원 요청과 같은 주(가능하면 같은 날)에 기초수급도 신청</strong>하세요.
+          </div>
+        </div>
+
+        <!-- 타임라인 -->
+        <div class="rm-card">
+          <div class="rm-h"><span>📅</span> 한눈에 보는 타임라인</div>
+          <div class="rm-sub" style="margin-bottom:8px">위기 발생일을 0으로 놓고 본 개월 수 기준 (막대는 참고용 모식도)</div>
+          <div class="rm-tl">
+            <div class="rm-scale">
+              <span style="left:0">0</span><span style="left:16.66%">1개월</span><span style="left:33.33%">2개월</span><span style="left:50%">3개월</span><span style="left:66.66%">4개월</span><span style="left:83.33%">5개월</span><span style="left:100%">6개월</span>
+            </div>
+            <div class="rm-row">
+              <div class="rm-rowlabel">🚨 긴급복지 생계지원</div>
+              <div class="rm-track">
+                <div class="rm-bar rm-b-green" style="left:0;width:50%">기본 3개월 (월 단위 지급)</div>
+                <div class="rm-bar rm-b-green2" style="left:50%;width:50%">연장 심의 시 (총 6개월 한도)</div>
+                <div class="rm-mark" style="left:16.66%" title="사후조사"></div>
+              </div>
+            </div>
+            <div class="rm-row">
+              <div class="rm-rowlabel">🏠 기초수급 심사 (신청일 기준)</div>
+              <div class="rm-track">
+                <div class="rm-bar rm-b-cyan" style="left:0;width:16.66%">원칙 30일</div>
+                <div class="rm-bar rm-b-yellow" style="left:16.66%;width:16.67%">연장 시 ~60일</div>
+                <div class="rm-bar rm-b-red" style="left:33.33%;width:16.67%">지연 사례</div>
+              </div>
+            </div>
+          </div>
+          <div class="rm-legend">
+            ▌검은 세로선 = 긴급지원 <strong>사후조사</strong>(지원 결정 후 1개월 이내)<br />
+            ▌<span style="color:#22d3ee">하늘색</span> 법정 원칙 · <span style="color:#fbbf24">노랑</span> 법정 최대(60일, 연장 사유 통지 필요) · <span style="color:#fb7185">빨강</span> 법정기한을 넘겨 지연되는 경우(정부 감사에서 실제 적발 사례 있음)<br />
+            ▌기초수급이 선정되면 급여는 <strong>신청한 달부터 소급</strong>해 지급되는 것이 일반적이므로, 신청이 빠를수록 유리합니다.
+          </div>
+        </div>
+
+        <!-- 내 상황 진단 -->
+        <div class="rm-card">
+          <div class="rm-h"><span>🔎</span> 0단계 · 내 상황에 이 로드맵이 맞는지 점검</div>
+          <div class="rm-qgrp">
+            <div class="rm-q">Q1. 최근 갑작스러운 위기 사유가 있나요? (실직·휴폐업, 중한 질병·부상, 화재, 가정폭력, 주소득자 사망·가출·구금 등)</div>
+            <div class="rm-chips" data-q="q1">
+              <button class="rm-chip" onclick="rm_diag('q1','y',this)">있다</button>
+              <button class="rm-chip" onclick="rm_diag('q1','n',this)">없다 (계속 소득이 낮았다)</button>
+            </div>
+          </div>
+          <div class="rm-qgrp">
+            <div class="rm-q">Q2. 지금 기초생활수급(생계·의료급여 등)을 받고 있나요?</div>
+            <div class="rm-chips" data-q="q2">
+              <button class="rm-chip" onclick="rm_diag('q2','y',this)">받고 있다</button>
+              <button class="rm-chip" onclick="rm_diag('q2','n',this)">아니다 (신청 전/신청 중)</button>
+            </div>
+          </div>
+          <div class="rm-qgrp">
+            <div class="rm-q">Q3. 가구 월소득이 기준 중위소득 75% 이하이고, 재산·금융재산도 기준 이하인가요?</div>
+            <div class="rm-chips" data-q="q3">
+              <button class="rm-chip" onclick="rm_diag('q3','y',this)">그렇다</button>
+              <button class="rm-chip" onclick="rm_diag('q3','n',this)">기준을 넘을 것 같다</button>
+              <button class="rm-chip" onclick="rm_diag('q3','u',this)">잘 모르겠다</button>
+            </div>
+            <div style="margin-top:6px"><button class="rm-lk" onclick="switchMain('emergency')">🚨 긴급지원 탭에서 소득·재산 기준 확인 →</button></div>
+          </div>
+          <div id="rm_diag_result" class="rm-box rm-info">위 질문에 답하면 맞춤 안내가 표시됩니다.</div>
+        </div>
+
+        <!-- 진행률 -->
+        <div class="rm-card" style="padding:14px 18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:8px">
+            <strong>✅ 내 진행 상황 (체크한 항목)</strong><span id="rm_prog_txt" style="color:var(--text3)">0 / 0</span>
+          </div>
+          <div class="rm-prog"><div id="rm_prog_bar"></div></div>
+        </div>
+
+        <!-- 단계 카드 -->
+        <div id="rm_steps"></div>
+
+        <!-- 결과 통지 후 분기 -->
+        <div class="rm-card">
+          <div class="rm-h"><span>🔀</span> 결과 통지를 받은 뒤 — 3가지 갈림길</div>
+          <div class="rm-fork" id="rm_fork"></div>
+        </div>
+
+        <!-- 흔한 실수 -->
+        <div class="rm-card">
+          <div class="rm-h"><span>⚠️</span> 이 순서에서 가장 많이 하는 실수</div>
+          <div id="rm_mistakes"></div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="rm-card">
+          <div class="rm-h"><span>❓</span> 자주 궁금한 점</div>
+          <div id="rm_faq"></div>
+        </div>
+
+        <div class="rm-box rm-warn" style="font-size:11px;line-height:1.8">
+          📚 <strong>근거</strong>: 국민기초생활 보장법 제21조·제26조(신청, 처리기한 30일·최대 60일), 긴급복지지원법 제3조(타 법률 지원 우선)·제10조(지원기간), 보건복지부 「2026년 긴급복지지원사업 안내」, 찾기쉬운 생활법령정보. (확인일: 2026.10.14)<br />
+          ⚠️ 긴급지원의 일부 위기사유(예: 기초수급 신청 후 결정 전)는 <strong>지자체 조례로 정해 운영 방식이 지역마다 다를 수 있고</strong>, 실제 처리 속도·서류는 시·군·구 담당자 판단에 따라 달라집니다. 참고용이며 법률·행정 자문이 아닙니다. 막히면 <strong>129(보건복지상담센터)</strong>에 먼저 문의하세요.
+        </div>
+      </div>
+
       <!-- ① 역산 계산기 -->
-      <div id="plan-reverse">
+      <div id="plan-reverse" style="display: none">
         <div class="card" style="margin-bottom: 16px">
           <div class="card-title">
             <span class="icon">🔢</span> 신청 가능 시점 역산 계산기
@@ -10483,7 +10666,7 @@
       // 수급 준비 플랜 탭 JS
       // ══════════════════════════════════════════════════════
 
-      const PLAN_TABS = ["reverse", "checklist", "reject", "docs"];
+      const PLAN_TABS = ["roadmap", "reverse", "checklist", "reject", "docs"];
       let plan_initialized = false;
 
       function planTab(id) {
@@ -10493,6 +10676,8 @@
           if (el) el.style.display = t === id ? "" : "none";
           if (btn) btn.classList.toggle("active", t === id);
         });
+        if (id === "roadmap" && !document.getElementById("rm_steps").innerHTML)
+          rm_init();
         if (
           id === "checklist" &&
           !document.getElementById("cl_items").innerHTML
@@ -10507,8 +10692,325 @@
       function plan_init() {
         if (plan_initialized) return;
         plan_initialized = true;
-        planTab("reverse");
+        planTab("roadmap");
         rv_calc();
+      }
+
+
+      // ──────────────────────────────────────────
+      // 긴급지원 → 기초수급 로드맵
+      // ──────────────────────────────────────────
+      const RM_STEPS = [
+        {
+          icon: "📝",
+          title: "STEP 0 · 오늘 준비하기",
+          when: "오늘 · 30분~1시간",
+          goal: "방문·전화 전에 내 가구 상황을 정리해 한 번에 접수합니다. 단, <strong>서류를 다 못 모았어도 긴급복지는 먼저 요청</strong>할 수 있으니 준비 때문에 미루지 마세요.",
+          checks: [
+            "함께 사는 가구원(이름·생년월일·관계) 정리하기 — 주민등록상 가구와 실제 같이 사는 사람 모두",
+            "위기사유 증빙 챙기기 — 실직: 이직확인서·고용보험 자료 / 폐업: 폐업사실증명 / 질병·부상: 진단서·입원확인서·진료비 영수증 / 그 밖: 해당 사실을 보여주는 자료",
+            "최근 3개월 소득 자료 — 급여명세서·통장 입금내역·매출 자료 (없으면 '없음'이라고 설명할 수 있게 정리)",
+            "내 명의 통장 사본(지원금 받을 계좌)과 신분증 준비",
+            "재산 파악 — 전월세 계약서, 부동산·자동차, 예금·보험(해약환급금)·주식, 대출·부채 금액",
+          ],
+          tips: [
+            "기초수급 신청 서류의 전체 목록은 <strong>📄 신청 서류 안내</strong> 탭에 정리돼 있습니다.",
+            "긴급복지는 위기사유가 확인되면 <strong>먼저 지원하고 나중에 조사</strong>하는 구조이므로, 서류가 부족해도 129에 먼저 전화해 상담을 시작하세요.",
+          ],
+          links: [["📄 신청 서류 안내 보기", "planTab('docs')"], ["✅ 신청 전 체크리스트", "planTab('checklist')"]],
+        },
+        {
+          icon: "📞",
+          title: "STEP 1 · 긴급복지지원 요청하기",
+          when: "오늘~내일 (위기 발생 즉시)",
+          goal: "당장의 생활비를 확보합니다. <strong>가장 먼저 할 일</strong>입니다.",
+          where: "① 보건복지상담센터 <strong>129</strong> (전화) ② 거주지 읍·면·동 주민센터 방문 ③ 시·군·구청. 본인뿐 아니라 이웃·친족 등 <strong>관계인도 신고</strong>할 수 있습니다.",
+          checks: [
+            "129에 전화하거나 주민센터에 방문해 긴급복지 생계지원을 요청했다",
+            "위기사유(실직·질병 등)와 현재 소득이 끊긴 상황을 구체적으로 설명했다",
+            "'기초생활수급도 신청할 예정(또는 신청함)이고 결과가 나올 때까지 지원이 필요하다'고 알렸다",
+            "연락 가능한 전화번호와 입금받을 계좌를 알려주었다",
+            "담당자 이름·연락처, 현장확인 일정을 메모했다",
+          ],
+          say: "“○○(실직/질병 등)으로 소득이 끊겨 생계가 곤란합니다. 긴급복지 생계지원을 요청합니다. 기초생활수급도 함께 신청할 예정인데, 결과가 나오기 전까지 지원이 필요합니다.”",
+          tips: [
+            "긴급복지의 <strong>소득 기준은 기준 중위소득 75% 이하</strong>로 기초수급(생계급여 32%)보다 넓고, 재산·금융재산 기준도 따로 있습니다. 기준 충족 여부는 <strong>사후조사·적정성 심사에서 최종 판단</strong>됩니다. (내 기준 확인: 🚨 긴급지원 탭)",
+            "위기사유 중에는 <strong>‘기초생활보장 급여를 신청했으나 결정되기 전’</strong>인 경우를 지자체 조례로 정해 두는 제도가 있습니다. 그래서 위 문장처럼 기초 신청 사실을 함께 말하는 것이 좋습니다. (조례는 지역마다 다르니 담당자에게 해당 여부를 확인하세요.)",
+          ],
+          warns: [
+            "이미 기초생활 <strong>생계급여를 받고 있으면 같은 성격의 긴급지원은 제외</strong>됩니다(다른 법률 지원 우선 원칙). 지원 결정 전까지는 위기상황을 고려해 지원이 가능하기도 합니다.",
+            "소득·재산을 사실과 다르게 말하면 지원 중단과 <strong>전액 환수</strong>, 심하면 처벌 대상이 될 수 있습니다. 모르는 것은 모른다고 말하세요.",
+          ],
+          links: [["🚨 긴급지원 탭에서 내 기준 확인", "switchMain('emergency')"]],
+        },
+        {
+          icon: "🏃",
+          title: "STEP 2 · 현장확인 → 지원 결정 → 입금",
+          when: "요청 후 1일~수일",
+          goal: "담당 공무원이 위기상황을 확인하면 <strong>소득·재산 조사보다 먼저</strong> 지원이 결정되고 입금됩니다.",
+          checks: [
+            "현장확인(방문·통화) 때 위기상황과 가구 상황을 사실대로 설명했다",
+            "지원 결정 알림(문자 등)을 받고 지원 종류·기간·금액을 확인했다",
+            "지원금이 내 계좌에 입금된 것을 확인했다",
+            "담당자에게 '기초수급 신청 예정/신청 완료'를 다시 알리고, 연계 안내를 받았다",
+            "지원 결정 알림·통지서를 사진/사본으로 보관했다",
+          ],
+          tips: [
+            "생계지원은 <strong>기본 3개월간의 지원</strong>(월 단위로 지급)이며, 위기상황이 계속되면 연장될 수 있습니다. 생계지원은 <strong>총 6개월</strong>을 넘을 수 없습니다. 금액은 가구원 수별로 정해져 있습니다. (🚨 긴급지원 탭 참고)",
+            "긴급지원 담당 공무원은 요청 당시 <strong>기초생활보장 등 다른 법률 지원 대상이 될 수 있으면 우선 그쪽으로 연계</strong>하도록 되어 있습니다. 연계 안내를 적극적으로 요청하세요.",
+          ],
+          warns: [
+            "지원금은 생계 유지 목적으로 사용하세요. 사후조사에서 문제가 되면 환수될 수 있습니다.",
+          ],
+        },
+        {
+          icon: "🏠",
+          title: "STEP 3 · 기초수급 신청하기",
+          when: "긴급지원 요청과 같은 주 (가능하면 같은 날)",
+          goal: "<strong>신청일이 기준</strong>이 됩니다. 수급자로 결정되면 급여가 신청한 달부터 소급 적용되는 것이 일반적이므로, 긴급지원 결과를 기다리지 말고 바로 신청하세요.",
+          where: "주민등록상 주소지 <strong>읍·면·동 주민센터</strong> 방문 (복지로 온라인 신청도 가능). 긴급지원을 요청한 그 주민센터에서 같은 날 이어서 신청하면 편합니다.",
+          checks: [
+            "사회보장급여 신청서에서 필요한 급여(생계·의료·주거·교육)를 빠짐없이 신청했다",
+            "금융정보 등 제공동의서에 서명했다 (서명 대상 가구원 범위는 접수 때 담당자 안내에 따르기)",
+            "신분증·임대차계약서·소득 증빙 등 가진 서류를 제출했다 (없는 서류는 보완 일정을 물어보았다)",
+            "<strong>접수일(신청일)이 적힌 접수증·신청서 사본·문자</strong>를 받아 보관했다",
+            "긴급복지 지원을 받고 있다(또는 요청했다)는 사실을 담당자에게 알렸다",
+            "근로능력평가 대상인지(만 18~64세 등) 물어보고, 필요하면 진단서 등 준비 일정을 정했다",
+          ],
+          say: "“생계·의료·주거급여를 함께 신청합니다. 오늘 접수일을 확인할 수 있는 접수증(또는 신청서 사본)을 주세요. 현재 긴급복지지원도 요청/수령 중입니다. 부족한 서류는 언제까지 내면 되나요?”",
+          tips: [
+            "주거급여·교육급여는 담당 기관이 다를 수 있지만 <strong>신청은 같은 주민센터에서 함께</strong> 접수하는 것이 일반적입니다.",
+            "질병·부상으로 일을 못 하는 경우 <strong>근로능력평가</strong>가 필요할 수 있습니다. 상세 절차는 ⚖️ 근로능력판정 탭을 참고하세요.",
+          ],
+          warns: [
+            "긴급지원과 기초수급은 <strong>별개 신청</strong>입니다. 긴급지원을 받는다고 기초수급이 자동으로 접수되지 않습니다.",
+            "서류가 부족하다는 이유로 접수를 미루지 마세요. 접수일이 늦어지면 소급 시작 시점도 늦어질 수 있습니다.",
+          ],
+          links: [["📄 신청 서류 안내", "planTab('docs')"], ["⚖️ 근로능력판정 탭", "switchMain('workability')"]],
+        },
+        {
+          icon: "⏳",
+          title: "STEP 4 · 심사 기간 버티기 (30일~)",
+          when: "신청 후 원칙 30일, 최대 60일 — 실제로는 더 걸릴 수 있음",
+          goal: "담당자가 사회보장정보시스템으로 소득·재산·금융정보를 조회하고 필요하면 가정방문·추가서류를 요청합니다. 이 기간에 <strong>탈락 요인을 만들지 않고, 보완 요청에 빠르게 응답</strong>하는 것이 핵심입니다.",
+          checks: [
+            "담당자 전화·문자를 놓치지 않고 바로 응답하고 있다",
+            "보완서류 요청을 받으면 정해진 기한 안에 제출한다 (못 맞추면 기한 전에 먼저 연락)",
+            "소득·재산이 바뀌면(취업, 입금, 계약, 해약 등) 즉시 담당자에게 알린다",
+            "통장·재산을 갑자기 옮기거나 증여·해약하기 전에 담당자와 먼저 상의한다",
+            "신청 2~3주 뒤 ‘접수일, 현재 단계, 부족한 서류’를 전화로 확인했다",
+            "법정 최대 기간(60일)과 긴급지원 종료 시점을 달력에 적어두었다",
+          ],
+          tips: [
+            "<strong>법정 기한</strong>: 신청일부터 30일 이내 통지가 원칙입니다. 부양의무자 조사 등에 시일이 걸리는 특별한 사유가 있거나 조사·자료제출을 거부·방해하는 경우에 한해 <strong>60일까지 연장</strong>할 수 있고, 연장할 때는 통지서에 <strong>구체적 사유</strong>를 밝혀야 합니다.",
+            "<strong>현실</strong>: 정부합동감사에서 법정 최장기한(60일)을 넘겨 결정이 지연된 사례(최장 162일 보도)가 적발된 바 있습니다. 그래서 <strong>2~3개월 걸릴 수도 있다</strong>고 보고, 긴급지원 연장까지 포함해 생활비를 계획하는 것이 안전합니다.",
+          ],
+          warns: [
+            "자료 제출을 거부하거나 연락이 안 되면 <strong>조사 지연(최대 60일 연장)이나 불리한 결정</strong>으로 이어질 수 있습니다.",
+          ],
+        },
+        {
+          icon: "🔍",
+          title: "STEP 5 · 긴급지원 사후조사 · 연장 대비",
+          when: "지원 결정 후 1개월 이내 사후조사 → 이후 적정성 심사 → 기본 3개월 종료 전 연장 판단",
+          goal: "긴급지원은 선지원이므로 <strong>나중에 소득·재산 기준을 확인(사후조사)</strong>하고, 적정성 심사에서 적정하면 종료·연장, 부적정하면 중단·환수됩니다.",
+          checks: [
+            "사후조사 때 소득·재산을 기초수급 신청서와 <strong>똑같이 일관되게</strong> 신고했다",
+            "적정성 심사 결과(적정/부적정) 통지를 확인했다",
+            "기초수급 결과가 아직이면, 긴급지원 종료 1~2주 전에 담당자에게 상황을 알리고 연장 가능 여부를 문의했다",
+            "연장이 안 될 경우를 대비해 다음 달 생활비 대책(지자체 지원·푸드뱅크·129 상담)을 마련했다",
+          ],
+          tips: [
+            "생계지원 연장은 <strong>긴급지원심의위원회 등 심의 결과</strong>에 따르며 보장되지 않습니다. 총 6개월을 넘을 수 없습니다.",
+            "긴급지원이 끝날 때쯤 기초수급 결과가 나오도록 STEP 3을 <strong>일찍</strong> 해두는 것이 가장 확실한 대비입니다.",
+          ],
+          warns: [
+            "사후조사에서 기준 초과나 부정한 방법이 확인되면 <strong>지원 중단·비용 환수</strong>가 결정될 수 있습니다.",
+          ],
+        },
+      ];
+
+      const RM_FORK = [
+        {
+          cls: "rm-ok",
+          title: "✅ A. 수급자로 선정됐다면",
+          items: [
+            "통지서에서 <strong>급여 종류·금액·보장 시작일</strong>을 확인합니다.",
+            "급여는 일반적으로 <strong>신청한 달부터 소급</strong>해 지급됩니다. 심사 기간 동안의 급여가 한꺼번에 들어올 수 있습니다.",
+            "긴급 생계지원과 <strong>겹치는 기간이 어떻게 정산·조정되는지</strong> 담당자에게 확인하세요. (같은 성격의 급여가 중복되지 않도록 조정될 수 있습니다.)",
+            "기초생활 급여를 받게 되면 같은 내용의 긴급지원은 제외됩니다. 긴급지원 종료 절차도 함께 확인하세요.",
+            "이후에는 <strong>소득·재산 변동 신고</strong>가 필수입니다. 근로능력이 있으면 조건부수급(자활) 안내를 받을 수 있습니다.",
+          ],
+          links: [["⚖️ 근로능력판정", "switchMain('workability')"], ["🔁 반복수급 가이드", "switchMain('cycle')"]],
+        },
+        {
+          cls: "rm-danger",
+          title: "❌ B. 부적합(탈락) 통지를 받았다면",
+          items: [
+            "통지서의 <strong>탈락 사유</strong>(소득인정액 초과, 재산 초과, 근로능력 등)를 먼저 확인합니다.",
+            "결정에 불복하면 <strong>이의신청</strong>(결정 통보일로부터 90일 이내, 시·도지사)을 할 수 있습니다.",
+            "사유를 해소한 뒤 <strong>재신청</strong>이 가능합니다. (탈락 사유 & 대처 탭 참고)",
+            "긴급지원은 지자체 조례에 따라 <strong>‘기초수급 신청 후 부적합 결정’도 위기사유</strong>로 인정하는 곳이 있습니다(예: 결정일로부터 일정 기간 내). 관할 시·군·구에 확인하세요.",
+            "수급이 어렵더라도 <strong>차상위·바우처·의료비·주거 지원</strong> 등 다른 제도가 열려 있을 수 있습니다.",
+          ],
+          links: [["❌ 탈락 사유 & 대처", "planTab('reject')"], ["🎁 복지서비스 안내", "switchMain('benefits')"], ["🔶 차상위계층 계산기", "switchMain('near')"]],
+        },
+        {
+          cls: "rm-warn",
+          title: "⏰ C. 60일이 지나도 결과가 없다면",
+          items: [
+            "신청일(접수증)과 <strong>연장 사유 통지서를 받았는지</strong> 확인합니다. 60일 연장은 사유를 서면에 밝혀야 하는 예외입니다.",
+            "담당자에게 <strong>현재 진행 단계와 예상 결정일</strong>을 구체적으로 묻습니다.",
+            "답이 없으면 시·군·구청 복지 담당 부서, <strong>129</strong>, 국민신문고(epeople.go.kr) 민원 순으로 문의합니다.",
+            "그동안 생활비가 끊기지 않도록 <strong>긴급지원 연장 여부</strong>를 함께 챙깁니다.",
+          ],
+          say: "“신청일이 ○월 ○일입니다. 현재 어느 단계이고, 결정 예정일은 언제인가요? 연장 사유 통지서는 따로 받지 못했습니다.”",
+          links: [["🚨 긴급지원 탭", "switchMain('emergency')"]],
+        },
+      ];
+
+      const RM_MISTAKES = [
+        ["긴급지원만 받고 기초수급 신청을 미룸", "긴급지원은 기본 3개월, 최대 6개월 한도입니다. 기초 신청이 늦으면 지원이 끝난 뒤 공백이 생기고, 급여 소급 시작 시점도 늦어집니다. <strong>같은 주에 신청</strong>하세요."],
+        ["서류를 다 모은 뒤에 연락하려고 기다림", "긴급복지는 선지원 후조사입니다. 위기사유와 상황을 말로 설명하고 129·주민센터에 먼저 도움을 요청하세요. 서류는 접수 뒤 보완할 수 있는 경우가 많습니다."],
+        ["접수증·신청일 기록을 안 남김", "처리기한과 소급은 <strong>신청일</strong> 기준입니다. 접수증, 신청서 사본, 접수 문자를 꼭 보관하세요."],
+        ["담당자 연락을 놓치거나 보완요청을 방치", "보완 지연은 심사 지연·불리한 결정으로 이어질 수 있습니다. 못 맞추면 기한 전에 먼저 연락하세요."],
+        ["심사 중에 재산·통장을 갑자기 정리", "증여·명의 이동·급한 해약은 조사에서 불리하거나 문제 될 수 있습니다. 하기 전에 담당자와 상의하세요."],
+        ["긴급지원 사후조사에서 소득·재산을 다르게 말함", "기초 신청서와 긴급지원 사후조사의 내용이 다르면 신뢰 문제로 이어지고, 부정한 방법이면 환수·처벌 대상이 됩니다. <strong>일관되고 정확하게</strong> 신고하세요."],
+      ];
+
+      const RM_FAQ = [
+        ["긴급복지와 기초수급을 동시에 신청해도 되나요?", "네. 긴급지원은 다른 법률에 따른 지원이 <strong>결정되기 전까지</strong> 위기상황을 고려해 가능하고, 위기사유 중에는 기초 신청 후 결정 전인 경우를 조례로 인정하는 곳도 있습니다. 다만 <strong>이미 기초생활 급여(같은 성격)를 받고 있으면 긴급지원에서 제외</strong>됩니다."],
+        ["긴급복지는 소득·재산이 기준을 약간 넘으면 아예 안 되나요?", "기준(소득 중위 75%, 지역별 재산·금융재산) 충족 여부는 <strong>사후조사·적정성 심사에서 최종 판단</strong>됩니다. 먼저 지원이 이뤄져도 사후조사에서 기준 초과·부정한 방법이 확인되면 중단·환수될 수 있으니, 애매하면 129에 정확한 상황으로 상담하세요."],
+        ["긴급지원을 받으면 기초수급 심사에서 불리해지나요?", "긴급지원을 받았다는 사실만으로 기초수급 심사에서 감점이 된다는 규정은 확인되지 않았습니다. 기초수급은 소득인정액·재산·근로능력 등을 별도로 판단합니다. 다만 <strong>긴급지원 수혜 사실은 숨기지 말고 담당자에게 알리세요.</strong>"],
+        ["기초수급이 선정되면 긴급지원금을 돌려줘야 하나요?", "일반적으로 적정하게 받은 지원이면 환수 대상이 아닙니다. 다만 <strong>같은 기간·같은 성격의 급여가 중복</strong>되면 조정될 수 있어, 선정 통지 후 정산 방식을 담당자에게 꼭 확인하세요."],
+        ["긴급복지는 몇 번까지 받을 수 있나요?", "생계지원은 월 단위로 <strong>최대 6회(총 6개월)</strong>입니다. 같은 위기사유로 지원이 끝나면 일정 기간(2년)이 지나야 다시 지원받을 수 있고, 다른 위기사유는 이전 지원 종료 후 별도 제한 기간이 적용됩니다. 자세한 횟수·재지원 기준은 관할 시·군·구에서 확인하세요."],
+        ["‘3개월 걸린다’는 말이 맞나요?", "법정 기한은 <strong>30일(최대 60일)</strong>입니다. 다만 실제로는 조사·보완·근로능력평가·행정 처리 지연으로 더 걸리는 사례가 있어, 생활비 계획은 <strong>2~3개월</strong>을 기준으로 잡는 것이 안전합니다."],
+        ["주민센터에 안 가고 전화만으로 되나요?", "긴급복지 요청·상담은 129 전화로 시작할 수 있습니다. 기초수급은 신청서와 금융정보 제공동의서 등 서명이 필요하므로 방문 접수(또는 복지로 온라인)가 필요합니다. 거동이 어려운 경우 방문 접수 대안을 129나 주민센터에 문의하세요."],
+      ];
+
+      const rm_state = { q: {}, checks: {} };
+
+      function rm_init() {
+        const box = document.getElementById("rm_steps");
+        let html = "";
+        RM_STEPS.forEach((st, i) => {
+          html += `<div class="rm-step" id="rm_step_${i}">
+            <div class="rm-sh" onclick="rm_toggle(${i})">
+              <div class="rm-num">${i}</div>
+              <div class="rm-st"><b>${st.icon} ${st.title}</b><span>⏱ ${st.when}</span></div>
+              <div class="rm-chev">▾</div>
+            </div>
+            <div class="rm-sb">
+              <div>${st.goal}</div>
+              ${st.where ? `<h4>📍 어디서</h4><div>${st.where}</div>` : ""}
+              <h4>☑️ 할 일 체크리스트</h4>
+              ${st.checks.map((c, j) => `<label class="rm-ck" id="rm_ck_${i}_${j}"><input type="checkbox" onchange="rm_check(${i},${j},this)"><span>${c}</span></label>`).join("")}
+              ${st.say ? `<h4>🗣 이렇게 말하세요</h4><div class="rm-say">${st.say}</div>` : ""}
+              ${st.tips && st.tips.length ? `<h4>💡 알아둘 점</h4><div class="rm-box rm-info"><ul class="rm-ul">${st.tips.map((t) => `<li>${t}</li>`).join("")}</ul></div>` : ""}
+              ${st.warns && st.warns.length ? `<h4>⚠️ 주의</h4><div class="rm-box rm-warn"><ul class="rm-ul">${st.warns.map((t) => `<li>${t}</li>`).join("")}</ul></div>` : ""}
+              ${st.links ? `<div class="rm-linkrow">${st.links.map((l) => `<button class="rm-lk" onclick="${l[1]}">${l[0]}</button>`).join("")}<a class="rm-lk" href="tel:129">📞 129 전화</a></div>` : ""}
+            </div>
+          </div>`;
+        });
+        box.innerHTML = html;
+
+        document.getElementById("rm_fork").innerHTML = RM_FORK.map(
+          (f) => `<div class="rm-box ${f.cls}">
+            <div style="font-weight:800;font-size:13px;color:var(--text);margin-bottom:6px">${f.title}</div>
+            <ul class="rm-ul">${f.items.map((t) => `<li>${t}</li>`).join("")}</ul>
+            ${f.say ? `<div class="rm-say" style="margin-top:8px">${f.say}</div>` : ""}
+            ${f.links ? `<div class="rm-linkrow">${f.links.map((l) => `<button class="rm-lk" onclick="${l[1]}">${l[0]}</button>`).join("")}</div>` : ""}
+          </div>`,
+        ).join("");
+
+        document.getElementById("rm_mistakes").innerHTML = RM_MISTAKES.map(
+          (m, i) => `<div class="rm-box rm-danger" style="margin-bottom:8px">
+            <strong>${i + 1}. ${m[0]}</strong><br>${m[1]}</div>`,
+        ).join("");
+
+        document.getElementById("rm_faq").innerHTML = RM_FAQ.map(
+          (f, i) => `<div class="rm-faq" id="rm_faq_${i}">
+            <div class="q" onclick="rm_faq(${i})"><span>Q. ${f[0]}</span><span>▾</span></div>
+            <div class="a">${f[1]}</div></div>`,
+        ).join("");
+
+        rm_progress();
+        rm_toggle(0);
+      }
+
+      function rm_toggle(i) {
+        const el = document.getElementById("rm_step_" + i);
+        if (el) el.classList.toggle("open");
+      }
+
+      function rm_faq(i) {
+        const el = document.getElementById("rm_faq_" + i);
+        if (el) el.classList.toggle("open");
+      }
+
+      function rm_check(i, j, input) {
+        rm_state.checks[i + "_" + j] = input.checked;
+        const lab = document.getElementById(`rm_ck_${i}_${j}`);
+        if (lab) lab.classList.toggle("done", input.checked);
+        rm_progress();
+      }
+
+      function rm_progress() {
+        const total = RM_STEPS.reduce((a, s) => a + s.checks.length, 0);
+        const done = Object.values(rm_state.checks).filter(Boolean).length;
+        const t = document.getElementById("rm_prog_txt");
+        const b = document.getElementById("rm_prog_bar");
+        if (t) t.textContent = `${done} / ${total}`;
+        if (b) b.style.width = total ? (done / total) * 100 + "%" : "0%";
+      }
+
+      function rm_diag(q, val, btn) {
+        rm_state.q[q] = val;
+        btn.parentElement
+          .querySelectorAll(".rm-chip")
+          .forEach((c) => c.classList.remove("on"));
+        btn.classList.add("on");
+        const { q1, q2, q3 } = rm_state.q;
+        const out = document.getElementById("rm_diag_result");
+        if (!out) return;
+        const set = (cls, html) => {
+          out.className = "rm-box " + cls;
+          out.innerHTML = html;
+        };
+        if (!q1 || !q2) {
+          set("rm-info", "Q1, Q2에 답하면 맞춤 안내가 표시됩니다.");
+          return;
+        }
+        if (q2 === "y") {
+          set(
+            "rm-warn",
+            "<strong>이미 기초생활 급여를 받고 있는 경우</strong><br>같은 성격(생계 등)의 긴급지원은 <strong>다른 법률 지원 우선 원칙</strong>에 따라 제외됩니다. 다만 받고 있는 급여와 다른 항목(예: 의료·주거 등)은 가능할 수 있으니 <strong>129나 주민센터에 문의</strong>하세요. 소득·재산·가구 변동이 있었다면 <strong>변동 신고</strong>도 필요합니다.",
+          );
+          return;
+        }
+        if (q1 === "n") {
+          set(
+            "rm-info",
+            "<strong>갑작스러운 위기사유가 없는 경우</strong><br>긴급복지는 ‘위기사유 + 소득·재산 기준’이 모두 필요해서 해당이 어려울 수 있습니다(단, 지자체 조례로 정한 사유가 있으니 129에서 확인해 보세요). 이 경우 <strong>STEP 0 → STEP 3(기초수급 신청)</strong>을 바로 진행하고, 심사 기간에는 <strong>🎁 복지서비스·푸드뱅크·지자체 위기가구 지원</strong>을 함께 알아보세요.",
+          );
+          return;
+        }
+        if (!q3) {
+          set("rm-info", "Q3까지 답하면 더 정확한 안내가 표시됩니다. (Q1: 위기사유 있음, 기초수급 미수급 상태)");
+          return;
+        }
+        if (q3 === "n") {
+          set(
+            "rm-warn",
+            "<strong>위기사유는 있으나 소득·재산이 기준을 넘길 수 있는 경우</strong><br>긴급지원은 사후조사에서 기준 초과가 확인되면 <strong>중단·환수</strong>될 수 있습니다. 그래도 <strong>STEP 1(129 상담)과 STEP 3(기초수급 신청)은 모두 진행</strong>해 보세요. 어느 쪽이든 정확한 상황을 그대로 설명하는 것이 중요합니다.",
+          );
+          return;
+        }
+        set(
+          "rm-ok",
+          "<strong>✅ 이 로드맵 그대로 진행하면 됩니다.</strong><br>위기사유가 있고 기초수급을 아직 받고 있지 않으니, <strong>STEP 0 → 1 → 2 → 3</strong> 순서로 오늘부터 시작하세요. 긴급지원 요청(STEP 1)과 기초수급 신청(STEP 3)은 <strong>같은 주(가능하면 같은 날)</strong>에 하는 것이 좋습니다." +
+            (q3 === "u" ? "<br><span style='font-size:11px;color:var(--text3)'>기준을 모르겠다면 🚨 긴급지원 탭에서 먼저 확인하거나, 모르는 채로 129에 상담해도 됩니다.</span>" : ""),
+        );
       }
 
       // ─── 2026년 기준 상수 ───
@@ -14693,7 +15195,8 @@
           tab: "plan",
           icon: "📋",
           title: "수급 준비 플랜",
-          keywords: "수급 준비 재산 역산 계획 사전 정리 증여",
+          keywords:
+            "수급 준비 재산 역산 계획 사전 정리 증여 긴급지원 긴급복지 기초수급 신청 로드맵 순서 처리기간 30일 60일 3개월 선지원 후조사 129 심사 대기 생계비 이의신청",
         },
         {
           tab: "gwork",
