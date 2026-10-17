@@ -4379,7 +4379,7 @@
                   본인부담 없음<br />
                   ※ 2종(가구 내 근로능력자 존재): 입원 10%, 외래 15%</span
                 ><br />
-                • 매년 재판정 완화 — 질환 상태에 따라 2~5년 유효기간 부여
+                • 판정 유효기간은 기본 1년이며, 질환 상태에 따라 최대 5년까지 연장 (아래 표)
               </div>
             </div>
             <div
@@ -9572,6 +9572,13 @@
       >
         <button
           class="step-btn active"
+          onclick="cyTab('sim')"
+          id="cytab-sim"
+        >
+          🧮 반복수급 시뮬레이터
+        </button>
+        <button
+          class="step-btn"
           onclick="cyTab('overview')"
           id="cytab-overview"
         >
@@ -9604,7 +9611,151 @@
       </div>
 
       <!-- ① 제도 개요 -->
-      <div id="cy-overview">
+      <!-- 반복수급 시뮬레이터 -->
+      <div id="cy-sim">
+        <style>
+          .cs-st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;color:#0b1220;white-space:nowrap}
+          .cs-tbl td,.cs-tbl th{padding:7px 8px;font-size:11.5px}
+          .cs-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+          .cs-k{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+          .cs-k .l{font-size:11px;color:var(--text3)}
+          .cs-k .v{font-size:16px;font-weight:800;margin-top:3px;color:var(--text)}
+          .cs-k .s{font-size:10.5px;color:var(--text3);margin-top:2px;line-height:1.5}
+          .cs-bar{height:10px;border-radius:5px;background:var(--surface2);overflow:hidden;min-width:60px}
+          .cs-bar>div{height:100%;background:linear-gradient(90deg,#34d399,#22d3ee)}
+        </style>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🧮</span> 알바 ↔ 수급 반복 시뮬레이터</div>
+          <div class="rm-sub">
+            월 수입과 알바 기간을 넣으면 <strong style="color:var(--text)">① 언제 급여가 끊기는지(탈락) ② 알바가 끝난 뒤 재신청하면 어떤 공백·대기 기간이 생기는지 ③ 반복할 때 실제로 얼마가 남는지</strong>를 월별로 보여주고, 그에 맞는 대응 순서를 알려줍니다.
+          </div>
+          <div class="rm-box rm-info" style="margin-top:12px;font-size:12px">
+            <strong>계산 규칙(보건복지부 2026년 사업안내 기준)</strong><br />
+            • 소득인정액 = 소득평가액 + 재산의 소득환산액, 소득평가액 = 실제소득 − 근로소득공제(+기타)<br />
+            • 근로소득공제: 생계·주거·교육급여는 일반 <strong>30%</strong>, 34세 이하·대학생 <strong>60만원 공제 후 30%</strong>, 65세 이상·장애인 등 <strong>20만원 공제 후 30%</strong> (의료급여는 일반 30% 공제가 적용되지 않는 것으로 안내됨)<br />
+            • 선정기준: 기준 중위소득의 <strong>생계 32% · 의료 40% · 주거 48% · 교육 50%</strong>, 생계급여액 = 선정기준 − 소득인정액<br />
+            • 급여는 <strong>신청일부터</strong> 지급되고, 소득 변동을 신고하지 않아 생긴 과다지급은 <strong>상계·소급(환수)</strong>될 수 있습니다. (급여 중지 시점은 아래 ⚖️ 박스 참고)
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>⚖️</span> 월 200만원 알바 — 급여는 “첫 달”에 끊기나, “둘째 달”에 끊기나? (규정으로 확정)</div>
+          <div class="rm-box rm-ok">
+            <strong>결론</strong><br />
+            ① <strong>자격은 취업한 첫 달부터 사라집니다.</strong> 소득은 월급이 들어온 달이 아니라 <strong>취업(근로 개시) 상태가 바뀐 달부터</strong> 반영되고, 소득인정액이 선정기준을 넘으면 그 달부터 수급 요건에서 벗어납니다.<br />
+            ② 그러나 <strong>급여가 실제로 끊기는 달은 ‘중지 결정이 속한 달의 다음 달’</strong>입니다. 중지가 결정된 달의 생계급여는 <strong>전부 지급</strong>되기 때문입니다.<br />
+            ③ 따라서 <strong>취업한 달 안에 신고하고 그 달에 결정까지 끝나면</strong> → 첫 달 생계급여는 정상 지급, <strong>둘째 달부터 급여 0원</strong>입니다.<br />
+            ④ <strong>결정이 늦어지면</strong>(신고 지연·처리 지연) → 결정이 속한 달까지 급여가 나가지만, 그 앞 달들은 <strong>소득 반영월인데 지급된 과다지급</strong>으로 <strong>상계·소급(환수)</strong> 대상이 됩니다.
+          </div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl">
+            <thead><tr><th>규정</th><th>내용</th><th>출처</th></tr></thead>
+            <tbody>
+              <tr><td><strong>발생월 반영 원칙</strong></td><td>근로(상시·일용)·사업 등 상태가 변경(<strong>신규취업, 이직, 실직, 퇴직, 휴직, 복직, 폐업</strong> 등)되면 <strong>변경이 발생한 월부터</strong> 변경된 상태를 반영해 소득액을 산정</td><td>보건복지부 국민기초생활보장사업안내(2024 개정사항)</td></tr>
+              <tr><td><strong>급여 생성 방식</strong></td><td>변동사항은 <strong>매월 급여생성 마감 전까지</strong> 반영해야 하며, 그 달에 미반영되면 <strong>당월 급여는 전월 기준으로 생성</strong>된다. 변동 처리 후 해당 월의 <strong>상계·소급절차</strong>를 진행해야 다음 달 급여를 변경할 수 있다.</td><td>사업안내(변동사항 적용 및 관리)</td></tr>
+              <tr><td><strong>중지 결정 달 전액 지급</strong></td><td>급여가 필요 없게 된 경우 등으로 생계급여 지급이 중지되더라도 <strong>중지가 결정된 날이 속하는 달의 생계급여 금품은 전부 지급</strong></td><td>국민기초생활 보장법 시행규칙 제6조제4항 본문</td></tr>
+              <tr><td><strong>신청일부터 지급</strong></td><td>급여는 <strong>신청일부터</strong> 지급되고, 처음 수급자로 결정되면 <strong>급여 개시 달의 생계급여를 전부</strong> 지급</td><td>국민기초생활 보장법 제27조제1항, 시행규칙 제6조제1항</td></tr>
+              <tr><td><strong>변동 통지</strong></td><td>급여 중지·변경은 산출 근거를 밝힌 <strong>서면</strong>으로 통지</td><td>국민기초생활 보장법 제29조·제30조</td></tr>
+            </tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.7">
+            ※ 소득이 발생한 달에 ‘취업월 안에 결정까지’ 끝날지는 담당자 처리 속도에 달려 있어, 도구에서는 <strong>결정이 이뤄지는 달</strong>만 선택하게 했습니다. 의료·주거급여의 적용 월은 생계급여와 같은 결정 절차를 따르지만 급여별 세부 시기는 다를 수 있어 생계급여 기준으로 계산합니다. <strong>퇴직(근로 종료)월 소득</strong>은 ‘퇴직 상태가 발생한 월부터 반영’ 원칙이 있어 담당자 판단 여지가 있으므로, 이 도구는 보수적으로 <strong>마지막 근무 달의 소득을 반영</strong>하고 재신청 가능일을 그 다음 달부터로 계산합니다.
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>1️⃣</span> 내 조건 입력</div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">가구원 수</div>
+              <select class="hs-in" id="cs_size" onchange="cs_calc()">
+                <option value="1">1인</option><option value="2">2인</option><option value="3">3인</option>
+                <option value="4">4인</option><option value="5">5인</option><option value="6">6인 이상</option>
+              </select></div>
+            <div><div class="hs-lbl">알바하는 사람 유형 (공제 기준)</div>
+              <select class="hs-in" id="cs_type" onchange="cs_calc()">
+                <option value="general">일반 (만 35~64세)</option>
+                <option value="youth">청년 (만 34세 이하)·대학생</option>
+                <option value="senior">65세 이상·등록장애인·북한이탈주민</option>
+                <option value="pregnant">임신 중·분만 후 6개월 미만</option>
+              </select></div>
+            <div><div class="hs-lbl">월 알바 수입 (세전, 원)</div>
+              <input class="hs-in" id="cs_income" type="number" inputmode="numeric" step="50000" value="2000000" oninput="cs_calc()" /></div>
+            <div><div class="hs-lbl">알바 기간 (개월)</div>
+              <input class="hs-in" id="cs_months" type="number" inputmode="numeric" min="1" max="24" value="3" oninput="cs_calc()" /></div>
+            <div><div class="hs-lbl">알바 시작 월</div>
+              <input class="hs-in" id="cs_start" type="month" value="2026-11" onchange="cs_calc()" /></div>
+            <div><div class="hs-lbl">알바 외 월 소득 (원, 선택)</div>
+              <input class="hs-in" id="cs_other" type="number" inputmode="numeric" step="10000" value="0" oninput="cs_calc()" /></div>
+            <div><div class="hs-lbl">재산의 월 소득환산액 (원, 선택)</div>
+              <input class="hs-in" id="cs_asset" type="number" inputmode="numeric" step="10000" value="0" oninput="cs_calc()" /></div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">
+            ※ 소득은 <strong>세전 금액</strong>이 기준입니다(건강보험 등 공적자료의 세전 금액이 우선 반영). 재산의 소득환산액은 <a href="#" onclick="switchMain('calc');return false" style="color:var(--accent2)">🧮 수급자격 계산기</a>에서 확인한 값을 넣으세요. 2027년 이후 월은 2027년 기준 중위소득(확정 전)으로 계산합니다.
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>2️⃣</span> 반복 시나리오 입력</div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">소득 신고 후 <strong>중지 결정</strong>이 이뤄지는 달</div>
+              <select class="hs-in" id="cs_delay" onchange="cs_calc()">
+                <option value="0">취업한 달 안에 신고하고 그 달에 결정 (가장 빠른 경우)</option>
+                <option value="1">결정이 취업 다음 달 (신고가 늦었거나 처리 지연)</option>
+                <option value="2">결정이 취업 2개월 뒤</option>
+                <option value="3">결정이 취업 3개월 뒤</option>
+                <option value="99">신고하지 않음 (정기 확인조사에서 확인)</option>
+              </select></div>
+            <div><div class="hs-lbl">알바 종료 후 재신청 시점</div>
+              <select class="hs-in" id="cs_apply" onchange="cs_calc()">
+                <option value="0">마지막 근무 달에 미리 신청</option>
+                <option value="1" selected>종료 다음 달에 바로 신청</option>
+                <option value="2">종료 2개월 뒤 신청</option>
+                <option value="3">종료 3개월 뒤 신청</option>
+              </select></div>
+            <div><div class="hs-lbl">재신청 심사 소요 가정</div>
+              <select class="hs-in" id="cs_proc" onchange="cs_calc()">
+                <option value="1">약 1개월 (법정 원칙 30일)</option>
+                <option value="2" selected>약 2개월 (법정 최대 60일)</option>
+                <option value="3">약 3개월 (지연 사례)</option>
+              </select></div>
+            <div><div class="hs-lbl">알바 사이 쉬는 기간 (개월)</div>
+              <input class="hs-in" id="cs_break" type="number" inputmode="numeric" min="1" max="12" value="3" oninput="cs_calc()" /></div>
+            <div><div class="hs-lbl">알바 반복 횟수</div>
+              <select class="hs-in" id="cs_cycles" onchange="cs_calc()">
+                <option value="1">1회</option><option value="2" selected>2회</option><option value="3">3회</option>
+              </select></div>
+            <div><div class="hs-lbl">재신청 때 근로능력 판정 상태 (진단서 필요 여부)</div>
+              <select class="hs-in" id="cs_ability" onchange="cs_calc()">
+                <option value="none">근로능력 있음으로 신청 / 평가 받은 적 없음</option>
+                <option value="valid">이전 ‘근로능력 없음’ 판정이 재신청 시점에도 유효기간 안</option>
+                <option value="expired">‘근로능력 없음’ 판정을 새로 받아야 함 (처음이거나 유효기간 만료)</option>
+                <option value="exempt">평가 면제 대상 (중증장애인·중증질환 산정특례·장기요양 등급·20세 미만 중·고교생 등)</option>
+              </select></div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">
+            ※ 시작 시점에는 <strong>생계급여 수급 중</strong>이라고 가정합니다. 급여 중지 시점은 위의 <strong>규정으로 확정</strong>했고, 사람마다 달라지는 것은 <strong>신고·결정이 이뤄지는 달</strong>과 <strong>재신청 심사 소요</strong>뿐입니다.
+          </div>
+        </div>
+
+        <div id="cs_out"></div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>⏱️</span> 단계별 소요 기간 — 보통 이렇게 걸립니다</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl" id="cs_dur"></table></div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🛠️</span> 내 상황 맞춤 대응 순서</div>
+          <div id="cs_guide"></div>
+        </div>
+
+        <div class="rm-box rm-warn" style="font-size:11px;line-height:1.8">
+          📚 <strong>근거</strong>: 보건복지부 「국민기초생활보장사업안내」(2024년 개정사항: 발생월 반영 원칙·소득 변동 반영 및 급여생성·상계소급 절차 / 2026년판 근로·사업소득 공제 p.106~107, 선정기준), 국민기초생활 보장법 제26조·제27조·제29조·제30조, 같은 법 시행규칙 제6조제1항·제4항, 국민연금공단 근로능력평가 안내(판정 유효기간·제출서류·재신청 시 기존 판정 인정), 찾기쉬운 생활법령정보. (확인일: 2026.10.17)<br />
+          ⚠️ <strong>발생월 반영 원칙은 2024년 사업안내 개정사항으로 확인했으며, 2026년판에서의 유지 여부는 별도로 확인하지 못했습니다.</strong> 환수 범위·상계 방식, 퇴직월 소득 처리, 재신청 심사의 소득 기준월은 담당 공무원 판단과 공적자료 확인 시점에 따라 달라질 수 있습니다. 이 도구는 <strong>의사결정을 돕는 추정</strong>이며 결정 통지가 아닙니다. 중지 통지서를 받으면 <strong>이의신청(통보일로부터 90일 이내)</strong>이 가능합니다.
+        </div>
+      </div>
+
+      <!-- 제도 개요 -->
+      <div id="cy-overview" style="display: none">
         <div class="card" style="margin-bottom: 16px">
           <div class="card-title">
             <span class="icon">🔁</span> "일 있으면 일하고, 없으면 다시
@@ -9811,13 +9962,10 @@
                 만 18~64세인데 질병·부상으로 <strong>근로능력 없음</strong> 판정을 받아
                 자활사업 참여 의무를 면제받고 싶은 경우 → 국민연금공단이
                 지정한 의료기관에서 진단서·소견서 등을 제출해 근로능력평가를
-                받아야 합니다. (진단서 유효요건 상 보통 <strong>일정 기간 이상의
-                치료 이력</strong>이 확인돼야 하는 경우가 많아 "3개월 진료"처럼
-                체감되는 경우가 있습니다.)
+                받아야 합니다. (근로능력평가용 진단서는 <strong>최근 2개월 이내 발급분</strong>과 <strong>최근 2개월분 진료기록지</strong>가 필요하고, 정신신경계는 <strong>누적 치료기간 3개월 이상</strong>이 확인돼야 합니다. — 국민연금공단 안내)
               </li>
               <li>
-                이미 근로능력 없음 판정을 받았던 사람이 <strong>재판정 주기</strong>가
-                도래해 갱신해야 하는 경우
+                ‘근로능력 없음’ 판정의 <strong>유효기간이 만료</strong>돼 다시 판정을 받아야 하는 경우 (수급 탈락 후 재신청해도 <strong>기존 판정의 유효기간까지는 결과가 인정</strong>되므로 그 안에는 진단서가 필요 없습니다)
               </li>
             </ul>
             <br />
@@ -16250,7 +16398,7 @@
           icon: "🔁",
           title: "반복수급 가이드",
           keywords:
-            "반복수급 재신청 탈수급 적립중지 유예 이행급여특례 자활특례 병원진단서 알바반복",
+            "반복수급 재신청 탈수급 적립중지 유예 이행급여특례 자활특례 병원진단서 알바반복 시뮬레이터 알바 월200 소득 탈락 경계 급여 중지 재신청 공백 기간 소급 환수 소득신고 근로소득공제",
         },
       ];
 
@@ -16503,9 +16651,440 @@
       }
 
       // ──────────────────────────────────────────
+      // 반복수급 시뮬레이터
+      // ──────────────────────────────────────────
+      const CS_ST = {
+        ok: { l: "수급 유지", c: "#34d399" },
+        reduced: { l: "감액 수급", c: "#a3e635" },
+        grace: { l: "중지 결정 달 · 생계급여 전액 지급", c: "#fbbf24" },
+        overpaid: { l: "소득 반영월인데 급여 지급 · 상계·환수 대상", c: "#fb7185" },
+        "suspended-income": { l: "급여 중지 (소득 초과)", c: "#fb7185" },
+        "suspended-nonapply": { l: "공백 (재신청 전)", c: "#fb923c" },
+        retro: { l: "자격 회복 · 소급 대기", c: "#60a5fa" },
+        "retro-risk": { l: "소급 대기 (불확실)", c: "#a78bfa" },
+        catchup: { l: "결정 · 소급분 입금", c: "#22d3ee" },
+        pending: { l: "심사 중 재취업", c: "#a78bfa" },
+      };
+      const CS_DUR = [
+        ["단계", "보통 걸리는 기간", "내가 할 일"],
+        ["알바 시작 → 소득 신고", "<strong>소득이 생기면 즉시</strong>(안내 사례: 10일 이내)", "주민센터 방문 또는 신고. 미신고분은 환수 대상"],
+        ["신고 → 급여 중지·변경 결정", "담당자 처리 기간(수일~수주) · <strong>중지 결정이 속한 달의 생계급여는 전부 지급</strong>", "서면 통지서의 산출 근거 확인, 이의는 90일 이내"],
+        ["알바 종료 → 재신청 준비", "회사의 이직·근로종료 서류 처리 시간 필요", "퇴사 전에 이직확인서·근로계약 종료 확인서·마지막 급여명세서 요청"],
+        ["재신청 → 결과 통지", "<strong>원칙 30일, 특별 사유 시 최대 60일</strong> (실제로는 지연 사례 있음)", "접수증 보관, 보완서류 즉시 제출, 긴급복지 병행"],
+        ["결정 → 입금", "결정 후 지급일(안내 사례: 매월 20일)에 <strong>신청일부터의 급여를 소급해 일괄 지급</strong>", "통지서의 보장 시작일·금액 확인"],
+        ["공백기 생활비", "신청 후 결정 전에는 현금이 없음", "긴급복지 생계지원(기본 3개월·선지원 후조사) 신청"],
+      ];
+
+      function cs_idx(str) {
+        const m = /^(\d{4})-(\d{2})$/.exec(str || "");
+        if (!m) return null;
+        return parseInt(m[1], 10) * 12 + parseInt(m[2], 10) - 1;
+      }
+      function cs_lab(i) {
+        const y = Math.floor(i / 12), m = (i % 12) + 1;
+        return y + "." + String(m).padStart(2, "0");
+      }
+      function cs_won(n) {
+        return Math.round(n).toLocaleString("ko-KR") + "원";
+      }
+      function cs_med(idx, size) {
+        const tbl = Math.floor(idx / 12) >= 2027 ? MEDIAN_2027 : MEDIAN_2026;
+        return tbl[Math.min(Math.max(size, 1), 6)];
+      }
+      function cs_T(idx, size) {
+        const m = cs_med(idx, size);
+        return { life: Math.round(m * 0.32), med: Math.round(m * 0.4), house: Math.round(m * 0.48), edu: Math.round(m * 0.5) };
+      }
+      function cs_evalIncome(p, I) {
+        // 소득평가액(생계·주거·교육 판정용 / 의료급여 판정용)
+        if (p.type === "youth") { const v = Math.max(I - 600000, 0) * 0.7; return { life: v, med: v }; }
+        if (p.type === "senior") { const v = Math.max(I - 200000, 0) * 0.7; return { life: v, med: v }; }
+        if (p.type === "pregnant") return { life: I * 0.7, med: I * 0.7 };
+        return { life: I * 0.7, med: I };
+      }
+      function cs_eval(idx, p, alba) {
+        const T = cs_T(idx, p.size);
+        const ev = cs_evalIncome(p, alba ? p.income : 0);
+        const base = p.other + p.asset;
+        const rL = Math.round(ev.life + base), rM = Math.round(ev.med + base);
+        return { T, recogLife: rL, recogMed: rM, life: rL <= T.life, med: rM <= T.med, house: rL <= T.house, edu: rL <= T.edu, lifeAmt: Math.max(T.life - rL, 0) };
+      }
+      function cs_limit(p, idx) {
+        const T = cs_T(idx, p.size);
+        const base = p.other + p.asset;
+        const inv = (target, kind) => {
+          const x = target - base;
+          if (x < 0) return null;
+          if (kind === "life" || p.type === "youth" || p.type === "senior") {
+            if (p.type === "youth") return Math.floor(x / 0.7) + 600000;
+            if (p.type === "senior") return Math.floor(x / 0.7) + 200000;
+            return Math.floor(x / 0.7);
+          }
+          if (p.type === "pregnant") return Math.floor(x / 0.7);
+          return Math.floor(x);
+        };
+        return { life: inv(T.life, "life"), med: inv(T.med, "med"), house: inv(T.house, "life"), edu: inv(T.edu, "life"), T };
+      }
+
+      function cs_run(p) {
+        const wins = [];
+        let st = p.start;
+        for (let c = 0; c < p.cycles; c++) { wins.push({ a: st, b: st + p.months - 1 }); st += p.months + p.brk; }
+        const first = p.start, last = wins[wins.length - 1].b + p.brk + p.proc + 3;
+        const R = {};
+        for (let t = first - 1; t <= last; t++) {
+          const alba = wins.some((w) => t >= w.a && t <= w.b);
+          const ev = cs_eval(t, p, alba), ev0 = cs_eval(t, p, false);
+          R[t] = { t, alba, ev, ev0, status: "ok", cash: ev0.lifeAmt, legal: ev0.lifeAmt, note: "" };
+        }
+        let prevDec = null, prevRetro = [];
+        const infos = [];
+        wins.forEach((w, wi) => {
+          const info = { a: w.a, b: w.b, f: null, report: null, suspendFrom: null, q: null, s0: null, d: null, flags: [] };
+          infos.push(info);
+          const receiving = prevDec === null || prevDec < w.a;
+          if (!receiving) {
+            prevRetro.forEach((t) => { if (t < w.a && R[t]) { R[t].status = "retro-risk"; R[t].cash = 0; R[t].note = "재취업으로 심사 중 소득 변동 — 소급 인정 불확실"; } });
+            info.flags.push("이전 재신청 결과가 나오기 전에 다시 알바를 시작했습니다. 심사 중 소득 변동이 반영돼 소급이 인정되지 않을 수 있습니다.");
+          }
+          const months = [];
+          for (let t = w.a; t <= w.b; t++) months.push(t);
+          const f = months.find((t) => !R[t].ev.life);
+          info.f = f === undefined ? null : f;
+          let needReapply = false;
+
+          if (!receiving) {
+            months.forEach((t) => { R[t].legal = 0; R[t].cash = 0; R[t].status = R[t].ev.life ? "pending" : "suspended-income"; R[t].note = R[t].ev.life ? "심사 결과 전 재취업 — 소득 반영" : "심사 중 재취업 + 소득 초과 → 급여 불가"; });
+            needReapply = true;
+          } else if (f === undefined) {
+            months.forEach((t) => { R[t].status = "reduced"; R[t].cash = R[t].ev.lifeAmt; R[t].legal = R[t].ev.lifeAmt; });
+          } else {
+            months.filter((t) => t < f).forEach((t) => { R[t].status = "reduced"; R[t].cash = R[t].ev.lifeAmt; R[t].legal = R[t].ev.lifeAmt; });
+            const d = p.delay;
+            const r = d === 99 ? Infinity : f + d;
+            const pay = (t, status, note) => { R[t].status = status; R[t].legal = 0; R[t].cash = R[t].ev0.lifeAmt; if (note) R[t].note = note; };
+            if (r > w.b) {
+              months.filter((t) => t >= f).forEach((t) => pay(t, "overpaid", "소득 변동 미신고 → 정기조사 때 환수 대상"));
+              info.report = null;
+              info.flags.push(d === 99 ? "소득을 신고하지 않아 알바 기간 내내 급여가 지급된 것으로 계산됩니다. 소득은 취업한 달부터 반영되므로 정기조사에서 확인되면 전 기간이 상계·환수 대상이고, 부정한 방법으로 판단되면 불이익이 더 큽니다." : "중지 결정이 알바 종료 뒤로 밀려 알바 기간 급여가 모두 과다지급(상계·환수 대상)입니다.");
+            } else {
+              info.report = r;
+              for (let t = f; t <= r; t++) {
+                if (t === r) pay(t, "grace", "중지 결정이 속한 달 — 생계급여 전부 지급(시행규칙 제6조제4항), 다음 달부터 중지");
+                else pay(t, "overpaid", "소득 반영월(취업월부터)인데 결정 전 — 급여가 전월 기준으로 지급됐지만 상계·소급(환수) 대상");
+              }
+              if (r >= w.b) {
+                info.flags.push("중지 결정이 마지막 근무 달에 이뤄져 ‘급여 0원’ 구간이 거의 없습니다. 다만 결정 전 달들의 과다지급분은 상계·환수 대상이니, 소득 종료 사실을 담당자에게 알려 정리 방식을 확인하세요.");
+              } else {
+                info.suspendFrom = r + 1;
+                for (let t = r + 1; t <= w.b; t++) { R[t].status = "suspended-income"; R[t].legal = 0; R[t].cash = 0; R[t].note = "소득 초과로 급여 중지"; }
+                needReapply = true;
+              }
+            }
+          }
+
+          if (needReapply) {
+            const q = w.b + p.apply;
+            const s0 = Math.max(q, w.b + 1);
+            const dec = q + p.proc;
+            info.q = q; info.s0 = s0; info.d = dec;
+            const eligibleAfter = cs_eval(s0, p, false).life;
+            if (!eligibleAfter) info.flags.push("알바 소득이 없어도 (알바 외 소득·재산환산액 때문에) 생계급여 선정기준을 넘어 재신청해도 지급되지 않습니다.");
+            for (let t = w.b + 1; t < s0; t++) if (R[t]) { R[t].status = "suspended-nonapply"; R[t].legal = 0; R[t].cash = 0; R[t].note = "급여는 신청일부터 지급 → 신청 전 달은 지급 불가"; }
+            const retro = [];
+            for (let t = s0; t < dec; t++) if (R[t]) { R[t].status = eligibleAfter ? "retro" : "suspended-nonapply"; R[t].cash = 0; if (eligibleAfter) { R[t].note = "자격은 회복됐지만 결정 전이라 입금 없음 (소급 지급 예정)"; retro.push(t); } }
+            if (R[dec]) {
+              if (eligibleAfter) {
+                const sum = retro.reduce((a, t) => a + R[t].legal, 0) + R[dec].legal;
+                R[dec].status = "catchup"; R[dec].cash = sum; R[dec].note = "신청일부터의 급여 소급분 일괄 입금";
+              } else { R[dec].status = "suspended-nonapply"; R[dec].cash = 0; }
+            }
+            prevDec = dec; prevRetro = retro;
+          } else { prevDec = null; prevRetro = []; }
+        });
+
+        // 집계
+        const all = [];
+        for (let t = first; t <= last; t++) all.push(R[t]);
+        const sum = (arr, fn) => arr.reduce((a, x) => a + fn(x), 0);
+        const legalGap = all.filter((x) => x.status === "suspended-income" || x.status === "suspended-nonapply" || x.status === "pending").length;
+        const cashGap = all.filter((x) => ["suspended-income", "suspended-nonapply", "retro", "retro-risk", "pending"].includes(x.status)).length;
+        const lost = sum(all.filter((x) => ["suspended-income", "suspended-nonapply", "pending"].includes(x.status)), (x) => x.ev0.lifeAmt);
+        const overpaid = sum(all.filter((x) => x.status === "overpaid"), (x) => x.cash);
+        const uncertain = sum(all.filter((x) => x.status === "retro-risk"), (x) => x.ev0.lifeAmt);
+        const retroAmt = sum(all.filter((x) => x.status === "retro"), (x) => x.legal);
+        const albaTotal = p.income * p.months * p.cycles;
+        return { R, all, wins, infos, legalGap, cashGap, lost, overpaid, uncertain, retroAmt, albaTotal, first, last };
+      }
+
+      function cs_params() {
+        const g = (id) => document.getElementById(id);
+        const num = (id, d) => { const v = parseInt(g(id).value, 10); return isNaN(v) ? d : v; };
+        const start = cs_idx(g("cs_start").value);
+        return {
+          size: num("cs_size", 1), type: g("cs_type").value,
+          income: Math.max(num("cs_income", 0), 0), months: Math.min(Math.max(num("cs_months", 1), 1), 24),
+          start: start === null ? cs_idx("2026-11") : start,
+          other: Math.max(num("cs_other", 0), 0), asset: Math.max(num("cs_asset", 0), 0),
+          delay: num("cs_delay", 0), apply: num("cs_apply", 1), proc: num("cs_proc", 2),
+          brk: Math.min(Math.max(num("cs_break", 3), 1), 12), cycles: num("cs_cycles", 2), ability: g("cs_ability").value,
+        };
+      }
+
+      function cs_calc() {
+        const out = document.getElementById("cs_out");
+        if (!out) return;
+        const p = cs_params();
+        const res = cs_run(p);
+        const ev = cs_eval(p.start, p, true), ev0 = cs_eval(p.start, p, false);
+        const lim = cs_limit(p, p.start);
+        const T = ev.T;
+        const ok = (b) => (b ? "✅" : "❌");
+        const lifeState = !ev.life ? "탈락 (소득 초과)" : ev.lifeAmt < ev0.lifeAmt ? "감액 수급 (" + cs_won(ev.lifeAmt) + ")" : "전액 수급";
+        const limTxt = (v) => (v === null ? "소득 없이도 기준 초과" : "월 " + cs_won(v) + " 이하");
+
+        // 규정 적용 결과(내 시나리오)
+        const wi = res.infos[0];
+        let ruleHtml = "";
+        if (wi.f === null) {
+          ruleHtml = `<div class="rm-box rm-ok">입력한 알바 소득은 생계급여 선정기준 이하라 <strong>급여 중지 없이 감액 수급</strong>으로 이어집니다. (소득 신고는 필요)</div>`;
+        } else {
+          const over = res.all.filter((x) => x.status === "overpaid" && x.t >= wi.a && x.t <= wi.b);
+          const overSum = over.reduce((a, x) => a + x.cash, 0);
+          const lines = [];
+          lines.push(`<li><strong>${cs_lab(wi.f)}</strong> — 취업 첫 달: 소득이 반영되어 <strong>자격상 이 달부터 선정기준 초과</strong></li>`);
+          if (wi.report !== null) {
+            lines.push(`<li><strong>${cs_lab(wi.report)}</strong> — 중지 결정이 속한 달: <strong>생계급여 전액 지급</strong> (시행규칙 제6조제4항)</li>`);
+            if (wi.suspendFrom !== null) lines.push(`<li><strong>${cs_lab(wi.suspendFrom)}</strong> — <strong>급여 중지 첫 달 (생계급여 0원)</strong></li>`);
+            if (over.length) lines.push(`<li>결정 전 ${over.map((x) => cs_lab(x.t)).join(", ")} — 소득 반영월인데 급여가 나간 달: <strong>${cs_won(overSum)}</strong> 상계·소급(환수) 대상</li>`);
+          } else {
+            lines.push(`<li>신고·결정이 알바 기간 안에 이뤄지지 않아 <strong>${cs_lab(wi.f)}~${cs_lab(wi.b)}</strong> 지급분 ${cs_won(overSum)}이 정기조사 때 상계·환수 대상이 됩니다.</li>`);
+          }
+          ruleHtml = `<div class="rm-box rm-warn"><strong>내 시나리오에 규정을 적용한 결과</strong><ul class="rm-ul">${lines.join("")}</ul></div>`;
+        }
+
+        // 요약 카드
+        let html = `<div class="rm-card"><div class="rm-h"><span>⏱️</span> 급여가 끊기는 시점 (내 시나리오)</div>${ruleHtml}</div><div class="rm-card">
+          <div class="rm-h"><span>3️⃣</span> 월 ${cs_won(p.income)} 알바 시 판정 (${cs_lab(p.start)} 기준)</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl">
+            <thead><tr><th>급여</th><th>선정기준</th><th>내 소득인정액</th><th>판정</th><th>이 급여를 유지하는 알바 월수입 상한(세전)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>생계급여 (32%)</strong></td><td>${cs_won(T.life)}</td><td>${cs_won(ev.recogLife)}</td><td>${ok(ev.life)} ${lifeState}</td><td>${limTxt(lim.life)}</td></tr>
+              <tr><td><strong>의료급여 (40%)</strong></td><td>${cs_won(T.med)}</td><td>${cs_won(ev.recogMed)}</td><td>${ok(ev.med)} ${ev.med ? "유지" : "탈락"}</td><td>${limTxt(lim.med)}</td></tr>
+              <tr><td><strong>주거급여 (48%)</strong></td><td>${cs_won(T.house)}</td><td>${cs_won(ev.recogLife)}</td><td>${ok(ev.house)} ${ev.house ? "유지" : "탈락"}</td><td>${limTxt(lim.house)}</td></tr>
+              <tr><td><strong>교육급여 (50%)</strong></td><td>${cs_won(T.edu)}</td><td>${cs_won(ev.recogLife)}</td><td>${ok(ev.edu)} ${ev.edu ? "유지" : "탈락"}</td><td>${limTxt(lim.edu)}</td></tr>
+            </tbody></table></div>`;
+        if (!ev0.life) html += `<div class="rm-box rm-danger" style="margin-top:10px">⚠️ 알바 소득이 없어도 <strong>알바 외 소득·재산 환산액(${cs_won(p.other + p.asset)}) 때문에 생계급여 선정기준을 넘습니다.</strong> 입력값을 확인하세요.</div>`;
+        const diffText = ev.life
+          ? (ev.lifeAmt < ev0.lifeAmt ? `<strong>급여가 감액돼도 수급자격은 유지</strong>됩니다. 알바 월수입을 <strong>${limTxt(lim.life)}</strong>로 유지하면 재신청 반복 없이 갑니다.` : "")
+          : `알바 월수입을 <strong>${limTxt(lim.life)}</strong>로 조절하면 생계급여 자격을 유지할 수 있습니다. 지금 입력한 ${cs_won(p.income)}은 <strong>${cs_won(ev.recogLife - T.life)}</strong> 초과입니다.`;
+        html += `<div class="rm-box rm-info" style="margin-top:10px">${diffText}</div></div>`;
+
+        // 타임라인 핵심 지표
+        const w1 = res.infos[0];
+        const keyRows = [];
+        keyRows.push(["알바 시작", cs_lab(p.start)]);
+        if (w1.f !== null) keyRows.push(["소득 초과 시작(급여 판정)", cs_lab(w1.f)]);
+        if (w1.report !== null) keyRows.push(["소득 신고·중지 결정", cs_lab(w1.report)]);
+        if (w1.suspendFrom !== null) keyRows.push(["첫 급여 중지 달", cs_lab(w1.suspendFrom)]);
+        keyRows.push(["알바 종료(마지막 근무)", cs_lab(w1.b)]);
+        if (w1.q !== null) { keyRows.push(["재신청 달", cs_lab(w1.q)]); keyRows.push(["결정·첫 입금(소급 포함)", cs_lab(w1.d)]); }
+        const kpi = `<div class="cs-kpi">
+          <div class="cs-k"><div class="l">급여 못 받는 달 (법적 공백)</div><div class="v" style="color:#fb7185">${res.legalGap}개월</div><div class="s">소득 초과 + 신청 전 공백 + 심사 중 재취업</div></div>
+          <div class="cs-k"><div class="l">현금이 안 들어오는 달</div><div class="v" style="color:#fb923c">${res.cashGap}개월</div><div class="s">소급 대기 달 포함 · 생활비 대책 필요</div></div>
+          <div class="cs-k"><div class="l">소급으로 돌려받는 생계급여</div><div class="v" style="color:#60a5fa">${cs_won(res.retroAmt)}</div><div class="s">신청일부터의 급여 일괄 입금</div></div>
+          <div class="cs-k"><div class="l">잃는 생계급여(영구 공백)</div><div class="v" style="color:#fb7185">${cs_won(res.lost)}</div><div class="s">소득 초과·신청 전 공백</div></div>
+          ${res.overpaid ? `<div class="cs-k"><div class="l">환수 위험액(추정)</div><div class="v" style="color:#fb7185">${cs_won(res.overpaid)}</div><div class="s">신고 지연·미신고로 받은 급여</div></div>` : ""}
+        </div>`;
+
+        const net = res.albaTotal - res.lost - res.overpaid;
+        const verdict = `<div class="rm-box ${net > 0 ? "rm-ok" : "rm-danger"}" style="margin-top:10px">
+          <strong>알바 ${p.cycles}회 합계 손익(생계급여 기준)</strong><br />
+          알바 총수입 ${cs_won(res.albaTotal)} − 못 받는 생계급여 ${cs_won(res.lost)}${res.overpaid ? " − 환수 위험액 " + cs_won(res.overpaid) : ""} = <strong>${cs_won(net)}</strong><br />
+          <span style="font-size:11px;color:var(--text3)">※ 의료·주거·교육급여 상실에 따른 손실, 건강보험료·세금, 환수 가산금은 포함하지 않았습니다. 의료·주거 혜택이 큰 가구는 실제 순이익이 더 작을 수 있습니다.${res.uncertain ? " 소급이 불확실한 생계급여 " + cs_won(res.uncertain) + "은 손실에 넣지 않았습니다." : ""}</span></div>`;
+
+        html += `<div class="rm-card"><div class="rm-h"><span>4️⃣</span> 첫 번째 사이클 핵심 일정과 반복 결과</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl"><tbody>${keyRows.map((k) => `<tr><td>${k[0]}</td><td><strong>${k[1]}</strong></td></tr>`).join("")}</tbody></table></div>
+          ${kpi}${verdict}`;
+        if (res.infos.some((i) => i.flags.length)) {
+          html += `<div class="rm-box rm-warn" style="margin-top:10px"><strong>주의</strong><ul class="rm-ul">${res.infos.map((i, k) => i.flags.map((f) => `<li>[${k + 1}회차] ${f}</li>`).join("")).join("")}</ul></div>`;
+        }
+        if (p.brk <= p.proc) html += `<div class="rm-box rm-danger" style="margin-top:10px">⚠️ 알바 사이 쉬는 기간(${p.brk}개월)이 재신청 심사 소요(${p.proc}개월)보다 짧거나 같습니다. <strong>결과가 나오기 전에 다시 알바가 시작</strong>되면 재신청의 이점이 사라집니다. 쉬는 기간이 <strong>${p.proc + 1}개월 이상</strong>이어야 급여 재개 후 혜택을 볼 수 있습니다.</div>`;
+        html += `</div>`;
+
+        html += cs_docsCard(p, res);
+
+        // 월별 표
+        const rowsHtml = res.all.filter((x) => x.t >= res.first).map((x) => {
+          const st = CS_ST[x.status] || CS_ST.ok;
+          const e = x.ev;
+          const flag = (b, t) => `<span title="${t}" style="opacity:${b ? 1 : 0.35}">${b ? "✅" : "❌"}</span>`;
+          return `<tr><td><strong>${cs_lab(x.t)}</strong></td><td>${x.alba ? "💼 " + cs_won(p.income) : "—"}</td><td>${cs_won(e.recogLife)}</td><td style="white-space:nowrap">${flag(e.life, "생계")}${flag(e.med, "의료")}${flag(e.house, "주거")}${flag(e.edu, "교육")}</td><td><span class="cs-st" style="background:${st.c}">${st.l}</span>${x.note ? `<div style="font-size:10px;color:var(--text3);margin-top:2px;line-height:1.4">${x.note}</div>` : ""}</td><td style="text-align:right">${x.cash ? "<strong>" + cs_won(x.cash) + "</strong>" : "<span style='color:var(--text3)'>0원</span>"}</td></tr>`;
+        }).join("");
+        html += `<div class="rm-card"><div class="rm-h"><span>5️⃣</span> 월별 타임라인</div>
+          <div class="rm-sub" style="margin-bottom:6px">✅❌ 순서: 생계 · 의료 · 주거 · 교육 (알바 소득만 반영한 자격 판정). 입금 열은 <strong>실제 현금 입금 기준</strong>(소급분은 결정 달에 한꺼번에).</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" style="min-width:640px"><thead><tr><th>월</th><th>알바</th><th>소득인정액</th><th>판정</th><th>상태</th><th>생계급여 입금</th></tr></thead><tbody>${rowsHtml}</tbody></table></div></div>`;
+
+        // 가구원별 경계표
+        const gRows = [1, 2, 3, 4, 5, 6].map((n) => {
+          const pp = Object.assign({}, p, { size: n });
+          const l = cs_limit(pp, p.start);
+          const cell = (v) => (v === null ? "<span style='color:var(--text3)'>—</span>" : cs_won(v));
+          return `<tr${n === p.size ? " style='background:rgba(6,182,212,.12)'" : ""}><td><strong>${n}인${n === 6 ? "+" : ""}</strong></td><td>${cell(l.life)}</td><td>${cell(l.med)}</td><td>${cell(l.house)}</td><td>${cell(l.edu)}</td></tr>`;
+        }).join("");
+        html += `<div class="rm-card"><div class="rm-h"><span>📏</span> 알바 월수입(세전) 상한 — 이 금액 이하면 급여 자격 유지</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl"><thead><tr><th>가구원</th><th>생계급여</th><th>의료급여</th><th>주거급여</th><th>교육급여</th></tr></thead><tbody>${gRows}</tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px">※ 선택한 유형(${({ general: "일반", youth: "청년·대학생", senior: "65세 이상·장애인 등", pregnant: "임신·분만 후" })[p.type]})의 공제와 입력한 기타 소득·재산 환산액을 반영한 추정치입니다.</div></div>`;
+
+        // 급여 곡선(소득별 생계급여)
+        const steps = [];
+        for (let v = 0; v <= 3000000; v += 250000) steps.push(v);
+        const maxAmt = Math.max(ev0.lifeAmt, 1);
+        const curveRows = steps.map((v) => {
+          const e2 = cs_eval(p.start, Object.assign({}, p, { income: v }), true);
+          const w = Math.round((e2.lifeAmt / maxAmt) * 100);
+          const mark = Math.abs(v - p.income) < 125000 ? " style='background:rgba(251,191,36,.15)'" : "";
+          return `<tr${mark}><td>${cs_won(v)}</td><td style="width:45%"><div class="cs-bar"><div style="width:${w}%"></div></div></td><td style="text-align:right">${e2.life ? cs_won(e2.lifeAmt) : "<span style='color:#fb7185'>탈락</span>"}</td><td style="white-space:nowrap">${e2.med ? "✅" : "❌"}의료 ${e2.house ? "✅" : "❌"}주거</td></tr>`;
+        }).join("");
+        html += `<div class="rm-card"><div class="rm-h"><span>📈</span> 알바 월수입별 생계급여 (소득이 늘면 급여는 이렇게 줄어듭니다)</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl"><thead><tr><th>월 알바 수입</th><th>생계급여 크기</th><th>월 생계급여</th><th>의료·주거</th></tr></thead><tbody>${curveRows}</tbody></table></div></div>`;
+
+        out.innerHTML = html;
+        cs_renderGuide(p, res, ev, lim);
+        const dur = document.getElementById("cs_dur");
+        if (dur && !dur.innerHTML) dur.innerHTML = `<thead><tr>${CS_DUR[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${CS_DUR.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+      }
+
+
+      const cs_docState = {};
+      function cs_docChk(k, v) { cs_docState[k] = v; const el = document.getElementById("cs_dk_" + k); if (el) el.classList.toggle("done", v); }
+
+      function cs_docsCard(p, res) {
+        const w1 = res.infos[0];
+        const ab = p.ability;
+        const abRe = {
+          none: "<strong>불필요</strong> — 근로능력평가는 ‘근로능력 없음’ 판정을 받으려는 사람이 신청하는 절차입니다. (만 18~64세 근로능력 있는 수급권자는 조건부수급(자활사업 참여) 대상이 될 수 있음)",
+          valid: "<strong>불필요</strong> — ‘근로능력 없음’ 판정을 받은 사람이 수급자 탈락 후 재신청하면 <strong>기존 판정의 유효기간까지 결과가 인정</strong>됩니다(국민연금공단 안내). 유효기간이 끝났는지 먼저 확인하세요.",
+          expired: "<strong>필요</strong> — 새 평가 서류: 근로능력평가 신청서(주민센터), <strong>근로능력평가용 진단서(최근 2개월 이내 발급)</strong>, <strong>최근 2개월분 진료기록지 사본</strong>, (해당 시) 약물처방지·입퇴원 요약지. 정신신경계는 누적 치료기간 3개월 이상 확인 필요",
+          exempt: "<strong>불필요(평가 면제)</strong> — 면제 사유를 확인할 증빙(장애인등록증·산정특례 등록·장기요양 인정 등)만 제출",
+        }[ab];
+        const rows = [
+          ["사회보장급여 신청서", "필요", "<strong>필요</strong> — 새 신청이라 다시 작성", "급여는 신청일부터 지급 → <strong>신청일이 곧 급여 시작일</strong>이므로 서류가 다 안 모여도 접수부터"],
+          ["금융정보 등 제공동의서", "필요", "<strong>필요</strong> — 새로 작성·서명", "소득·재산 조사를 처음부터 다시 하기 때문. 알바로 번 돈이 남아 있으면 금융재산으로 조회됨"],
+          ["신분증", "필요", "필요", "—"],
+          ["임대차계약서 / 임차료 증빙", "해당 시", "해당 시 (이사·계약 변동이 있으면 새 계약서)", "주거급여 임차급여 판정에 필요"],
+          ["통장 사본(급여 입금 계좌)", "필요", "필요 (계좌가 같으면 담당자 안내에 따름)", "—"],
+          ["가족관계·주민등록 확인", "주민센터가 행정정보로 확인", "동일", "가구원 변동(전입·전출)이 있으면 알리기"],
+          ["<strong>소득 종료 증빙</strong> — 이직확인서(또는 근로계약 종료 확인서), 마지막 급여명세서, 통장 내역", "소득 자료(해당 시)", "<strong>재신청의 핵심 서류</strong>", "공적자료에 알바 소득이 남아 조회돼도 <strong>‘현재 유지되지 않음’이 명백히 확인되면 즉시 반영 제외</strong>가 가능(사업안내) — 퇴직 증빙으로 소명"],
+          ["재산 증빙 (예금·보험·차량 등)", "금융정보 조회 + 필요 시 서류", "동일 (알바 기간 재산 변동 포함)", "수급 중 늘어난 예금·차량은 재신청 때 조사됨"],
+          ["<strong>근로능력평가 서류</strong> (근로능력평가용 진단서·진료기록지 등)", "18~64세 중 ‘근로능력 없음’ 판정을 받으려는 경우만", abRe, "진단서는 <strong>최근 2개월 이내 발급분</strong>만 인정 → 재신청 직전에 발급"],
+          ["이전 수급 결정·중지 통지서", "—", "필수는 아니나 <strong>보관 권장</strong>", "급여 변동 경위·이의신청(90일)·정산 확인 때 필요"],
+        ];
+        const chk = [
+          ["form", "사회보장급여 신청서 작성(재신청)"],
+          ["fin", "금융정보 등 제공동의서 서명(본인·가구원)"],
+          ["id", "신분증"],
+          ["income", "이직확인서 또는 근로계약 종료 확인서 + 마지막 급여명세서 + 통장 거래내역"],
+          ["asset", "예금·보험·차량 등 재산 현황 정리(알바 수입 사용·잔액 포함)"],
+          ["rent", "임대차계약서(해당 시)"],
+        ];
+        if (ab === "expired") { chk.push(["ability1", "근로능력평가용 진단서 (<strong>최근 2개월 이내 발급</strong>)"]); chk.push(["ability2", "최근 2개월분 진료기록지 사본 (+약물처방지·입퇴원 요약지, 정신신경계는 누적 3개월 이상 치료 확인)"]); chk.push(["ability3", "근로능력평가 신청서(주민센터)"]); }
+        if (ab === "valid") chk.push(["ability4", "기존 ‘근로능력 없음’ 판정 통지서와 유효기간 만료일 확인"]);
+        if (ab === "exempt") chk.push(["ability5", "평가 면제 증빙(장애인등록증·산정특례 등록·장기요양 인정서 등)"]);
+
+        let tl = "";
+        if (w1.q !== null) {
+          const items = [];
+          items.push(`<li><strong>${cs_lab(w1.b)}(마지막 근무 달) 이전</strong> — 회사에 이직확인서·근로계약 종료 확인서·마지막 급여명세서 발급 요청 (회사 처리 시간 필요)</li>`);
+          if (ab === "expired") {
+            items.push(`<li><strong>알바 기간(${cs_lab(w1.a)}~${cs_lab(w1.b)}) 중</strong> — 근로능력 평가 대상 질환의 <strong>진료를 끊지 않고 이어가세요</strong> (진료기록지 최근 2개월분, 정신신경계는 누적 3개월 이상 필요)</li>`);
+            items.push(`<li><strong>${cs_lab(w1.q - 1)}~${cs_lab(w1.q)}</strong> — 근로능력평가용 진단서 발급 (<strong>발급 후 2개월 이내</strong> 제출해야 하므로 너무 일찍 받지 마세요)</li>`);
+            items.push(`<li><strong>${cs_lab(w1.q)}</strong> — 수급 재신청과 <strong>같은 날</strong> 근로능력평가 신청서·진단서·진료기록 접수 (신청일 확보)</li>`);
+            items.push(`<li><strong>약 ${cs_lab(w1.q + 1)}</strong> — 근로능력 판정 통보 (접수일부터 <strong>30일 이내</strong>, 자료보완·직접진단 기간은 제외). 보완 요청 2회에 응하지 않으면 반려돼 ‘근로능력 있음’으로 판정될 수 있음</li>`);
+          } else {
+            items.push(`<li><strong>${cs_lab(w1.q)}</strong> — 수급 재신청 접수 (신청서·금융정보 제공동의서·신분증·소득 종료 증빙)</li>`);
+          }
+          tl = `<div class="rm-box rm-info" style="margin-top:10px"><strong>서류 준비 일정 (내 시나리오)</strong><ul class="rm-ul">${items.join("")}</ul></div>`;
+        } else {
+          tl = `<div class="rm-box rm-ok" style="margin-top:10px">이 시나리오에서는 급여 중지 후 재신청이 필요하지 않습니다. 다만 소득 변동 신고에는 <strong>근로계약서·급여명세서(세전)</strong>가 필요합니다.</div>`;
+        }
+        let warn = "";
+        const keep = p.income * p.months - 0;
+        warn += `<div class="rm-box rm-warn" style="margin-top:10px"><strong>알바로 번 돈은 재산 조사에 잡힙니다.</strong> 알바 총수입(${cs_won(p.income * p.months)} / 1회) 중 쓰지 않고 예금으로 남은 돈은 재신청 때 <strong>금융정보 조회로 금융재산</strong>에 반영돼 소득인정액(재산의 소득환산액)이 커질 수 있습니다. 시작 전에 <a href="#" onclick="switchMain('calc');return false" style="color:var(--accent2)">🧮 수급자격 계산기</a>로 재신청 시점의 재산 환산액을 미리 확인하세요.</div>`;
+        if (ab === "expired" && p.proc < 2) warn += `<div class="rm-box rm-danger" style="margin-top:10px">⚠️ 근로능력평가는 <strong>접수 후 30일 이내 통보(보완 기간 제외)</strong>라 수급 결정이 그 뒤로 밀릴 수 있습니다. 심사 소요를 <strong>2개월 이상</strong>으로 잡고 현금 공백에 대비하세요.</div>`;
+        const tableHtml = `<div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" style="min-width:620px"><thead><tr><th>서류</th><th>최초 신청</th><th>재신청 (내 경우)</th><th>참고</th></tr></thead><tbody>${rows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`;
+        const listHtml = `<h4 style="font-size:12px;margin:14px 0 6px">☑️ 재신청 서류 체크리스트</h4>${chk.map((c) => `<label class="rm-ck ${cs_docState[c[0]] ? "done" : ""}" id="cs_dk_${c[0]}"><input type="checkbox" ${cs_docState[c[0]] ? "checked" : ""} onchange="cs_docChk('${c[0]}',this.checked)"><span>${c[1]}</span></label>`).join("")}`;
+        return `<div class="rm-card"><div class="rm-h"><span>📄</span> 재신청 서류 — 최초 신청과 같은 것 · 추가되는 것 · 생략되는 것</div>
+          <div class="rm-box rm-ok"><strong>결론</strong><br />
+            ① <strong>신청서·금융정보 등 제공동의서·신분증은 최초 신청 때와 똑같이 다시</strong> 냅니다. 재신청은 새로운 신청이라 소득·재산 조사도 처음부터 다시 합니다.<br />
+            ② <strong>재신청에서 달라지는 핵심은 ‘소득 종료 증빙’</strong>(이직확인서·마지막 급여명세서)입니다.<br />
+            ③ <strong>병원 진단서(근로능력평가)는 재신청마다 내는 서류가 아닙니다.</strong> ‘근로능력 없음’ 판정을 받으려는 경우에만 필요하고, 이전 판정의 유효기간이 남아 있으면 <strong>탈락 후 재신청해도 기존 결과가 인정</strong>됩니다.
+          </div>
+          ${tableHtml}${tl}${warn}${listHtml}
+          <div class="rm-box rm-info" style="margin-top:12px;font-size:11.5px"><strong>근로능력 ‘없음’ 판정 유효기간</strong> (국민연금공단): 기본 1년, 질환 호전가능성·의학적 단계에 따라 <strong>고착 1단계 2년 · 고착 2~4단계 3년 · 비고착 1단계 1년 · 비고착 2~4단계 2년</strong>, 연속 3회 이상 ‘근로능력 없음’인 정기평가자는 각각 3년·5년·(—)·4년. 자세한 내용은 <a href="#" onclick="switchMain('workability');return false" style="color:var(--accent2)">⚖️ 근로능력판정 탭</a>, 문의 국민연금 1355.</div>
+        </div>`;
+      }
+
+      function cs_renderGuide(p, res, ev, lim) {
+        const el = document.getElementById("cs_guide");
+        if (!el) return;
+        const w1 = res.infos[0];
+        const blocks = [];
+        const B = (cls, title, items) => blocks.push(`<div class="rm-box ${cls}" style="margin-bottom:10px"><div style="font-weight:800;font-size:13px;color:var(--text);margin-bottom:6px">${title}</div><ul class="rm-ul">${items.map((t) => `<li>${t}</li>`).join("")}</ul></div>`);
+
+        // 알바 시작 전
+        const pre = [];
+        if (!ev.life) pre.push(`월 ${cs_won(p.income)}이면 생계급여 선정기준을 넘어 <strong>급여가 중지</strong>됩니다. 소득을 <strong>${lim.life === null ? "—" : "월 " + cs_won(lim.life) + " 이하"}</strong>로 조절할 수 있는지(근무 시간·일수) 먼저 따져보세요. 이 이하면 재신청 반복이 필요 없습니다.`);
+        else pre.push(`입력한 소득은 생계급여 선정기준 안이라 <strong>감액 수급으로 자격이 유지</strong>됩니다. 그래도 취업·소득 발생 사실은 반드시 신고하세요.`);
+        if (!ev.med) pre.push(`<strong>의료급여도 끊기는 소득 수준</strong>입니다. 의료급여가 끊기면 건강보험(직장 또는 지역가입)으로 전환되고 보험료가 생길 수 있으니, 만성질환·정기 진료가 있으면 알바 전에 대책을 세우세요.`);
+        if (!ev.house) pre.push(`<strong>주거급여도 끊기는 수준</strong>입니다. 월세 지원이 사라지는 달의 월세를 어떻게 낼지 미리 계산하세요.`);
+        pre.push(`청년(만 34세 이하)·대학생은 60만원 공제 후 30% 추가공제, 65세 이상·장애인 등은 20만원 공제 후 30% 추가공제가 적용됩니다. 해당하면 유형을 정확히 선택해 상한이 달라지는지 확인하세요.`);
+        pre.push(`자활근로 등 <strong>자활사업 소득</strong>은 별도의 공제·특례가 있습니다. 일반 알바와 구조가 다르므로 <a href="#" onclick="cyTab('deduction');return false" style="color:var(--accent2)">💸 소득공제·장려금</a> 탭과 주민센터 상담을 함께 확인하세요.`);
+        B("rm-info", "① 알바를 시작하기 전", pre);
+
+        // 신고
+        const rep = [`<strong>소득은 취업한 달부터 반영</strong>되고, 급여는 <strong>중지 결정이 속한 달까지 전액 지급, 다음 달부터 0원</strong>입니다. 그래서 <strong>취업한 달 안에 신고해 그 달에 결정</strong>되게 하는 것이 과다지급(환수)을 가장 줄이는 방법입니다.`, `소득이 생기면 <strong>지체 없이</strong>(안내 사례: 10일 이내) 주민센터에 소득 변동을 신고하고 <strong>접수 사실(날짜)</strong>을 남기세요.`, `근로계약서·급여명세서(세전 금액 표시)를 준비합니다. 근로소득은 건강보험 등 <strong>공적자료의 세전 금액이 우선 반영</strong>됩니다.`];
+        if (p.delay !== 0) rep.push(`<strong>신고가 늦을수록 과다지급액이 커집니다.</strong> 이 시나리오에서는 환수 위험액이 ${cs_won(res.overpaid)}으로 추정됩니다. 늦었더라도 지금 바로 신고하는 쪽이 손실이 작습니다.`);
+        B(p.delay !== 0 ? "rm-danger" : "rm-info", "② 알바 시작 직후 — 신고", rep);
+
+        // 중지 통지
+        if (w1.suspendFrom !== null) {
+          B("rm-warn", `③ ${cs_lab(w1.suspendFrom)}부터 급여가 중지될 때`, [
+            "급여 중지·변경은 <strong>산출 근거가 적힌 서면 통지서</strong>로 오며, 중지가 결정된 달의 생계급여는 전부 지급됩니다.",
+            "통지서의 소득인정액·공제 적용(연령·장애 등)이 맞는지 확인하세요. 틀렸다면 <strong>이의신청(통보일로부터 90일 이내)</strong>이 가능합니다.",
+            "의료급여가 끊기면 건강보험 가입 상태를 확인하고, 주거급여가 끊기면 월세 납부 계획을 다시 세웁니다.",
+            "알바 종료 시점을 달력에 적어 두고 <strong>종료 직후 바로 재신청</strong>할 수 있게 준비합니다.",
+          ]);
+        }
+
+        // 종료 재신청
+        if (w1.q !== null) {
+          const re = [
+            `<strong>재신청 서류는 최초 신청과 같습니다</strong>(신청서·금융정보 등 제공동의서·신분증)${p.ability === "expired" ? ". 여기에 <strong>근로능력평가 서류(진단서는 최근 2개월 이내 발급)</strong>가 추가됩니다" : p.ability === "valid" ? ". <strong>기존 ‘근로능력 없음’ 판정의 유효기간 안이면 진단서 없이</strong> 기존 결과가 인정됩니다" : ". 진단서는 ‘근로능력 없음’ 판정을 받으려는 경우에만 필요합니다"}. 아래 📄 서류 카드를 체크하며 준비하세요.`,
+            `퇴사 전에 <strong>이직확인서·근로계약 종료 확인서·마지막 급여명세서</strong>를 회사에 요청하세요(처리 시간이 필요). 공적자료에 과거 소득이 남아 조회되더라도 <strong>현재 유지되지 않음이 명백히 확인되면 즉시 반영 제외</strong>가 가능하므로(사업안내) 퇴직 증빙을 꼭 제출하세요.`,
+            `급여는 <strong>신청일부터</strong> 지급되고 급여 개시 달의 생계급여는 <strong>전부 지급</strong>되므로 ${p.apply >= 2 ? `<strong>${p.apply}개월 늦게 신청하면 그 달들은 못 받는 공백</strong>이 됩니다. ` : ""}<strong>소득이 끝난 달의 다음 달(또는 마지막 근무 달)에 바로 신청</strong>하세요.`,
+            `접수증(신청일)을 보관하고, 심사 소요는 <strong>원칙 30일·최대 60일</strong>이지만 ${p.proc}개월로 가정했습니다. 보완서류 요청은 즉시 응대하세요.`,
+            `결정 전 ${res.cashGap > 0 ? "<strong>현금이 들어오지 않는 달</strong>이 생기므로" : ""} <a href="#" onclick="switchMain('emergency');return false" style="color:var(--accent2)">🚨 긴급복지 생계지원</a>(선지원 후조사, 기본 3개월)을 재신청과 같은 주에 신청하세요.`,
+          ];
+          B("rm-ok", `④ ${cs_lab(w1.b)} 알바 종료 → 재신청 (${cs_lab(w1.q)}) → 결정 (${cs_lab(w1.d)})`, re);
+        }
+
+        // 반복
+        const rp = [];
+        rp.push(`반복 ${p.cycles}회 동안 <strong>급여를 받지 못하는 달은 ${res.legalGap}개월</strong>, 현금이 들어오지 않는 달은 ${res.cashGap}개월입니다. 알바 수입이 공백으로 잃는 생계급여(${cs_won(res.lost)})보다 큰지 비교하세요.`);
+        rp.push(`알바 사이 쉬는 기간은 <strong>심사 소요(${p.proc}개월)보다 길게</strong> 잡아야 재신청 결과를 누릴 수 있습니다. 현재 ${p.brk}개월 입니다.`);
+        rp.push(`잦은 신청·탈락 자체로 불이익을 주는 규정은 없지만, 매번 소득·재산 조사가 새로 진행되므로 <strong>근무·소득 내역을 월별로 정리</strong>해 두면 심사가 빨라집니다.`);
+        rp.push(`알바가 반복될 거라면 <strong>소득을 선정기준 이하로 맞추는 방법</strong>(근무량 조절)이나 자활사업 참여, 의료급여·주거급여 특례 가능 여부를 주민센터와 상담하세요. 상세는 <a href="#" onclick="cyTab('bridge');return false" style="color:var(--accent2)">🌉 탈수급 후 공백기 대응</a>을 참고하세요.`);
+        B("rm-info", "⑤ 반복할 때", rp);
+
+        el.innerHTML = blocks.join("");
+      }
+
+      // ──────────────────────────────────────────
       // 반복수급 가이드 탭 전환
       // ──────────────────────────────────────────
       const CY_TABS = [
+        "sim",
         "overview",
         "reapply",
         "deduction",
@@ -16526,7 +17105,8 @@
       function cy_init() {
         if (cy_initialized) return;
         cy_initialized = true;
-        cyTab("overview");
+        cyTab("sim");
+        if (typeof cs_calc === "function") cs_calc();
       }
 
       function hp_renderIncomeTable() {
