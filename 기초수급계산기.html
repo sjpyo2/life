@@ -3434,6 +3434,13 @@
       >
         <button
           class="step-btn active"
+          onclick="rentalTab('notice')"
+          id="rtab-notice"
+        >
+          📡 공고 확인 센터
+        </button>
+        <button
+          class="step-btn"
           onclick="rentalTab('guide')"
           id="rtab-guide"
         >
@@ -3462,6 +3469,13 @@
         </button>
         <button
           class="step-btn"
+          onclick="rentalTab('happy')"
+          id="rtab-happy"
+        >
+          🌟 행복주택
+        </button>
+        <button
+          class="step-btn"
           onclick="rentalTab('purchase')"
           id="rtab-purchase"
         >
@@ -3482,8 +3496,134 @@
         </button>
       </div>
 
+      <!-- 공고 확인 센터 -->
+      <div id="rental-notice">
+        <div class="rm-card">
+          <div class="rm-h"><span>📡</span> 공고 확인 센터 — 수시 공고 · 정기 접수 · 내 지역 채널</div>
+          <div class="rm-sub">
+            공공임대 공고는 <strong style="color:var(--text)">연중 불규칙하게 올라오는 ‘수시(예비입주자) 공고’</strong>와
+            <strong style="color:var(--text)">연 몇 차례 대규모로 나오는 ‘정기 공고’</strong>가 섞여 있고,
+            접수 기간이 <strong style="color:var(--text)">3~5일(평일·마감 시각 오후)</strong>로 짧아 놓치기 쉽습니다.
+            이 화면에서 <strong style="color:var(--text)">무엇을 매일 보고, 무엇을 시즌에 보는지, 내 지역은 어디를 봐야 하는지</strong> 바로 확인하세요.
+          </div>
+          <div class="rm-linkrow" style="margin-top:12px">
+            <a class="rm-lk" href="https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026" target="_blank" rel="noopener">⚡ LH 공고문 목록 (접수중·마감일)</a>
+            <a class="rm-lk" href="https://housing.seoul.go.kr/site/main/sh/publicLease/07/list" target="_blank" rel="noopener">⚡ SH 행복주택 공고 목록</a>
+            <a class="rm-lk" href="https://apply.gh.or.kr/co/coa/selectMainView.do" target="_blank" rel="noopener">⚡ GH 청약센터 (경기)</a>
+            <a class="rm-lk" href="https://www.ih.co.kr" target="_blank" rel="noopener">⚡ iH 인천도시공사</a>
+            <a class="rm-lk" href="https://www.myhome.go.kr" target="_blank" rel="noopener">마이홈포털</a>
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🔔</span> ① 매일 확인할 곳(수시) vs 시즌에 확인할 곳(정기)</div>
+          <div class="rm-box rm-info" style="margin-bottom:10px;font-size:12px">
+            <strong>기준</strong>: <span style="color:#fb7185"><strong>수시</strong></span> = 공고가 언제 뜰지 모르니 <strong>평일 하루 1번 5분</strong> 확인 · <span style="color:#fbbf24"><strong>정기</strong></span> = 과거에 비슷한 달에 반복해서 올라왔으니 <strong>그 시기에 집중 확인</strong>. 정기 시기는 2024~2026년 실제 공고 패턴이며 <strong>올해 일정은 공고로 확정</strong>됩니다.
+          </div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="no_tbl" style="min-width:760px"></table></div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🗺️</span> ② 내 지역 공고 바로보기</div>
+          <div class="rm-chips" data-nq="region">
+            <button class="rm-chip" onclick="no_region('seoul',this)">서울</button>
+            <button class="rm-chip" onclick="no_region('gyeonggi',this)">경기</button>
+            <button class="rm-chip" onclick="no_region('incheon',this)">인천</button>
+            <button class="rm-chip" onclick="no_region('gwangju',this)">광주</button>
+            <button class="rm-chip" onclick="no_region('jeonnam',this)">전남</button>
+            <button class="rm-chip" onclick="no_region('other',this)">그 외 지역</button>
+          </div>
+          <div id="no_region_out" class="rm-box rm-info" style="margin-top:10px">지역을 선택하면 매일 볼 곳, 시즌에 볼 곳, 접수처가 원클릭 버튼으로 나옵니다.</div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>⏱️</span> ③ 공고에서 마감일·접수처를 3초 만에 찾는 법</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="no_three" style="min-width:640px"></table></div>
+          <h4 style="font-size:12px;margin:14px 0 6px">📅 실제 공고는 이런 모양입니다 — 접수 3일, 서류 3일, 발표는 몇 달 뒤</h4>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="no_tl" style="min-width:640px"></table></div>
+          <div class="rm-box rm-warn" style="margin-top:10px;font-size:12px">
+            <strong>놓치기 쉬운 포인트</strong>
+            <ul class="rm-ul">
+              <li><strong>접수 시작은 오전 10시</strong>, <strong>마감은 오후 16~17시</strong>인 공고가 많습니다(날짜만 보고 퇴근 후에 하면 이미 마감).</li>
+              <li>SH 행복주택은 <strong>주말은 인터넷 접수 불가</strong>(예: 7/11 금 10시~7/15 화 17시 → 실제로는 평일 3일).</li>
+              <li>서류심사 대상자로 뽑히면 <strong>서류 제출도 3일 내외(등기우편, 우체국 소인 기준)</strong>입니다. 일반우편은 불가한 공고가 있습니다.</li>
+              <li>인터넷 청약은 <strong>공동인증서·금융인증서·간편인증</strong>이 필요합니다. 마감 당일 인증서 오류로 놓치지 않게 미리 로그인 테스트를 해두세요.</li>
+              <li>같은 유형·같은 발표일 공고에 <strong>중복 신청하면 무효</strong>가 될 수 있고, 공공임대에 입주하면 <strong>다른 예비자 명부에서 모두 제외</strong>될 수 있습니다(SH 공고문 기준).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rm-card" style="padding:14px 18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:8px">
+            <strong>✅ 놓치지 않는 세팅 진행 상황</strong><span id="no_prog_txt" style="color:var(--text3)">0 / 0</span>
+          </div>
+          <div class="rm-prog"><div id="no_prog_bar"></div></div>
+        </div>
+        <div class="rm-card">
+          <div class="rm-h"><span>🛎️</span> ④ 알림 세팅 · 매일 5분 루틴 · 접수일 체크</div>
+          <div id="no_steps"></div>
+        </div>
+
+        <div class="rm-box rm-warn" style="font-size:11px;line-height:1.8">
+          📚 <strong>근거</strong>: LH청약플러스 공고문 목록(번호·유형·공고명·지역·게시일·마감일·상태 열), 서울주거포털 SH 임대/분양 공고 목록(2024.12~2026.5 행복주택 공고 이력)·SH 2025 2차 행복주택 공고문, 헤럴드경제 SH 2026 행복주택 보도(2026.5.27), 경기일보·메트로신문 GH 매입임대 보도(2025.4·2025.12), 경기도·위키트리 경기행복주택 2026.5.4~8 접수, 광주전남 LH 공고 사례, 인천 iH 입주자모집공고 게시판 안내. (확인일: 2026.10.18)<br />
+          ⚠️ 접수 기간·시각·접수처·모집 단지는 <strong>공고마다 다르며 공고문이 최종 기준</strong>입니다. 위 ‘정기 시즌’은 과거 패턴이고, 광주·전남·인천 일부 사례는 공고 요약 서비스(주거나침반)의 정리를 참고했습니다. 사이트 개편으로 메뉴·주소가 바뀔 수 있습니다.
+        </div>
+      </div>
+
+      <!-- 행복주택 -->
+      <div id="rental-happy" style="display: none">
+        <div class="rm-card">
+          <div class="rm-h"><span>🌟</span> 행복주택 — 청년·신혼·고령자·주거급여수급자 계층별 공공임대</div>
+          <div class="rm-sub">
+            시세의 <strong style="color:var(--text)">60~80%</strong> 임대료로 공급되고, 계층에 따라 <strong style="color:var(--text)">최대 10년~20년</strong> 거주할 수 있는 공공임대입니다.
+            <strong style="color:var(--text)">LH·SH(서울)·GH(경기 ‘경기행복주택’)·iH(인천)</strong> 등이 각자 공고를 냅니다. 수급자는 <strong style="color:var(--text)">‘주거급여수급자’ 계층(거주 최대 20년)</strong>이나 고령자·청년·신혼 계층 중 해당하는 곳으로 신청합니다.
+          </div>
+          <div class="rm-box rm-warn" style="margin-top:12px;font-size:12px">
+            <strong>수급자가 꼭 알아둘 점</strong><br />
+            • 행복주택은 영구임대·매입임대와 달리 <strong>보증금이 큰 편</strong>입니다. SH 2026년 1차 평균: 전용 29㎡ 이하 <strong>보증금 6,200만원·월 24만원</strong>, 39㎡ 이하 1억 1,400만원·월 43만원. 보증금이 거의 없다면 영구임대·매입임대·주거상향지원을 우선하세요.<br />
+            • <strong>공공임대(국민·영구·행복·통합)에 입주하면 다른 예비자 명부에서 모두 제외</strong>될 수 있습니다(SH 공고문 기준). 영구임대를 기다리는 중이라면 행복주택 입주 전에 영향을 확인하세요.
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>👥</span> 계층별 자격 · 거주기간 (2026 LH·SH 안내)</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="hpy_tbl" style="min-width:680px"></table></div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>💰</span> 소득·자산·임대조건</div>
+          <ul class="rm-ul" style="font-size:12px;line-height:1.9;color:var(--text2)">
+            <li><strong>소득</strong>: 전년도 도시근로자 가구원수별 월평균소득 <strong>100% 이하</strong> (대학생은 본인+부모 소득, 세대원인 청년은 본인 소득, <strong>맞벌이 부부 120%</strong>, 1인 가구 +20%p·2인 가구 +10%p 가산) — LH 2026 안내. 참고: 2026 서울주거포털 안내 기준 월평균소득 100%는 1인 3,813,363원, 2인 5,866,270원.</li>
+            <li><strong>자산</strong>: 총자산 <strong>3억 4,500만원</strong> 이하, 자동차 <strong>4,542만원</strong> 이하 (신혼부부·한부모 기준, 2026년 적용). <strong>대학생·청년 등은 별도 기준</strong>이므로 공고문 확인.</li>
+            <li><strong>임대료</strong>: 주변 시세 60~80%. SH 2026 1차 평균 — 29㎡ 이하 보증금 6,200만원·월 24만원 / 39㎡ 이하 1.14억·43만원 / 49㎡ 이하 1.36억·52만원 / 59㎡ 이하 1.63억·62만원. 단지·면적별 편차가 크니 <strong>공고문의 ‘공급 세대 및 임대조건’</strong>을 보세요.</li>
+            <li><strong>거주기간</strong>(2년 단위 재계약): 대학생·청년·산업단지근로자 최대 <strong>10년</strong>, 신혼부부·한부모 <strong>10~14년</strong>, 고령자·주거급여수급자 최대 <strong>20년</strong> (LH·SH 2026 안내; 과거 공고에는 6년으로 표기된 사례가 있어 <strong>공고문 확인</strong>).</li>
+          </ul>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>👣</span> 신청 순서 — SH 2026년 1차 공고 사례</div>
+          <ol class="rm-ul" style="font-size:12px;line-height:1.95;color:var(--text2);padding-left:20px">
+            <li><strong>공고 (5.28)</strong> — 서울주거포털/SH 누리집에 오후 4시 게시. 이날이 <strong>자격 판단 기준일(모집공고일)</strong>입니다.</li>
+            <li><strong>인터넷 청약 (6.15~17, 3일)</strong> — SH 인터넷청약(공동인증서·간편인증). <strong>고령자·장애인은 6.16~17 방문 접수</strong> 가능.</li>
+            <li><strong>서류심사 대상자 발표 (6.26)</strong> — 대상자에 뽑히면 <strong>기간 내 서류 제출</strong>(미제출 시 탈락).</li>
+            <li><strong>당첨자 발표 (10.30)</strong> — 공고 후 <strong>약 5개월</strong>. 입주는 12월부터 가능(단지별 상이).</li>
+            <li>예비입주자는 <strong>공가 발생 순서대로 계약 안내</strong>(등기우편) — 주소·전화 변경은 즉시 갱신.</li>
+          </ol>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px">※ LH 행복주택은 LH청약플러스 인터넷 청약, GH 경기행복주택은 GH 청약센터, iH는 iH 공고문의 접수 방법을 따릅니다. 우선공급(예: 2세 미만 자녀가 있는 신청자, 2026 SH 1차) 등 가점·우선순위는 공고마다 달라 공고문에서 확인하세요.</div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🗺️</span> 지역별 행복주택 공고 확인처</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="hpy_reg" style="min-width:640px"></table></div>
+        </div>
+
+        <div class="rm-box rm-info" style="font-size:12px">
+          🎯 <strong>수급자 우선순위 정리</strong>: ① 보증금이 없으면 주거취약계층 주거상향지원·영구임대·매입임대(1순위 수급자) → ② 보증금을 마련할 수 있으면 행복주택 ‘주거급여수급자’ 계층(최대 20년) 또는 해당하는 고령자·청년·신혼 계층 병행 → ③ 어느 쪽이든 <a href="#" onclick="rentalTab('notice');return false" style="color:var(--accent2)">📡 공고 확인 센터</a>에서 올라오는 즉시 접수.
+        </div>
+      </div>
+
       <!-- 내 케이스별 신청 가이드 -->
-      <div id="rental-guide">
+      <div id="rental-guide" style="display: none">
         <div class="rm-card">
           <div class="rm-h"><span>🧭</span> 기초수급자 임대주택 신청 — 내 케이스대로 따라 하기</div>
           <div class="rm-sub">
@@ -3497,6 +3637,7 @@
             3) <strong>접수처는 유형·공고마다 다릅니다.</strong> 영구임대·전세임대·매입임대는 <strong>주민등록지 주민센터 접수</strong>인 경우가 많고, 국민임대·행복주택은 <strong>LH청약플러스 인터넷 청약</strong>이 일반적입니다. 반드시 공고문의 ‘신청방법’을 확인하세요.<br />
             4) <strong>예비입주자로 선정돼도 바로 입주하는 게 아닙니다.</strong> 공가·해약이 생길 때 순번대로 계약 안내가 옵니다.<br />
             5) 서로 다른 유형은 <strong>병행 신청</strong>하는 것이 유리합니다. (같은 당첨자 발표일 주택에 중복 청약하면 무효 처리될 수 있으니 공고문 확인)
+            <div class="rm-linkrow"><button class="rm-lk" onclick="rentalTab('notice')">📡 지금 접수 중인 공고 확인하러 가기 (수시·정기·지역별)</button></div>
           </div>
         </div>
 
@@ -3529,6 +3670,8 @@
               <button class="rm-chip" onclick="rt_pick('region','seoul',this)">서울</button>
               <button class="rm-chip" onclick="rt_pick('region','gyeonggi',this)">경기</button>
               <button class="rm-chip" onclick="rt_pick('region','incheon',this)">인천</button>
+              <button class="rm-chip" onclick="rt_pick('region','gwangju',this)">광주</button>
+              <button class="rm-chip" onclick="rt_pick('region','jeonnam',this)">전남</button>
               <button class="rm-chip" onclick="rt_pick('region','other',this)">그 외 지역</button>
             </div>
           </div>
@@ -3607,7 +3750,7 @@
       <div id="rental-overview" style="display: none">
         <div class="card" style="margin-bottom: 16px">
           <div class="card-title">
-            <span class="icon">🏘️</span> LH 공공임대주택 4가지 유형 비교
+            <span class="icon">🏘️</span> 공공임대주택 유형 비교 (영구·국민·행복·매입·전세)
           </div>
           <div
             style="font-size: 11px; color: var(--text3); margin-bottom: 14px"
@@ -3801,7 +3944,21 @@
             </div>
           </div>
         </div>
-      </div>
+              <div class="card" style="margin-bottom: 16px; cursor: pointer" onclick="rentalTab('happy')">
+          <div style="background: var(--surface2); border-radius: 12px; padding: 14px 16px; border-left: 4px solid #fbbf24">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px">
+              <div style="font-weight: 700; font-size: 14px; color: #fbbf24">🌟 행복주택 (신규 추가)</div>
+              <div style="font-size: 11px; background: rgba(251,191,36,0.15); color: #fbbf24; padding: 3px 8px; border-radius: 20px">청년·신혼·고령자·주거급여수급자</div>
+            </div>
+            <div style="font-size: 12px; color: var(--text2); line-height: 1.7">
+              <strong style="color: var(--text)">대상:</strong> 무주택 대학생·청년·(예비)신혼부부·한부모·고령자·<strong>주거급여수급자</strong>·산단근로자 (소득 100% 이하 등, 계층별 상이)<br />
+              <strong style="color: var(--text)">임대료:</strong> 시세의 60~80% — 보증금이 큰 편 (SH 2026 1차 평균 29㎡ 이하 6,200만원·월 24만원)<br />
+              <strong style="color: var(--text)">거주기간:</strong> 청년 최대 10년 · 신혼·한부모 10~14년 · 고령자·주거급여수급자 20년<br />
+              <strong style="color: var(--text)">신청:</strong> LH청약플러스·SH 인터넷청약·GH 청약센터·iH (공급기관별) — 상세는 눌러서 확인
+            </div>
+          </div>
+        </div>
+</div>
 
       <!-- 영구임대 상세 -->
       <div id="rental-permanent" style="display: none">
@@ -11237,7 +11394,7 @@
         if (tab === "income") ic_updateBenefit();
         if (tab === "emergency") em_init();
         if (tab === "medical") med_init();
-        if (tab === "rental") rentalTab("guide");
+        if (tab === "rental") rentalTab("notice");
         if (tab === "workability") wa_init();
         if (tab === "plan") plan_init();
         if (tab === "gwork") gw_init();
@@ -11355,6 +11512,141 @@
 
 
       // ──────────────────────────────────────────
+      // 공고 확인 센터 · 행복주택
+      // ──────────────────────────────────────────
+      const URL_LH = "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026";
+      const URL_SH_HP = "https://housing.seoul.go.kr/site/main/sh/publicLease/07/list";
+      const URL_SH_PORTAL = "https://housing.seoul.go.kr";
+      const URL_SH_APP = "https://www.i-sh.co.kr/app";
+      const URL_GH = "https://apply.gh.or.kr/co/coa/selectMainView.do";
+      const URL_GG = "https://housing.gg.go.kr";
+      const URL_IH = "https://www.ih.co.kr";
+      const URL_MYHOME = "https://www.myhome.go.kr";
+      const nvq = (q) => "https://search.naver.com/search.naver?query=" + encodeURIComponent(q);
+      const nobtn = (l, u) => `<a class="rm-lk" href="${u}" target="_blank" rel="noopener">⚡ ${l}</a>`;
+
+      const NO_ROWS = [
+        ["구분", "기관 · 유형", "올라오는 방식 (근거)", "확인 주기", "접수 방식", "바로가기"],
+        ["<span style='color:#fb7185'><strong>수시</strong></span>", "<strong>LH 기존주택 매입임대</strong> 예비입주자 ([○○지역본부] 26년 N차, 청년·신혼신생아·고령자·다자녀)", "2026년부터 지역본부별·차수별 수시 공고 (예: 인천지역본부 26년 4차 청년 매입임대, 광주전남 매입임대 2026.6.18 공고)", "평일 매일 5분", "공고별 — 주민등록지 행정복지센터 또는 LH청약플러스 인터넷", nobtn("LH 공고 목록", URL_LH)],
+        ["<span style='color:#fb7185'><strong>수시</strong></span>", "<strong>LH 영구임대·국민임대·행복주택</strong> 단지별 예비입주자 모집", "2026.9 영구임대 예비입주자 공고 다수, 행복주택 ‘입자격완화 예비입주자’(광주첨단 2026.6.15, 남동구 2026.5) 등 단지별로 수시", "평일 매일 5분", "대부분 LH청약플러스 인터넷(방문접수 불가 공고 많음)", nobtn("LH 공고 목록", URL_LH)],
+        ["<span style='color:#fb7185'><strong>수시</strong></span>", "<strong>iH 인천도시공사</strong> 매입임대·천원주택·전세임대·영구/행복 예비자", "iH 입주자모집공고 게시판에 수시 게시(2026.9 기준 다수)", "평일 매일 5분", "공고별 — 온라인·방문·우편 혼재", nobtn("iH 홈페이지", URL_IH)],
+        ["<span style='color:#fbbf24'><strong>정기</strong></span>", "<strong>SH 행복주택</strong> (서울)", "연 2~3회: 2024.12.27 · 2025.4.25 · 2025.6.27 · 2025.12.31 · 2026.5.28 공고. 공고 후 약 2주 뒤 접수, 당첨자 발표는 약 5개월 뒤", "4~6월·12월 집중 확인", "SH 인터넷청약(평일 3일, 주말 불가, 마감 17시) · 고령자·장애인 방문 2일", nobtn("SH 행복주택 목록", URL_SH_HP) + nobtn("SH 인터넷청약", URL_SH_APP)],
+        ["<span style='color:#fbbf24'><strong>정기</strong></span>", "<strong>GH 경기행복주택</strong> (경기)", "대규모 정기 모집: 2026.5.4~8 접수(17개 시·군 28개 단지 2,034명)", "4~5월 집중 확인", "GH 청약센터 인터넷", nobtn("GH 청약센터", URL_GH)],
+        ["<span style='color:#fbbf24'><strong>정기</strong></span>", "<strong>GH 매입임대</strong> 예비입주자 (경기 시·군)", "2025.4.14~18(27개 시·군 3,099호), 2025.12.15~18(일반형 10개 시·군 946가구, 청년형 5개 시 123명)", "3~4월·11~12월 집중 확인", "일반형: 주민등록지 행정복지센터 · 청년형: GH 청약센터", nobtn("GH 청약센터", URL_GH)],
+        ["<span style='color:#fbbf24'><strong>정기</strong></span>", "<strong>LH·GH·iH 기존주택 전세임대</strong> 1순위", "2026년 LH 전세임대 공고 5.21 → 접수 6.8~12(주민등록지 행정복지센터) · 경기 GH 시·군별 1월 접수 사례(김포 1.12~23). 다자녀·청년 전세임대는 수시", "5~6월 · 1월 + 수시", "주민등록지 행정복지센터", nobtn("LH 공고 목록", URL_LH)],
+        ["<span style='color:#fb7185'><strong>수시</strong></span>", "<strong>광주·전남</strong> LH 광주전남지역본부 + 광주도시공사·전남개발공사", "매입임대·청년·신혼신생아·행복주택 예비입주자(광주첨단, 목포용해·영암 등) 수시. 사례: 인터넷 4/27(월) 10시~4/29(수) 16시(3일)", "평일 매일 5분", "인터넷/모바일(LH청약플러스) 또는 공고별", nobtn("LH 공고 목록", URL_LH) + nobtn("광주도시공사 공고 검색", nvq("광주광역시도시공사 임대주택 입주자 모집공고")) + nobtn("전남개발공사 공고 검색", nvq("전남개발공사 임대주택 입주자 모집공고"))],
+        ["<span style='color:#fb7185'><strong>상시</strong></span>", "<strong>주거취약계층 주거상향지원</strong> (고시원·쪽방 3개월+)", "공고 대기 없이 주민센터에서 상담·신청(지자체별 운영 확인)", "필요할 때", "읍·면·동 주민센터", nobtn("마이홈포털", URL_MYHOME)],
+      ];
+      const NO_THREE = [
+        ["보는 곳", "열·칸 이름", "3초 규칙"],
+        ["<strong>LH청약플러스 공고문 목록</strong>", "번호 · 유형 · 공고명 · <strong>지역</strong> · 첨부 · 게시일 · <strong>마감일</strong> · <strong>상태</strong> · 조회수", "① <strong>지역</strong> 열에서 내 시·군·구 → ② <strong>상태</strong>가 ‘접수중’인지 → ③ <strong>마감일</strong>이 오늘 이후인지 → ④ 공고명을 눌러 <strong>첨부 PDF 앞부분의 ‘신청 접수’ 칸</strong>에서 접수처(인터넷/주민센터)와 접수 시각 확인"],
+        ["<strong>서울주거포털(SH 공고 목록)</strong>", "번호 · 청약유형 · 공고명 · 공고게시일 · <strong>발표일</strong> · <strong>모집상태</strong> · 담당부서 · 링크", "① 청약유형 ‘행복주택’ → ② <strong>모집상태</strong>가 ‘모집중’인지 → ③ ‘바로가기’로 SH 공고문 → <strong>‘접수일’ 항목</strong>(인터넷·방문 구분, 시각)"],
+        ["<strong>GH 청약센터</strong>", "유형별·접수 상태별 공고 + 현재 접수 진행 중 공고 건수", "① 메인에서 ‘접수 진행 중’ 건수 → ② 유형(경기행복주택·매입임대) → ③ 공고 상세의 접수 기간·방법"],
+        ["<strong>공고문 PDF 3초 확인</strong>", "‘모집공고일’ · ‘접수일’ · ‘신청방법’ · ‘제출서류’", "PDF에서 <strong>Ctrl+F로 ‘접수’ 검색</strong> → 접수일(날짜·시각)과 <strong>인터넷 / 방문(주민센터) / 우편</strong> 구분을 확인"],
+      ];
+      const NO_TL = [
+        ["공고", "인터넷 접수", "방문 접수", "서류심사 대상자 발표", "서류 제출", "당첨자 발표"],
+        ["<strong>SH 행복주택 2025년 2차</strong> (공고 6.27)", "7.11(금) 10:00 ~ 7.15(화) 17:00 <span style='color:#fb7185'>(주말 불가)</span>", "7.14~15 10~17시", "7.25 16시 이후", "7.30~8.1 등기우편", "11.21 예정"],
+        ["<strong>SH 행복주택 2026년 1차</strong> (공고 5.28)", "6.15~17", "6.16~17 (고령자·장애인)", "6.26", "공고 확인(등기우편)", "10.30"],
+        ["<strong>LH 광주전남 매입임대</strong> (2026.4 공고 사례)", "4.27(월) 10:00 ~ 4.29(수) 16:00", "—", "4.30 14시 이후", "5.6~5.8 등기우편(5.8 소인까지)", "6.11 이후 (LH청약플러스/ARS)"],
+        ["<strong>GH 매입임대 일반형</strong> (2025.12)", "—", "12.15~18 주민등록지 행정복지센터", "공고 확인", "공고 확인", "공고 확인"],
+      ];
+      const NO_REG = {
+        seoul: { n: "서울", daily: [["LH 공고 목록 (지역 ‘서울’)", URL_LH], ["서울주거포털 — SH 임대/분양 공고", URL_SH_PORTAL]], season: [["SH 행복주택 공고 목록", URL_SH_HP], ["SH 인터넷청약", URL_SH_APP]], how: "SH 행복주택은 평일 3일 인터넷 접수(마감 17시, 주말 불가), <strong>고령자·장애인은 방문 접수</strong> 가능. LH 영구·매입·전세임대는 공고별로 주민센터 또는 인터넷.", tel: "SH 1600-3456 · LH(마이홈) 1600-1004" },
+        gyeonggi: { n: "경기", daily: [["LH 공고 목록 (지역 ‘경기’)", URL_LH], ["GH 청약센터 (임대주택·매입임대 공고)", URL_GH]], season: [["경기주거복지포털", URL_GG], ["GH 청약센터 — 경기행복주택·국민임대", URL_GH]], how: "GH 매입임대(일반형)는 <strong>주민등록지 행정복지센터 접수(4~5일)</strong>, 청년형·경기행복주택은 GH 청약센터 인터넷. 2026 경기행복주택은 5.4~8 접수.", tel: "LH(마이홈) 1600-1004 · GH 청약센터 안내" },
+        incheon: { n: "인천", daily: [["iH — 임대 관련 소식 → 입주자모집공고", URL_IH], ["LH 공고 목록 (인천지역본부)", URL_LH]], season: [["LH 전세임대 정기 모집(공고 5월경) — LH 목록", URL_LH], ["iH 임대주택 지도정보", "https://landmap.ih.co.kr/HWmap/"]], how: "인천은 <strong>iH와 LH 인천지역본부</strong> 공고를 모두 확인하세요. iH는 공고마다 온라인·방문·우편 접수가 섞여 있어 공고문의 접수 방법을 먼저 봅니다.", tel: "LH(마이홈) 1600-1004" },
+        gwangju: { n: "광주", daily: [["LH 공고 목록 (지역 ‘광주’)", URL_LH], ["광주광역시도시공사 공고 (검색)", nvq("광주광역시도시공사 임대주택 입주자 모집공고")]], season: [["LH 전세임대 정기 모집(공고 5월경) — LH 목록", URL_LH]], how: "<strong>LH 광주전남지역본부</strong>가 매입임대·청년/신혼신생아 매입임대·행복주택 예비입주자를 수시 공고합니다. 사례: 인터넷 4/27(월) 10시~4/29(수) 16시(3일), 서류 5/6~8 등기우편(소인), 발표 6/11. 광주도시공사 공고도 따로 확인하세요.", tel: "LH(마이홈) 1600-1004" },
+        jeonnam: { n: "전남", daily: [["LH 공고 목록 (지역 ‘전남’)", URL_LH], ["전남개발공사 공고 (검색)", nvq("전남개발공사 임대주택 입주자 모집공고")]], season: [["LH 전세임대 정기 모집(공고 5월경) — LH 목록", URL_LH]], how: "전남은 <strong>LH 광주전남지역본부와 전남개발공사</strong>가 공급합니다(행복주택 예비입주자: 목포·영암·장성·여수 등 수시, 광주·전남 매입임대 광주 5개 구·전남 4개 시·군). 두 곳을 모두 확인하세요.", tel: "LH(마이홈) 1600-1004" },
+        other: { n: "그 외 지역", daily: [["LH 공고 목록 (지역 열에서 내 지역)", URL_LH], ["마이홈포털 — 지역 공급기관 안내", URL_MYHOME]], season: [["LH 전세임대 정기 모집(공고 5월경) — LH 목록", URL_LH]], how: "LH 공고 목록의 <strong>‘지역’ 열</strong>로 내 지역만 골라 보고, 해당 <strong>시·도 도시공사(지방공사)</strong> 공고도 함께 확인하세요. 광역시·도마다 공사 청약 시스템이 따로 있습니다.", tel: "LH(마이홈) 1600-1004" },
+      };
+      const NO_STEPS = [
+        { h: "🔔 알림·즐겨찾기 세팅 (오늘 10분)", items: [
+          "<strong>LH청약플러스 앱</strong>을 설치하고 <strong>알림을 켰다</strong> (공고 알리미·오늘의 청약일정 기능)",
+          "내 지역 공사 채널을 즐겨찾기했다 — 서울 SH 행복주택 목록 · 경기 GH 청약센터 · 인천 iH · 광주·전남 LH 목록(+광주도시공사·전남개발공사)",
+          "브라우저 즐겨찾기 1번에 <strong>LH 공고문 목록</strong>을 넣었다 (‘마감일’·‘상태’ 열이 보이는 목록)",
+          "<strong>인증서(공동·금융·간편)</strong>가 유효한지 로그인 테스트를 했다",
+        ]},
+        { h: "📆 매일 5분 루틴 (평일)", items: [
+          "LH 공고문 목록에서 <strong>내 지역 + 상태 ‘접수중’</strong>인 공고가 있는지 본다",
+          "공고가 있으면 <strong>마감일</strong>과 <strong>접수처(인터넷/주민센터)</strong>를 3초 규칙으로 확인하고 캘린더에 접수 시작·마감 시각을 넣는다",
+          "정기 시즌(SH 4~6월·12월, GH 4~5월·12월, 전세임대 5~6월)에는 해당 공사 목록을 하루 2번 본다",
+        ]},
+        { h: "🧾 접수일 전 체크 (D-3 → 당일)", items: [
+          "<strong>D-3</strong>: 모집공고일 기준으로 주민등록 주소·무주택·수급자 상태가 맞는지 점검했다",
+          "<strong>D-3</strong>: 공고문 ‘제출서류’를 읽고, <strong>공고일 이후 발급분</strong>이 필요한 서류(수급자 증명서·주민등록등본 등)를 발급했다",
+          "<strong>D-1</strong>: 신청할 단지·계층·주택형을 정했고, 중복 신청이 안 되는지 확인했다",
+          "<strong>당일</strong>: 접수 시작 시각(보통 10시)에 신청하고 <strong>신청 완료 화면을 캡처</strong>했다 (마감 직전 접속 몰림 방지)",
+        ]},
+        { h: "📬 접수 후", items: [
+          "서류심사 대상자 발표일·<strong>서류 제출 기한(등기우편 소인)</strong>·당첨자 발표일을 캘린더에 넣었다",
+          "<strong>주소·전화번호</strong>가 바뀌면 즉시 개인정보를 갱신하기로 했다 (계약 안내는 등기우편)",
+        ]},
+      ];
+      const no_state = { checks: {} };
+      let no_inited = false;
+      function no_init() {
+        if (no_inited) return;
+        no_inited = true;
+        const tbl = (rows) => `<thead><tr>${rows[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+        document.getElementById("no_tbl").innerHTML = tbl(NO_ROWS);
+        document.getElementById("no_three").innerHTML = tbl(NO_THREE);
+        document.getElementById("no_tl").innerHTML = tbl(NO_TL);
+        document.getElementById("no_steps").innerHTML = NO_STEPS.map((g, gi) => `<div style="margin-bottom:10px"><div style="font-weight:700;font-size:13px;margin-bottom:4px">${g.h}</div>${g.items.map((t, j) => `<label class="rm-ck" id="no_ck_${gi}_${j}"><input type="checkbox" onchange="no_check('${gi}_${j}',this)"><span>${t}</span></label>`).join("")}</div>`).join("");
+        no_progress();
+      }
+      function no_check(k, input) {
+        no_state.checks[k] = input.checked;
+        const lab = document.getElementById("no_ck_" + k);
+        if (lab) lab.classList.toggle("done", input.checked);
+        no_progress();
+      }
+      function no_progress() {
+        const total = NO_STEPS.reduce((a, g) => a + g.items.length, 0);
+        const done = Object.values(no_state.checks).filter(Boolean).length;
+        const t = document.getElementById("no_prog_txt"), b = document.getElementById("no_prog_bar");
+        if (t) t.textContent = `${done} / ${total}`;
+        if (b) b.style.width = total ? (done / total) * 100 + "%" : "0%";
+      }
+      function no_region(key, btn) {
+        btn.parentElement.querySelectorAll(".rm-chip").forEach((c) => c.classList.remove("on"));
+        btn.classList.add("on");
+        const r = NO_REG[key], el = document.getElementById("no_region_out");
+        const row = (arr) => `<div class="rm-linkrow">${arr.map((x) => nobtn(x[0], x[1])).join("")}</div>`;
+        el.className = "rm-box rm-ok";
+        el.innerHTML = `<strong>📍 ${r.n}</strong>
+          <div style="margin-top:8px"><strong style="color:#fb7185">🔔 매일(수시) 볼 곳</strong>${row(r.daily)}</div>
+          <div style="margin-top:8px"><strong style="color:#fbbf24">📅 시즌(정기)에 볼 곳</strong>${row(r.season)}</div>
+          <div style="margin-top:8px"><strong>접수처·특징</strong><br>${r.how}</div>
+          <div style="margin-top:6px;font-size:11px;color:var(--text3)">문의: ${r.tel} · 목록 페이지에서 ‘마감일’·‘모집상태’ 열을 먼저 확인하세요.</div>`;
+      }
+
+      // 행복주택
+      const HPY_ROWS = [
+        ["계층", "자격 요약", "소득 기준", "최대 거주", "수급자 관점"],
+        ["<strong>주거급여수급자</strong>", "주거급여법상 수급권자인 무주택 세대구성원", "공고문 확인(별도 기준 적용 공고 있음)", "<strong>20년</strong>", "<strong>수급자 전용 계층</strong>. 기초수급 가구는 주거급여 수급 여부를 먼저 확인"],
+        ["<strong>고령자</strong>", "만 65세 이상 무주택 세대구성원", "도시근로자 월평균소득 100% 이하(1인 +20%p, 2인 +10%p)", "<strong>20년</strong>", "65세 이상 수급자는 이 계층도 가능"],
+        ["<strong>청년</strong>", "만 19~39세 미혼 무주택자", "본인(세대원이면 본인) 소득 100% 이하", "10년", "자산·자동차 기준 별도 — 공고문"],
+        ["<strong>대학생</strong>", "대학 재학·입학·복학 예정자(공고별 취준생 포함 여부 상이)", "본인+부모 소득 100% 이하", "10년", "부모 소득 합산"],
+        ["<strong>신혼부부·예비신혼·한부모</strong>", "혼인 7년 이내(공고별 상이) 무주택 / 한부모(만 6세 이하 자녀)", "100% (맞벌이 120%)", "10~14년", "총자산 3.45억·자동차 4,542만(2026)"],
+        ["<strong>산업단지근로자</strong>", "해당 산단 재직자", "공고문 확인", "10년", "—"],
+      ];
+      const HPY_REG = [
+        ["지역", "공급기관·공고 이름", "확인처 (바로가기)", "접수 방식"],
+        ["서울", "SH <strong>행복주택</strong> (2026년 1차 5.28 공고 등)", nobtn("SH 행복주택 목록", URL_SH_HP) + nobtn("SH 인터넷청약", URL_SH_APP), "SH 인터넷청약 (평일 3일), 고령자·장애인 방문"],
+        ["경기", "GH <strong>경기행복주택</strong> (2026.5.4~8) · LH 행복주택", nobtn("GH 청약센터", URL_GH) + nobtn("LH 공고 목록", URL_LH), "GH 청약센터 / LH청약플러스 인터넷"],
+        ["인천", "LH 인천지역본부 행복주택(예: 2026.5 남동구 입주자격완화 예비입주자) · iH 행복주택", nobtn("LH 공고 목록", URL_LH) + nobtn("iH 홈페이지", URL_IH), "공고별 (LH 인터넷 / iH 온라인·방문·우편)"],
+        ["광주·전남", "LH 광주전남지역본부 행복주택 예비입주자 (광주첨단, 목포용해·영암·장성·여수 등) · 광주도시공사·전남개발공사", nobtn("LH 공고 목록", URL_LH) + nobtn("광주도시공사 검색", nvq("광주광역시도시공사 행복주택 모집공고")) + nobtn("전남개발공사 검색", nvq("전남개발공사 행복주택 모집공고")), "LH청약플러스 인터넷 · 공사 공고별"],
+      ];
+      let hpy_inited = false;
+      function hpy_init() {
+        if (hpy_inited) return;
+        hpy_inited = true;
+        const tbl = (rows) => `<thead><tr>${rows[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+        document.getElementById("hpy_tbl").innerHTML = tbl(HPY_ROWS);
+        document.getElementById("hpy_reg").innerHTML = tbl(HPY_REG);
+      }
+
+      // ──────────────────────────────────────────
       // 임대주택 — 내 케이스별 신청 가이드
       // ──────────────────────────────────────────
       const rt_state = { size: null, flags: {}, region: null, cash: null, checks: {} };
@@ -11364,6 +11656,8 @@
         seoul: { name: "서울", site: "서울주거포털(housing.seoul.go.kr) — SH 서울주택도시개발공사 공고", url: "https://housing.seoul.go.kr", phone: "SH 1600-3456" },
         gyeonggi: { name: "경기", site: "경기주거복지포털(housing.gg.go.kr) — GH 경기주택도시공사 공고", url: "https://housing.gg.go.kr", phone: "GH 전세임대 전용 콜센터 1588-8056" },
         incheon: { name: "인천", site: "인천도시공사(iH) 홈페이지 공고 + LH 인천지역본부 공고(LH청약플러스)", url: "https://apply.lh.or.kr", phone: "LH 1600-1004" },
+        gwangju: { name: "광주", site: "LH 광주전남지역본부 공고(LH청약플러스) + 광주광역시도시공사 공고", url: "https://apply.lh.or.kr", phone: "LH 1600-1004" },
+        jeonnam: { name: "전남", site: "LH 광주전남지역본부 공고(LH청약플러스) + 전남개발공사 공고", url: "https://apply.lh.or.kr", phone: "LH 1600-1004" },
         other: { name: "해당 지역", site: "해당 시·도 도시공사 홈페이지 + LH 지역본부 공고(LH청약플러스)", url: "https://apply.lh.or.kr", phone: "LH 1600-1004" },
       };
 
@@ -11381,7 +11675,7 @@
 
       const RT_FIND = [
         ["어디서", "찾는 방법 (클릭 순서)", "이럴 때 유용"],
-        ["<strong>LH청약플러스</strong><br>apply.lh.or.kr", "① 메인 화면의 <strong>청약일정 / 청약캘린더</strong>에서 접수일·당첨자 발표일 확인<br>② 상단 <strong>[청약] → [임대주택]</strong>에서 유형별 공고문 열람(메뉴명은 개편될 수 있음)<br>③ 즐겨찾기 해두고 <strong>주 1회</strong> 확인 — 2026년부터 매입임대는 <strong>수시공고</strong>로 올라옵니다", "영구·국민·매입·전세임대 공고 전반"],
+        ["<strong>LH청약플러스</strong><br><a href='https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026' target='_blank' rel='noopener' style='color:var(--accent2)'>공고문 목록 바로가기 ↗</a>", "① 메인 화면의 <strong>청약일정 / 청약캘린더</strong>에서 접수일·당첨자 발표일 확인<br>② 상단 <strong>[청약] → [임대주택]</strong>에서 유형별 공고문 열람(메뉴명은 개편될 수 있음)<br>③ 즐겨찾기 해두고 <strong>주 1회</strong> 확인 — 2026년부터 매입임대는 <strong>수시공고</strong>로 올라옵니다", "영구·국민·매입·전세임대 공고 전반"],
         ["<strong>마이홈포털</strong><br>myhome.go.kr", "유형별 안내와 <strong>자가진단</strong>(주거급여 임차가구 등)을 먼저 해보고, 공고는 LH청약플러스·지역 공사 사이트로 이동해 확인", "내가 받을 수 있는 지원이 뭔지 모를 때"],
         ["<strong>지역 공사 포털</strong>", "서울 → 서울주거포털(SH)<br>경기 → 경기주거복지포털(GH)<br>인천 → 인천도시공사(iH)<br>그 외 → 해당 시·도 도시공사", "서울·경기·인천 거주자는 LH 외에 <strong>지역 공사 공고</strong>가 따로 있음"],
         ["<strong>시·군·구청 누리집</strong><br>‘고시·공고’", "‘기존주택 전세임대 입주자 모집’ 같은 제목으로 <strong>시·군별 모집 가구 수·접수 기간</strong>이 올라옴 (예: 경기 김포시 GH 전세임대 2026.1.12~23 접수, 주민등록지 행정복지센터 접수)", "전세임대 모집 시기 확인"],
@@ -11549,6 +11843,7 @@
             <h4>👣 신청 따라하기</h4>
             <ol class="rm-ul" style="padding-left:20px">${o.steps.map((t) => `<li style="margin:4px 0">${t}</li>`).join("")}</ol>
             ${o.extra ? `<h4>➕ 나에게 해당하는 추가 경로</h4><div class="rm-box rm-info"><ul class="rm-ul">${o.extra.map((t) => `<li>${t}</li>`).join("")}</ul></div>` : ""}
+            ${o.links && o.links.length ? `<h4>⚡ 공고 목록 바로가기</h4><div class="rm-linkrow">${o.links.map((l) => `<a class="rm-lk" href="${l[1]}" target="_blank" rel="noopener">⚡ ${l[0]}</a>`).join("")}</div><div style="font-size:11px;color:var(--text3);margin-top:4px">⏱ 목록에서 <strong>‘지역’ → ‘상태(접수중)’ → ‘마감일’</strong> 순서로 보고, 공고문(PDF)에서 <strong>‘접수일’·‘신청방법’</strong>(인터넷/주민센터)을 Ctrl+F로 찾으세요.</div>` : ""}
             <h4>✅ 결과 확인</h4><div>${o.check}</div>
             <h4>⚠️ 주의</h4><div class="rm-box rm-warn"><ul class="rm-ul">${o.warn.map((t) => `<li>${t}</li>`).join("")}</ul></div>
           </div>
@@ -11686,11 +11981,11 @@
 
         // 국민임대 등
         list.push({
-          title: "국민임대·행복주택 등 — LH청약플러스 인터넷 청약",
+          title: "국민임대·통합공공임대 — LH청약플러스 인터넷 청약",
           tag: "보조 병행 · 소득·자산 기준 충족 시",
           why: "수급자 전용 1순위 유형이 아니라 <strong>무주택세대구성원 + 소득·자산 요건</strong>으로 신청합니다. 전용 50㎡ 미만 국민임대는 <strong>월평균소득 50%(1인 70%, 2인 60%) 이하</strong> 가구에 우선 공급되고, <strong>해당 시·군·자치구 거주자가 1순위</strong>입니다.",
           where: "<strong>LH청약플러스 → [청약] → [임대주택] → 청약신청</strong>(PC·모바일 인터넷 청약, 방문접수 불가 공고가 많음). 공고는 청약캘린더에서 ‘○○ 국민임대주택 예비입주자 모집’으로 확인합니다.",
-          kw: ["○○ 국민임대주택 예비입주자 모집", "행복주택 예비입주자 모집", "통합공공임대 입주자 모집"],
+          kw: ["○○ 국민임대주택 예비입주자 모집", "통합공공임대 입주자 모집"],
           steps: [
             "청약캘린더에서 우리 지역 공고를 확인하고 <strong>소득·자산 기준</strong>(가구원 수별)을 대조합니다.",
             "공고 접수기간에 <strong>LH청약플러스(본인인증)</strong>로 청약신청합니다.",
@@ -11701,6 +11996,33 @@
           warn: [
             "전용 50㎡ 이상은 청약저축 납입횟수 순위가 적용되므로 수급자에게는 50㎡ 미만 위주가 현실적입니다.",
             "보증금이 영구·매입임대보다 큰 편입니다. 공고 임대조건을 꼭 확인하세요.",
+          ],
+        });
+
+        // 행복주택
+        const hpExtra = [];
+        hpExtra.push("<strong>주거급여수급자 계층</strong>: 주거급여법상 수급권자 무주택 세대 — 최대 20년 거주. 기초수급 가구는 주거급여 수급 여부를 확인하세요.");
+        if (f.senior) hpExtra.push("<strong>고령자 계층(만 65세 이상)</strong>: 소득 100% 이하, 최대 20년.");
+        if (f.youth) hpExtra.push("<strong>청년 계층(만 19~39세 미혼)</strong>: 최대 10년.");
+        if (f.single) hpExtra.push("<strong>한부모(만 6세 이하 자녀)</strong>: 신혼부부 기준 준용, 최대 10~14년.");
+        list.push({
+          title: "행복주택 — 주거급여수급자·고령자·청년·신혼 계층",
+          tag: cash === "c0" ? "후순위 · 보증금이 큰 편" : "병행 신청 · 보증금 필요",
+          why: `시세의 <strong>60~80%</strong>로 최대 10~20년 살 수 있는 공공임대입니다. 다만 <strong>보증금이 큰 편</strong>(SH 2026 1차 평균 29㎡ 이하 <strong>보증금 6,200만원·월 24만원</strong>)이라 ${cash === "c0" ? "<strong>보증금이 거의 없다면 후순위</strong>로 두고 ①~③ 유형을 먼저 신청하세요." : "보증금을 마련할 수 있을 때 병행하세요."} <strong>공공임대에 입주하면 다른 예비자 명부에서 제외</strong>될 수 있습니다(SH 공고문 기준).`,
+          where: "<strong>공급기관별 청약 시스템이 다릅니다</strong>: LH(전국) → LH청약플러스 인터넷 / 서울 → SH 인터넷청약 / 경기 → GH 청약센터(경기행복주택) / 인천 → iH 공고문 접수 방법. 서울 2026년 1차는 5.28 공고 → 6.15~17 접수(평일 3일) → 10.30 당첨자 발표였습니다.",
+          kw: ["행복주택 입주자 모집공고 (SH 서울)", "경기행복주택 예비입주자 모집 (GH)", "[정정공고] ○월 ○○시 행복주택 입주자격완화 예비입주자 모집 (LH)", "○○ 행복주택 예비입주자 모집"],
+          steps: [
+            "<strong>공고 목록</strong>에서 ‘행복주택’ 유형 + 내 지역 + <strong>상태 ‘접수중/모집중’</strong>을 확인합니다.",
+            "공고문에서 <strong>내 계층(주거급여수급자·고령자·청년 등)</strong>의 자격·소득·자산·자동차 기준과 보증금·월임대료를 확인합니다.",
+            "<strong>접수 시작일 10시</strong>에 인터넷 청약합니다 (인증서 준비, 주말 불가 공고 주의). 고령자·장애인은 방문 접수가 열리는 공고도 있습니다.",
+            "<strong>서류심사 대상자</strong> 발표 후 <strong>기간 내 서류 제출</strong>(등기우편 소인) — 수급자 증명서, 주민등록등본 등 공고문 서류 목록 기준.",
+            "당첨자·예비입주자 발표(공고 후 수개월) → 순번대로 계약 안내(등기우편).",
+          ],
+          extra: hpExtra,
+          check: "LH: [청약]→[당첨/낙찰결과조회], [고객서비스]→[나의정보]→[예비입주자순위] · SH/GH/iH: 각 공사 청약 시스템의 ‘나의 청약내역’·당첨자 발표 공지",
+          warn: [
+            "계층마다 소득·자산 기준이 다르니 <strong>내 계층 표</strong>를 공고문에서 정확히 확인하세요.",
+            "임대기간은 2년 단위 재계약이며 거주 가능 기간은 계층별로 다릅니다(고령자·주거급여수급자 최대 20년).",
           ],
         });
 
@@ -11720,6 +12042,14 @@
           warn: ["포털 개편으로 메뉴 위치가 바뀔 수 있습니다. 메뉴가 안 보이면 포털 검색창에 ‘매입임대’·‘전세임대’를 입력하세요."],
         });
 
+        const lhL = ["LH 공고문 목록 (마감일·상태)", URL_LH];
+        const regL = { seoul: [["SH 행복주택 공고 목록", URL_SH_HP], ["SH 인터넷청약", URL_SH_APP]], gyeonggi: [["GH 청약센터", URL_GH]], incheon: [["iH 인천도시공사 공고", URL_IH]], gwangju: [["광주도시공사 공고 검색", nvq("광주광역시도시공사 임대주택 입주자 모집공고")]], jeonnam: [["전남개발공사 공고 검색", nvq("전남개발공사 임대주택 입주자 모집공고")]], other: [] }[st.region] || [];
+        list.forEach((o) => {
+          if (/주거상향/.test(o.title)) o.links = [["마이홈포털 주거취약계층 안내", URL_MYHOME]];
+          else if (/지역 공사/.test(o.title)) o.links = regL.length ? regL : [lhL];
+          else if (/행복주택/.test(o.title)) o.links = [lhL].concat(regL);
+          else if (/국민임대|매입임대|영구임대|전세임대/.test(o.title)) o.links = [lhL].concat(/매입임대/.test(o.title) && st.region === "gyeonggi" ? [["GH 청약센터", URL_GH]] : []);
+        });
         document.getElementById("rt_cards").innerHTML = list.map((o, i) => rt_card(i, o)).join("");
         const names = list.map((o, i) => `${i + 1}. ${o.title.split(" — ")[0]}`).join("<br>");
         document.getElementById("rt_summary").innerHTML =
@@ -12991,7 +13321,9 @@
       // 임대주택 탭 전환
       // ──────────────────────────────────────────
       const RENTAL_TABS = [
+        "notice",
         "guide",
+        "happy",
         "overview",
         "permanent",
         "national",
@@ -13002,6 +13334,8 @@
       ];
       function rentalTab(id) {
         if (id === "guide" && typeof rt_init === "function") rt_init();
+        if (id === "notice" && typeof no_init === "function") no_init();
+        if (id === "happy" && typeof hpy_init === "function") hpy_init();
         RENTAL_TABS.forEach((t) => {
           const el = document.getElementById("rental-" + t);
           const btn = document.getElementById("rtab-" + t);
@@ -16603,7 +16937,7 @@
           icon: "🏘️",
           title: "임대주택 안내",
           keywords:
-            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
+            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 수시공고 정기공고 접수일정 마감일 SH GH iH 광주 전남 공고 확인 알림 경기행복주택 주거급여수급자 계층 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
         },
         {
           tab: "workability",
