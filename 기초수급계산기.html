@@ -3515,6 +3515,64 @@
           </div>
         </div>
 
+        <div class="rm-card" id="no_hot">
+          <div class="rm-h"><span>🔥</span> 지금 열려 있는 공고 (LH 공고문 목록 스냅샷 · 마감일 D-day 자동 계산)</div>
+          <div class="rm-box rm-warn" style="font-size:12px;margin-bottom:10px">
+            <strong>이 파일은 LH 서버에 연결되지 않아 ‘완전한 실시간’ 목록은 보여줄 수 없습니다.</strong> 아래는 <strong>2026.10.22~23 LH 공고문 목록에서 확인한 공고</strong>이고, <strong>D-day는 오늘 날짜로 자동 계산</strong>됩니다. 전체·최신 목록은 아래 <strong>⚡ 버튼으로 바로 열어</strong> ‘지역·상태·마감일’ 열을 확인하세요.
+          </div>
+          <div class="rm-chips" data-nf="f" style="margin-bottom:8px">
+            <button class="rm-chip on" onclick="no_snapFilter('',this)">전체</button>
+            <button class="rm-chip" onclick="no_snapFilter('인천',this)">인천·부천</button>
+            <button class="rm-chip" onclick="no_snapFilter('경기',this)">경기</button>
+            <button class="rm-chip" onclick="no_snapFilter('서울',this)">서울</button>
+            <button class="rm-chip" onclick="no_snapFilter('광주',this)">광주·전남</button>
+            <button class="rm-chip" onclick="no_snapFilter('대구',this)">대구경북</button>
+            <button class="rm-chip" onclick="no_snapFilter('경남',this)">경남</button>
+            <button class="rm-chip" onclick="no_snapFilter('제주',this)">제주</button>
+          </div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="no_snap" style="min-width:760px"></table></div>
+          <div class="rm-linkrow" style="margin-top:10px">
+            <a class="rm-lk" href="https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026" target="_blank" rel="noopener">⚡ LH 공고문 목록 (최신·전체)</a>
+            <a class="rm-lk" href="https://apply.lh.or.kr/lhapply/apply/main.do?mi=1021" target="_blank" rel="noopener">⚡ LH청약일정 (오늘의 공고)</a>
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🧪</span> 공고 판독기 — “전국 어디 살아도 신청 가능”이 내게도 맞는지</div>
+          <div class="rm-sub" style="margin-bottom:10px">공고 이름의 유형과 <strong style="color:var(--text)">내 거주지·수급 상태</strong>를 고르면, 신청 가능성·접수 방식·보증금 혜택·공고문에서 확인할 문구를 알려줍니다.</div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">공고 유형</div>
+              <select class="hs-in" id="jd_type" onchange="jd_calc()">
+                <option value="gen">일반 매입임대 (수급자·차상위·한부모 1순위)</option>
+                <option value="youth">청년 매입임대 (만 19~39세)</option>
+                <option value="dun">든든전세주택</option>
+                <option value="newly">신혼·신생아 매입임대</option>
+                <option value="happy">행복주택</option>
+                <option value="perm">영구임대</option>
+                <option value="jeonse">기존주택 전세임대</option>
+              </select></div>
+            <div><div class="hs-lbl">공고 지역</div>
+              <select class="hs-in" id="jd_ann" onchange="jd_calc()">
+                <option value="ib">인천·부천</option><option value="seoul">서울</option><option value="gg">경기(부천 제외)</option>
+                <option value="gj">광주·전남</option><option value="other">그 외</option>
+              </select></div>
+            <div><div class="hs-lbl">내 주민등록 거주지</div>
+              <select class="hs-in" id="jd_my" onchange="jd_calc()">
+                <option value="seoul">서울</option><option value="gyeonggi">경기(부천 제외)</option><option value="bucheon">경기 부천</option>
+                <option value="incheon">인천</option><option value="gwangju">광주</option><option value="jeonnam">전남</option><option value="other">그 외 지역</option>
+              </select></div>
+            <div><div class="hs-lbl">내 수급 상태</div>
+              <select class="hs-in" id="jd_st" onchange="jd_calc()">
+                <option value="both">생계급여 + 주거급여 동시 수급</option>
+                <option value="lifemed">생계·의료급여 수급 (주거급여 아님)</option>
+                <option value="house">주거급여만 수급</option>
+                <option value="near">차상위·한부모·기타 저소득</option>
+                <option value="none">해당 없음</option>
+              </select></div>
+          </div>
+          <div id="jd_out" class="rm-box rm-info" style="margin-top:10px"></div>
+        </div>
+
         <div class="rm-card">
           <div class="rm-h"><span>🔔</span> ① 매일 확인할 곳(수시) vs 시즌에 확인할 곳(정기)</div>
           <div class="rm-box rm-info" style="margin-bottom:10px;font-size:12px">
@@ -3565,7 +3623,7 @@
         </div>
 
         <div class="rm-box rm-warn" style="font-size:11px;line-height:1.8">
-          📚 <strong>근거</strong>: LH청약플러스 공고문 목록(번호·유형·공고명·지역·게시일·마감일·상태 열), 서울주거포털 SH 임대/분양 공고 목록(2024.12~2026.5 행복주택 공고 이력)·SH 2025 2차 행복주택 공고문, 헤럴드경제 SH 2026 행복주택 보도(2026.5.27), 경기일보·메트로신문 GH 매입임대 보도(2025.4·2025.12), 경기도·위키트리 경기행복주택 2026.5.4~8 접수, 광주전남 LH 공고 사례, 인천 iH 입주자모집공고 게시판 안내. (확인일: 2026.10.18)<br />
+          📚 <strong>근거</strong>: LH청약플러스 공고문 목록(번호·유형·공고명·지역·게시일·마감일·상태 열), 서울주거포털 SH 임대/분양 공고 목록(2024.12~2026.5 행복주택 공고 이력)·SH 2025 2차 행복주택 공고문, 헤럴드경제 SH 2026 행복주택 보도(2026.5.27), 경기일보·메트로신문 GH 매입임대 보도(2025.4·2025.12), 경기도·위키트리 경기행복주택 2026.5.4~8 접수, 광주전남 LH 공고 사례, 인천 iH 입주자모집공고 게시판 안내, LH 공고문 목록(2026.10.22 게시분), LH 인천지역본부 일반 매입임대주택 입주자 모집공고문(2026.7.23 공고분 — 입주자 선정순위·주택유형). (확인일: 2026.10.25)<br />
           ⚠️ 접수 기간·시각·접수처·모집 단지는 <strong>공고마다 다르며 공고문이 최종 기준</strong>입니다. 위 ‘정기 시즌’은 과거 패턴이고, 광주·전남·인천 일부 사례는 공고 요약 서비스(주거나침반)의 정리를 참고했습니다. 사이트 개편으로 메뉴·주소가 바뀔 수 있습니다.
         </div>
       </div>
@@ -3632,7 +3690,7 @@
           </div>
           <div class="rm-box rm-info" style="margin-top:12px">
             <strong>먼저 알아둘 핵심 5가지</strong><br />
-            1) 모든 공고의 <strong>자격 판단 기준일은 ‘모집공고일’</strong>입니다. 공고일 현재 <strong>주민등록 주소(사업대상지역)·무주택·수급자 상태</strong>를 갖춰야 하므로, 공고가 뜨기 전에 전입과 수급 결정을 마쳐 두세요.<br />
+            1) 모든 공고의 <strong>자격 판단 기준일은 ‘모집공고일’</strong>입니다. 공고일 현재 <strong>무주택·수급자 상태</strong>(와, 공고가 요구하면 <strong>주민등록 주소</strong>)를 갖춰야 하므로 공고가 뜨기 전에 수급 결정과 전입을 마쳐 두세요. <strong>거주지 요건은 공고마다 다릅니다</strong>(주민등록 필수 / 거주지 무관·지역 거주자 우선 / 모집권역 한정).<br />
             2) 생계·의료급여 수급자는 영구임대·기존주택 매입임대·기존주택 전세임대에서 <strong>1순위</strong>입니다.<br />
             3) <strong>접수처는 유형·공고마다 다릅니다.</strong> 영구임대·전세임대·매입임대는 <strong>주민등록지 주민센터 접수</strong>인 경우가 많고, 국민임대·행복주택은 <strong>LH청약플러스 인터넷 청약</strong>이 일반적입니다. 반드시 공고문의 ‘신청방법’을 확인하세요.<br />
             4) <strong>예비입주자로 선정돼도 바로 입주하는 게 아닙니다.</strong> 공가·해약이 생길 때 순번대로 계약 안내가 옵니다.<br />
@@ -11589,6 +11647,8 @@
         no_inited = true;
         const tbl = (rows) => `<thead><tr>${rows[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
         document.getElementById("no_tbl").innerHTML = tbl(NO_ROWS);
+        no_snapRender();
+        jd_calc();
         document.getElementById("no_three").innerHTML = tbl(NO_THREE);
         document.getElementById("no_tl").innerHTML = tbl(NO_TL);
         document.getElementById("no_steps").innerHTML = NO_STEPS.map((g, gi) => `<div style="margin-bottom:10px"><div style="font-weight:700;font-size:13px;margin-bottom:4px">${g.h}</div>${g.items.map((t, j) => `<label class="rm-ck" id="no_ck_${gi}_${j}"><input type="checkbox" onchange="no_check('${gi}_${j}',this)"><span>${t}</span></label>`).join("")}</div>`).join("");
@@ -11618,6 +11678,121 @@
           <div style="margin-top:8px"><strong style="color:#fbbf24">📅 시즌(정기)에 볼 곳</strong>${row(r.season)}</div>
           <div style="margin-top:8px"><strong>접수처·특징</strong><br>${r.how}</div>
           <div style="margin-top:6px;font-size:11px;color:var(--text3)">문의: ${r.tel} · 목록 페이지에서 ‘마감일’·‘모집상태’ 열을 먼저 확인하세요.</div>`;
+      }
+
+
+      // ── 지금 열려 있는 공고 스냅샷 · 공고 판독기 ──
+      const NO_SNAP = [
+        ["매입임대", "[정정공고][인천지역본부] 일반 매입임대주택 입주자 모집 공고(인천,부천)", "인천광역시 외", "2026-10-22", "2026-11-03", "공고중(정정)", "수급자·차상위·한부모 1순위 · 공고문상 주민등록 등재 여부와 무관(2026.7 공고 기준) · 방문 접수 · 무보증금 월세(생계+주거 동시 수급자)"],
+        ["매입임대", "2026년 2차 대구경북지역 든든전세주택 입주자 모집공고(비분양전환형)", "대구광역시 외", "2026-10-21", "2026-11-04", "공고중", "든든전세: 모집권역 거주자만 · 시세 90% 이하 전세(보증금 큼)"],
+        ["매입임대", "[경기북부] 청년 매입임대주택 선착순 예비입주자 모집공고 (김포시, 포천시)", "경기도", "2026-10-16", "2026-10-29", "공고중", "청년 매입임대 · 선착순"],
+        ["매입임대", "[제주지역본부-제주시] 든든전세주택 (예비)입주자 모집 공고(분양전환형)", "제주특별자치도", "2026-10-16", "2026-10-28", "공고중", "든든전세"],
+        ["매입임대", "[경남지역본부] 26년 4차 비분양전환형 든든전세주택 입주자 모집 공고", "경상남도", "2026-10-15", "2026-10-28", "공고중", "든든전세"],
+      ];
+      let no_snapF = "";
+      function no_ddayLabel(dateStr) {
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const dl = new Date(dateStr + "T00:00:00");
+        const d = Math.round((dl - today) / 86400000);
+        if (d < 0) return `<span style="color:var(--text3)">마감(${-d}일 지남)</span>`;
+        if (d === 0) return `<strong style="color:#fb7185">D-day (오늘 마감)</strong>`;
+        const c = d <= 3 ? "#fb7185" : d <= 7 ? "#fbbf24" : "#34d399";
+        return `<strong style="color:${c}">D-${d}</strong>`;
+      }
+      function no_snapFilter(k, btn) {
+        no_snapF = k;
+        if (btn) { btn.parentElement.querySelectorAll(".rm-chip").forEach((c) => c.classList.remove("on")); btn.classList.add("on"); }
+        no_snapRender();
+      }
+      function no_snapRender() {
+        const el = document.getElementById("no_snap");
+        if (!el) return;
+        const rows = NO_SNAP.filter((r) => !no_snapF || (r[1] + r[2]).includes(no_snapF) || (no_snapF === "광주" && /광주|전남|전라/.test(r[1] + r[2]))).slice().sort((a, b) => a[4].localeCompare(b[4]));
+        const today = new Date(); const ts = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, "0")}.${String(today.getDate()).padStart(2, "0")}`;
+        el.innerHTML = `<thead><tr><th>마감까지 (오늘 ${ts})</th><th>유형</th><th>공고명</th><th>목록 ‘지역’</th><th>게시일</th><th>마감일</th><th>핵심 메모</th></tr></thead><tbody>${rows.length ? rows.map((r) => `<tr><td>${no_ddayLabel(r[4])}</td><td>${r[0]}</td><td><strong>${r[1]}</strong></td><td>${r[2]}</td><td>${r[3].replace(/-/g, ".")}</td><td>${r[4].replace(/-/g, ".")}</td><td style="font-size:11px">${r[6]}</td></tr>`).join("") : `<tr><td colspan="7" style="color:var(--text3)">이 지역의 스냅샷 공고가 없습니다. 위 ⚡ 버튼으로 LH 목록에서 직접 확인하세요.</td></tr>`}</tbody>`;
+      }
+      const JD_MY_NAME = { seoul: "서울", gyeonggi: "경기", bucheon: "경기 부천", incheon: "인천", gwangju: "광주", jeonnam: "전남", other: "그 외 지역" };
+      function jd_calc() {
+        const g = (id) => document.getElementById(id).value;
+        const t = g("jd_type"), ann = g("jd_ann"), my = g("jd_my"), st = g("jd_st");
+        const out = document.getElementById("jd_out");
+        if (!out) return;
+        const local = (ann === "ib" && (my === "incheon" || my === "bucheon")) || (ann === "seoul" && my === "seoul") || (ann === "gg" && my === "gyeonggi") || (ann === "gj" && (my === "gwangju" || my === "jeonnam"));
+        const li = (arr) => `<ul class="rm-ul">${arr.map((x) => `<li>${x}</li>`).join("")}</ul>`;
+        let cls = "rm-info", head = "", body = [], find = [], recv = "";
+        const depo = st === "both" ? "<strong>무보증금 월세</strong> 대상 — 생계·주거급여를 동시에 받는 수급자이며, 월세가 <strong>주거급여 기준임대료 이내</strong>여야 합니다(전환된 월세는 주거급여로 지원)."
+          : st === "lifemed" ? "<strong>보증금 완화</strong> 대상 가능 — 생계·의료 수급자는 보증금을 해당 주택 <strong>월세 12개월분</strong>으로 낮추는 제도(공고 요약 기준). 주거급여도 받으면 무보증금 월세를 검토하세요."
+          : "보증금↔월세 <strong>상호전환</strong>(기본). 무보증금·보증금 완화는 수급자 등 대상이라 해당 여부를 공고문에서 확인하세요.";
+        if (t === "gen") {
+          if (ann === "ib") {
+            cls = "rm-ok";
+            head = local ? "✅ 신청 가능 · 지역 거주자 우선 혜택" : "✅ 신청은 가능 · 같은 순위 경쟁에서는 불리";
+            body = [
+              "LH 인천지역본부 일반 매입임대 공고문은 <strong>‘공급대상지역 주민등록 등재 여부와 관계없이 1순위’</strong>로 안내합니다(2026.7.23 공고분). 즉 <strong>전국 어디 거주자도 수급자·차상위·한부모 1순위 자격이면 신청</strong>할 수 있습니다.",
+              local ? `내 거주지(${JD_MY_NAME[my]})는 <strong>공급대상지역</strong>이라 같은 순위 경쟁에서 <strong>전입일이 빠른 순 → 가구원 수 많은 순 → 추첨</strong>으로 우선합니다.`
+                    : `내 거주지(${JD_MY_NAME[my]})는 공급대상지역(인천·부천)이 아니라 같은 순위에서 <strong>지역 거주자가 먼저 선정</strong>됩니다. 가구원 수가 많을수록 유리합니다.`,
+              "주택유형은 1형(2인 이하)·2형(2~4인)·3형(5인 이상)이며 <strong>희망하면 유형 구분 없이 신청</strong>할 수 있습니다. 가구원 수는 <strong>모집공고일 현재 무주택세대구성원 전원</strong> 기준입니다.",
+              "보증금: " + depo,
+            ];
+            find = ["입주자 선정순위", "공급대상지역", "주민등록 등재 여부와 관계없이", "무보증금", "신청방법·접수장소"];
+            recv = "인천지역본부 일반 매입임대는 <strong>방문 접수</strong>이고 <strong>주택을 직접 열람한 뒤 동·호를 지정</strong>해 신청하는 방식으로 안내됐습니다. <strong>타 지역 거주자는 방문 이동 시간·접수 시간(오전·오후, 점심시간 등)</strong>을 공고문에서 반드시 확인하세요.";
+          } else {
+            cls = "rm-warn";
+            head = "⚠️ 공고마다 거주지 요건이 다릅니다 — 공고문 확인 필요";
+            body = [
+              "인천지역본부 2026 공고는 주민등록 무관(지역 거주자 우선)이지만, <strong>경기북부 2025 일반 매입임대</strong>처럼 <strong>모집공고일 현재 사업대상지역 주민등록</strong>을 요건으로 한 공고도 있습니다.",
+              local ? "내 거주지가 공고 지역과 같아 요건을 충족할 가능성이 높습니다." : "내 거주지가 공고 지역과 달라 <strong>주민등록 요건이 있으면 신청 불가</strong>일 수 있습니다.",
+              "보증금: " + depo,
+            ];
+            find = ["주민등록", "공급대상지역", "사업대상지역", "입주자격", "신청방법"];
+            recv = "공고별로 주민센터·지사 <strong>방문</strong> 또는 LH청약플러스 <strong>인터넷</strong>입니다. 접수처가 어디인지 공고문 ‘신청 접수’ 칸에서 확인하세요.";
+          }
+        } else if (t === "youth") {
+          cls = "rm-info";
+          head = "ℹ️ 청년 매입임대 — 거주지 요건이 공고 요약에 없고 모집단위를 선택해 신청";
+          body = [
+            "<strong>만 19~39세 미혼 무주택 청년</strong>이 대상입니다. 인천 7차 공고 요약에는 <strong>거주지 요건이 보이지 않고 신청할 때 시·군·구 모집단위 하나를 고르는 방식</strong>으로 안내됩니다(공고문으로 최종 확인).",
+            "<strong>1순위: 수급자 가구(생계·의료·주거 중 하나)·지원대상 한부모·차상위</strong> — 부모가 집을 가지고 있어도 신청할 수 있습니다. 소득·자산은 수급자 자격으로 확인합니다.",
+            "임대보증금은 순위별로 다르며 인천 7차 사례에서 <strong>100~200만원 수준</strong>이라 ‘보증금 없음’은 아닙니다. 수급 상태별 혜택은 공고문 확인.",
+          ];
+          find = ["거주지", "주민등록", "모집단위", "1순위", "임대보증금"];
+          recv = "LH청약플러스 <strong>인터넷·앱 청약</strong>(청약→임대주택→청약신청→매입임대/전세임대). 접수는 보통 3~5일, 마감 시각은 오후입니다.";
+        } else if (t === "dun") {
+          const okRegion = ann !== "ib" || ["seoul", "gyeonggi", "bucheon", "incheon"].includes(my);
+          cls = okRegion ? "rm-warn" : "rm-danger";
+          head = ann === "ib" ? (okRegion ? "⚠️ 신청 자격은 가능하지만 ‘보증금 없음’ 유형이 아닙니다" : "❌ 모집권역(서울·경기·인천) 밖 거주자는 신청 무효") : "⚠️ 모집권역을 공고문에서 확인하세요";
+          body = [
+            "든든전세주택은 LH가 매입한 주택을 <strong>시세의 90% 이하 전세</strong>로 공급합니다. <strong>소득·자산 요건은 없지만 보증금이 큽니다</strong> — 수급자가 ‘보증금 없이’ 들어가는 유형이 아닙니다.",
+            ann === "ib" ? "인천본부 26-3차 사례: <strong>공고일 현재 주민등록상 서울·인천·경기 거주자만</strong> 신청 가능(모집권역 외 신청은 무효)." : "모집권역은 공고마다 다릅니다(지역본부별).",
+            "<strong>공고일 이후 발급 서류만 인정</strong>되고, <strong>1세대 1주택</strong>만 신청할 수 있습니다.",
+          ];
+          find = ["모집권역", "주민등록표등본", "보증금", "1세대 1주택"];
+          recv = "LH청약플러스 인터넷 청약 → 서류제출대상자 발표 → 서류제출(등기우편 또는 온라인) → 추첨. 접수 2~3일 사례(8.3 10시~8.5 16시).";
+        } else if (t === "newly") {
+          head = "ℹ️ 신혼·신생아 매입임대 — 혼인 7년 이내·신생아 가구 등 별도 자격";
+          body = ["혼인 7년 이내 신혼부부·예비신혼부부·한부모·유자녀 혼인가구·신생아 가구가 대상입니다. Ⅰ형은 최장 20년, Ⅱ형(전세형)은 최장 10년(유자녀 14년) 거주.", "<strong>신청 지역(인천/부천)의 연속 거주 기간에 따라 최대 3점 지역 가점</strong>이 있습니다(인천 5차 공고 요약). Ⅰ·Ⅱ 중복 신청 시 Ⅰ형은 탈락 처리될 수 있습니다."];
+          find = ["지역 가점", "중복 신청", "자산 기준"];
+          recv = "LH청약플러스 인터넷 청약.";
+        } else if (t === "happy") {
+          head = "ℹ️ 행복주택 — 계층별 공고, 공급기관마다 접수 시스템이 다름";
+          body = ["수급자는 <strong>주거급여수급자 계층</strong>(최대 20년)이나 고령자·청년 등 해당 계층으로 신청합니다. <strong>보증금이 큰 편</strong>(SH 2026 1차 29㎡ 이하 평균 6,200만원)이라 ‘보증금 없이’ 유형은 아닙니다.", "거주지 요건은 공고마다 다르니 ‘입주자격’의 <strong>해당 지역 거주 요건</strong> 문구를 확인하세요. 🌟 행복주택 소탭 참고."];
+          find = ["계층", "주민등록", "임대보증금", "접수일"];
+          recv = "LH 인터넷 / SH 인터넷청약(평일 3일) / GH 청약센터 / iH 공고별.";
+        } else if (t === "perm") {
+          head = "ℹ️ 영구임대 — 거주지(단지 지역) 주민센터에 신청";
+          body = ["수급자 1순위. LH 안내상 <strong>영구임대 단지가 속한 지역의 주민센터·시군구청에 입주 신청(희망 단지 지정)</strong>하는 방식입니다. 단지별 ‘예비입주자 모집공고’는 공고문의 접수방법을 따르세요.", "신청 가능 면적은 <strong>주민등록표상 세대원 수</strong>(1~2인 30㎡ 미만 등)로 정해집니다. 보증금이 매우 낮은 편입니다(🏘️ 임대주택 안내 참고)."];
+          find = ["희망 단지", "세대원 수", "접수방법"];
+          recv = "주민센터 사회복지 담당자 상담 후 신청.";
+        } else {
+          head = "ℹ️ 기존주택 전세임대 — 주민등록지 행정복지센터에서 접수";
+          body = ["접수는 <strong>내 주민등록지 행정복지센터</strong>에서 하므로 거주지 기준으로 신청합니다. 1순위: 생계·의료급여 수급자. 보증금은 전세금의 5%(1순위 신규계약은 2% 선택 가능).", "정기 1순위 모집은 보통 5~6월에 접수(2026: 6.8~12)하고 다자녀·청년 전세임대는 수시입니다."];
+          find = ["접수 장소", "1순위", "입주자 부담 보증금"];
+          recv = "주민등록지 주민센터 방문.";
+        }
+        out.className = "rm-box " + cls;
+        out.innerHTML = `<div style="font-weight:800;font-size:13px;color:var(--text);margin-bottom:6px">${head}</div>${li(body)}
+          <div style="margin-top:8px"><strong>접수 방식</strong><br>${recv}</div>
+          <div style="margin-top:8px"><strong>🔎 공고문(PDF)에서 Ctrl+F로 찾을 단어</strong><div class="rm-chips" style="margin-top:4px">${find.map((f) => `<span class="rm-chip on" style="cursor:default">${f}</span>`).join("")}</div></div>`;
       }
 
       // 행복주택
@@ -11685,7 +11860,7 @@
 
       const RT_READ = [
         ["확인할 곳", "어디를 보나", "수급자 체크포인트"],
-        ["① 사업대상지역", "공고 제목·공급지역", "내 <strong>시·군·구</strong>가 대상인지"],
+        ["① 거주지 요건", "‘입주자격’ 칸의 <strong>주민등록·거주·공급대상지역·모집권역</strong> 문구", "<strong>① 주민등록 필수 ② 거주지 무관(지역 거주자 우선) ③ 모집권역 한정</strong> 중 어느 것인지 — 공고마다 다름"],
         ["② 기준일", "‘모집공고일’", "공고일 현재 <strong>주민등록·무주택·수급자 상태</strong>로 자격 판단 → 공고 전에 전입·수급 결정 완료"],
         ["③ 신청자격·순위", "자격 표(1순위·2순위)", "<strong>‘생계급여 수급자 또는 의료급여 수급자’ = 1순위</strong> 문구 확인 + 무주택세대구성원"],
         ["④ 주택형", "형별 면적·대상 가구원수", "내 가구원 수에 맞는 형만 신청 가능 (영구임대는 <strong>주민등록표상 세대원 수</strong> 기준)"],
@@ -11761,7 +11936,7 @@
         ["수급자인데도 소득·자산 서류를 내야 하나요?", "공고마다 다릅니다. 수급자는 1순위 자격으로 수급자 증명서를 제출하지만, 무주택·자산(부동산·자동차) 요건은 별도로 확인합니다. 공고문의 ‘수급자 제출서류’ 칸을 확인하세요."],
         ["영구임대·매입임대·전세임대를 동시에 신청해도 되나요?", "서로 다른 유형·공고는 병행 신청이 일반적입니다. 다만 같은 당첨자 발표일의 주택에 중복 청약하면 무효 처리될 수 있으니 공고문의 규정을 확인하세요."],
         ["영구임대는 공고를 기다려야 하나요?", "LH 안내는 수급자가 영구임대 단지가 속한 지역의 주민센터·시군구청에 입주를 신청(희망 단지 지정)하는 방식입니다. 이와 별도로 단지별 ‘예비입주자 모집공고’가 올라오면 공고문의 접수방법을 따릅니다."],
-        ["내가 살고 있는 시·군·구가 아닌 곳에 신청할 수 있나요?", "공고별로 ‘사업대상지역에 주민등록이 등재된 무주택세대구성원’을 요건으로 하는 경우가 많습니다. 희망 지역이 다르면 공고문의 거주지 요건을 먼저 확인하세요. 영구임대는 단지가 속한 지역의 주민센터에 신청하는 방식으로 안내됩니다."],
+        ["내가 살고 있는 시·군·구가 아닌 곳에 신청할 수 있나요?", "<strong>공고마다 다릅니다.</strong> ① LH 인천지역본부 2026 일반 매입임대(인천·부천)는 <strong>‘공급대상지역 주민등록 등재 여부와 관계없이 1순위’</strong>라 전국 어디 거주자도 신청할 수 있지만, 같은 순위 경쟁에서는 <strong>공급대상지역 거주자(전입일 빠른 순) → 가구원 수 많은 순 → 추첨</strong>으로 정해져 타 지역 거주자는 불리합니다. ② 경기북부 2025 일반 매입임대처럼 <strong>사업대상지역 주민등록</strong>을 요건으로 하는 공고도 있습니다. ③ 든든전세주택은 모집권역(예: 서울·경기·인천) 거주자만 신청 가능하고 권역 외 신청은 무효입니다. 📡 공고 확인 센터의 <strong>공고 판독기</strong>에서 유형별로 확인하세요."],
         ["고시원에 사는 중인데 주민등록이 다른 곳이에요", "사업대상지역·주민등록 요건 때문에 불리할 수 있습니다. 실제 거주지로 전입신고를 하고(허위 전입 금지), 주거상향지원 요건(등본상 주소 3개월 이상 실거주)도 함께 확인하세요. 🏘️ 거처·주거 가이드 참고."],
       ];
 
@@ -11914,7 +12089,7 @@
         });
 
         // 매입임대
-        const kwBuy = ["기존주택 등 매입임대주택 예비입주자 모집", "[○○지역본부] 26년 N차 매입임대주택 예비입주자 모집"];
+        const kwBuy = ["[인천지역본부] 일반 매입임대주택 입주자 모집 공고(인천,부천)", "기존주택 등 매입임대주택 예비입주자 모집", "[○○지역본부] 26년 N차 매입임대주택 예비입주자 모집"];
         const exBuy = [];
         if (f.senior) { kwBuy.push("고령자 매입임대주택 예비입주자 모집"); exBuy.push("<strong>65세 이상</strong>: ‘고령자 매입임대’ 공고가 따로 올라옵니다(예: 2026.9 인천지역본부 2차 고령자 매입임대)."); }
         if (f.kids2) { kwBuy.push("다자녀 매입임대주택 예비입주자 모집"); exBuy.push("<strong>미성년 자녀 2명 이상</strong>: ‘다자녀 매입임대’ 공고를 함께 확인하세요."); }
@@ -11922,21 +12097,21 @@
         list.push({
           title: "기존주택 매입임대 — 수급자 1순위",
           tag: "병행 신청 · " + rt_typeBuy(n),
-          why: `LH·SH·GH 등이 사들인 <strong>도심 내 소형 주택</strong>을 저렴하게 빌려주는 제도입니다. 생계·의료급여 수급자는 <strong>1순위</strong>이고, 신청 요건은 <strong>모집공고일 현재 사업대상지역에 주민등록이 있는 무주택세대구성원</strong>입니다. 내 가구(${n}인)에 해당하는 형: <strong>${rt_typeBuy(n)}</strong>.`,
+          why: `LH·SH·GH 등이 사들인 <strong>도심 내 소형 주택</strong>을 저렴하게 빌려주는 제도입니다. 생계·의료급여 수급자는 <strong>1순위</strong>이고, 신청 요건은 <strong>모집공고일 현재 무주택세대구성원</strong>입니다. <strong>거주지 요건은 공고마다 다릅니다</strong> — 인천지역본부 2026 일반 매입임대(인천·부천)는 <strong>주민등록 등재 여부와 관계없이 1순위</strong>(같은 순위에서는 공급대상지역 거주자 우선)이고, 경기북부 2025 공고는 사업대상지역 주민등록을 요건으로 했습니다. 내 가구(${n}인)에 해당하는 형: <strong>${rt_typeBuy(n)}</strong>.`,
           where: `<strong>LH청약플러스</strong>(청약캘린더·[청약]→[임대주택] 공고문)에서 우리 시·군·구 공고 확인 → 공고문 ‘신청방법’에 따라 <strong>주민등록지 행정복지센터(읍면동)에 방문 접수</strong>(경기북부 공고 사례) 또는 인터넷 접수. ${reg.name === "해당 지역" ? "" : reg.name + " 거주자는 "}<strong>${reg.site}</strong>도 함께 확인하세요.<br><span style="font-size:11px;color:var(--text3)">※ 2026년부터 매입임대는 수시공고로 올라와 자주 확인해야 합니다. 공고에 따라 1~2인 가구를 1형으로 묶기도 하니 ‘주택형’ 표를 확인하세요.</span>`,
           kw: kwBuy,
           steps: [
             "LH청약플러스 <strong>청약캘린더</strong>에서 우리 지역 매입임대 접수일·발표일을 확인합니다.",
             "공고문에서 <strong>1순위 자격(생계·의료급여 수급자)</strong>, 주택형(내 가구원 수), 임대조건(보증금·월 임대료), 접수방법을 확인합니다.",
-            "<strong>접수</strong> — 공고가 정한 대로 주민센터에 서류를 내거나 인터넷으로 신청합니다. 접수증을 보관하세요.",
+            "<strong>접수</strong> — 공고가 정한 대로 주민센터·지사 방문 또는 인터넷으로 신청합니다. 인천지역본부 일반 매입임대는 <strong>방문 접수 + 주택을 직접 열람한 뒤 동·호를 지정해 신청</strong>하는 방식으로 안내됐습니다. 접수증을 보관하세요.",
             "<strong>서류제출대상자·당첨자(예비순번) 발표</strong>를 확인하고, 기간 내 서류를 제출합니다.",
             "공가가 생기면 순번대로 <strong>계약 안내(등기우편)</strong>가 옵니다. 보증금·월 임대료를 확인하고 계약합니다.",
-            "입주 후 <strong>전입신고 + 주거급여 변경</strong>을 합니다. (일부 공고는 생계·주거급여 동시 수급자 대상 무보증금 월세를 운영하니 임대조건 표를 확인하세요.)",
+            "입주 후 <strong>전입신고 + 주거급여 변경</strong>을 합니다. (임대조건은 ① 보증금↔월세 상호전환 ② <strong>무보증금 월세</strong>(생계·주거급여 동시 수급자, 월세가 주거급여 기준임대료 이내) ③ <strong>보증금 완화</strong>(생계·의료 수급자·한부모·고령자 등, 보증금을 월세 12개월분으로) — 공고문 확인)",
           ],
           extra: exBuy.length ? exBuy : null,
           check: "LH청약플러스 <strong>[청약] → [당첨/낙찰결과조회]</strong>, <strong>[고객서비스] → [나의정보] → [예비입주자순위]</strong>, ARS 1600-1004·1661-7700. 당첨자 명단 조회 가능 기간은 공고·안내에 따라 제한되니 발표일에 바로 확인하세요.",
           warn: [
-            "공고마다 대상 시·군·구가 다릅니다. <strong>주민등록이 사업대상지역</strong>에 있어야 합니다.",
+            "공고문 ‘입주자격’에서 <strong>‘주민등록’·‘공급대상지역’</strong> 문구를 찾아 <strong>거주지 무관인지, 주민등록이 필수인지</strong> 먼저 확인하세요. 무관이어도 같은 순위 경쟁에서는 지역 거주자가 먼저입니다.",
             "예비입주자는 대기자입니다. 입주까지 시간이 걸릴 수 있어 임시 거처를 유지하세요.",
           ],
         });
@@ -16937,7 +17112,7 @@
           icon: "🏘️",
           title: "임대주택 안내",
           keywords:
-            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 수시공고 정기공고 접수일정 마감일 SH GH iH 광주 전남 공고 확인 알림 경기행복주택 주거급여수급자 계층 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
+            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 전국 거주지 무관 보증금 없이 무보증금 월세 인천 부천 일반 매입임대 공고 판독기 지금 열린 공고 마감 D-day 수시공고 정기공고 접수일정 마감일 SH GH iH 광주 전남 공고 확인 알림 경기행복주택 주거급여수급자 계층 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
         },
         {
           tab: "workability",
