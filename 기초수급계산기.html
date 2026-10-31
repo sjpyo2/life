@@ -3448,6 +3448,13 @@
         </button>
         <button
           class="step-btn"
+          onclick="rentalTab('safe')"
+          id="rtab-safe"
+        >
+          🛡️ 계약 체크리스트
+        </button>
+        <button
+          class="step-btn"
           onclick="rentalTab('overview')"
           id="rtab-overview"
         >
@@ -3628,6 +3635,88 @@
         </div>
       </div>
 
+      <!-- 계약 체크리스트 -->
+      <div id="rental-safe" style="display: none">
+        <div class="rm-card">
+          <div class="rm-h"><span>🛡️</span> 집 계약 체크리스트 — 보증금 사기·분쟁 막는 순서</div>
+          <div class="rm-sub">
+            <strong style="color:var(--text)">계약 전 → 계약 당일 → 잔금·입주 당일 → 입주 후</strong> 순서로
+            <strong style="color:var(--text)">등기부등본 · 건축물대장 · 확정일자 · 납세증명서 · 전세보증금 반환보증 · 사기 방지</strong>를 체크합니다.
+            보증금은 수급자에게 큰 돈이므로, <strong style="color:var(--text)">하나라도 ‘확인 불가·이상’이면 계약하지 않는 것</strong>이 원칙입니다.
+          </div>
+          <div class="rm-linkrow" style="margin-top:10px">
+            <a class="rm-lk" href="https://www.iros.go.kr" target="_blank" rel="noopener">📄 인터넷등기소(등기부·신탁원부·확정일자)</a>
+            <a class="rm-lk" href="https://www.gov.kr" target="_blank" rel="noopener">🏛️ 정부24(건축물대장·전입신고)</a>
+            <a class="rm-lk" href="https://hometax.go.kr" target="_blank" rel="noopener">💰 홈택스(국세 납세증명)</a>
+            <a class="rm-lk" href="https://www.wetax.go.kr" target="_blank" rel="noopener">💰 위택스(지방세 납세증명)</a>
+            <a class="rm-lk" href="https://rt.molit.go.kr" target="_blank" rel="noopener">📈 실거래가 공개시스템</a>
+            <a class="rm-lk" href="https://www.khug.or.kr" target="_blank" rel="noopener">🛡️ HUG 반환보증</a>
+          </div>
+          <div class="rm-box rm-danger" style="margin-top:12px;font-size:12px">
+            <strong>🚫 이런 신호가 하나라도 있으면 계약하지 마세요</strong>
+            <ul class="rm-ul">
+              <li>등기부 갑구에 <strong>압류·가압류·가처분·경매개시결정</strong>이 있다 / 소유자와 계약 상대가 다르다</li>
+              <li><strong>신탁등기</strong>가 있는데 <strong>수탁자(신탁회사) 동의서·신탁원부</strong>를 못 받는다</li>
+              <li><strong>위반건축물</strong> 표시가 있거나 건축물대장 면적·용도가 계약서·광고와 다르다</li>
+              <li>보증금+선순위 채권이 시세의 <strong>80~90%를 넘는다</strong> (HUG 반환보증은 90% 이하여야 가입 가능)</li>
+              <li><strong>국세·지방세 체납</strong>이 있거나 납세증명서 제시를 거부한다</li>
+              <li>보증금을 <strong>소유자(임대인) 본인 명의가 아닌 계좌</strong>로 보내라고 한다 / 계약금을 서둘러 먼저 보내라고 재촉한다</li>
+              <li>시세보다 <strong>지나치게 싸고</strong>, 직거래·SNS·대리인만 나서며 본인 통화를 피한다</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🧮</span> 깡통전세 위험도 계산기 — 내 보증금은 안전한가</div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">집 시세 (원)</div><input class="hs-in" id="sf_price" type="number" inputmode="numeric" step="1000000" value="200000000" oninput="sf_calc()" /></div>
+            <div><div class="hs-lbl">선순위 근저당 채권최고액 합계 (원)</div><input class="hs-in" id="sf_mort" type="number" inputmode="numeric" step="1000000" value="60000000" oninput="sf_calc()" /></div>
+            <div><div class="hs-lbl">선순위 임차보증금 합계 (원, 다가구)</div><input class="hs-in" id="sf_prior" type="number" inputmode="numeric" step="1000000" value="0" oninput="sf_calc()" /></div>
+            <div><div class="hs-lbl">내 보증금 (원)</div><input class="hs-in" id="sf_dep" type="number" inputmode="numeric" step="1000000" value="50000000" oninput="sf_calc()" /></div>
+            <div><div class="hs-lbl">경매 낙찰가율 가정 (%)</div><input class="hs-in" id="sf_bid" type="number" inputmode="numeric" min="30" max="100" value="75" oninput="sf_calc()" /></div>
+            <div><div class="hs-lbl">집 위치</div>
+              <select class="hs-in" id="sf_area" onchange="sf_calc()"><option value="cap">수도권</option><option value="loc">그 외 지역</option></select></div>
+          </div>
+          <div id="sf_out" style="margin-top:10px"></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.7">※ <strong>시세는 실거래가 공개시스템·KB시세 등 여러 곳을 비교</strong>하세요(공시가격은 시세보다 낮습니다). 근저당 채권최고액은 보통 대출 원금의 120% 안팎이라 실제 대출보다 크게 잡힙니다. 70%·80% 구간은 일반적인 안전 가이드이고, 90%는 HUG 반환보증 가입요건입니다. 경매 낙찰가율·배당 순서(세금·최우선변제 등)에 따라 실제 회수액은 달라집니다.</div>
+        </div>
+
+        <div class="rm-card" style="padding:14px 18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:8px">
+            <strong>✅ 계약 체크 진행 상황</strong><span id="sf_prog_txt" style="color:var(--text3)">0 / 0</span>
+          </div>
+          <div class="rm-prog"><div id="sf_prog_bar"></div></div>
+        </div>
+        <div id="sf_groups"></div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>✍️</span> 특약 문구 샘플 (계약서 ‘특약사항’에 옮겨 쓰기)</div>
+          <div class="rm-box rm-warn" style="margin-bottom:10px;font-size:12px">샘플이므로 <strong>집 상황에 맞게 수정</strong>하고, 가능하면 공인중개사·법률구조공단(☎ 132) 확인을 받으세요. 특약을 <strong>모두 계약서에 서면으로</strong> 적고 임대인·임차인이 함께 서명(간인)해야 효력이 분명합니다.</div>
+          <div id="sf_clauses"></div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>⚖️</span> 소액임차인 최우선변제 — 경매돼도 먼저 받는 일부 (2023.2.21 이후 담보물권 기준 · 2026 현재)</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="sf_small" style="min-width:560px"></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px">※ 최우선변제는 <strong>보증금 전액이 아니라 일부</strong>만 보호하고, 모든 소액임차인 합계는 주택 매각대금의 1/2을 넘을 수 없습니다. 경매개시결정등기 전에 <strong>주택 인도+전입신고</strong>를 갖춰야 하며, <strong>선순위 담보권 설정 당시의 기준</strong>이 적용될 수 있습니다.</div>
+        </div>
+
+        <div class="rm-card">
+          <div class="rm-h"><span>🚨</span> 보증금을 못 돌려받을 것 같을 때 (사후 대응)</div>
+          <ul class="rm-ul" style="font-size:12px;line-height:1.9;color:var(--text2)">
+            <li><strong>이사 가기 전에</strong> 법원에 <strong>임차권등기명령</strong>을 신청하면, 이사·전출해도 대항력·우선변제권이 유지됩니다(이사부터 하면 권리를 잃을 수 있음).</li>
+            <li><strong>반환보증(HUG 등)에 가입했다면</strong> 만기 후 보증이행을 청구합니다. 필요한 서류·순서는 가입 기관에 문의하세요.</li>
+            <li>상담: <strong>대한법률구조공단 132</strong>, 보증기관 고객센터. 전세사기 피해가 의심되면 <strong>전세사기피해지원센터·경찰</strong>에 신고하세요.</li>
+            <li>만기 6개월~2개월 전에는 <strong>갱신요구 또는 해지 통보</strong>를 서면(내용증명)으로 해 두면 분쟁 때 유리합니다.</li>
+          </ul>
+        </div>
+
+        <div class="rm-box rm-warn" style="font-size:11px;line-height:1.8">
+          📚 <strong>근거</strong>: 주택임대차보호법 제3조의7(임대인 정보제시 의무, 2023.4.1 시행 — 법무부 보도자료 2023.3.30), 주택임대차보호법 시행령(소액임차인 범위·최우선변제), 주택도시보증공사(HUG) 전세보증금반환보증 안내(2026), 신탁부동산 임대차 관련 판례·보도(로톡뉴스·한국경제). (확인일: 2026.10.26)<br />
+          ⚠️ 법령·보증 요건은 개정될 수 있어 <strong>계약 직전에 공식 사이트에서 최신 기준을 확인</strong>하세요. 이 체크리스트는 법률 자문이 아니며, 구체적 사안은 전문가 상담이 필요합니다.
+        </div>
+      </div>
+
       <!-- 행복주택 -->
       <div id="rental-happy" style="display: none">
         <div class="rm-card">
@@ -3741,6 +3830,38 @@
               <button class="rm-chip" onclick="rt_pick('cash','c2',this)">500만원 이상</button>
             </div>
           </div>
+        </div>
+
+        <div class="rm-card" id="hf_card">
+          <div class="rm-h"><span>💳</span> 고려 중인 집으로 계산하기 — 보증금 부족액 · 대출 · 월세 · 수급 영향</div>
+          <div class="rm-sub" style="margin-bottom:10px">
+            후보 주택의 <strong style="color:var(--text)">보증금·월세</strong>와 내 돈을 넣으면 <strong style="color:var(--text)">① 부족한 보증금과 대출 가능 여부 ② 월 주거비와 주거급여 지원 ③ 계약 후 기초수급 자격 유지 여부 ④ 대출을 받는 순서</strong>를 한 번에 보여줍니다.
+          </div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">보유 현금 (원)</div><input class="hs-in" id="hf_cash" type="number" inputmode="numeric" step="100000" value="3000000" oninput="hf_touch();hf_calc()" /></div>
+            <div><div class="hs-lbl">후보 집 보증금 (원)</div><input class="hs-in" id="hf_dep" type="number" inputmode="numeric" step="1000000" value="30000000" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">후보 집 월세 (원, 전세면 0)</div><input class="hs-in" id="hf_rent" type="number" inputmode="numeric" step="10000" value="0" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">이사·중개 등 기타 초기비용 (원)</div><input class="hs-in" id="hf_misc" type="number" inputmode="numeric" step="100000" value="500000" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">집이 있는 지역</div>
+              <select class="hs-in" id="hf_reg" onchange="hf_calc()">
+                <option value="seoul">서울</option><option value="gyeonggi" selected>경기</option><option value="incheon">인천</option>
+                <option value="metro">광역시·세종·창원</option><option value="other">그 외 지역</option>
+              </select></div>
+            <div><div class="hs-lbl">가구원 수</div>
+              <select class="hs-in" id="hf_size" onchange="hf_calc()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+            <div><div class="hs-lbl">월 근로소득 (세전, 원)</div><input class="hs-in" id="hf_inc" type="number" inputmode="numeric" step="50000" value="0" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">현금 외 금융재산 (예금·보험 등, 원)</div><input class="hs-in" id="hf_fin" type="number" inputmode="numeric" step="100000" value="0" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">기타 일반재산 (원, 선택)</div><input class="hs-in" id="hf_gen" type="number" inputmode="numeric" step="100000" value="0" oninput="hf_calc()" /></div>
+            <div><div class="hs-lbl">대출 금리 (연 %, 가정)</div><input class="hs-in" id="hf_rate" type="number" inputmode="decimal" step="0.1" value="2.5" oninput="hf_calc()" /></div>
+          </div>
+          <div class="rm-chips" style="margin-top:8px">
+            <button class="rm-chip" onclick="hf_preset(500000,50000000,0)">전세 5,000만원</button>
+            <button class="rm-chip" onclick="hf_preset(500000,10000000,350000)">보증금 1,000만원 · 월 35만원</button>
+            <button class="rm-chip" onclick="hf_preset(500000,5000000,400000)">보증금 500만원 · 월 40만원</button>
+            <button class="rm-chip" onclick="hf_preset(500000,0,300000)">보증금 0원 · 월 30만원</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6">※ 위 입력의 <strong>보유 현금은 위 ‘내 케이스 고르기’의 현금 구간과 연동</strong>됩니다(직접 고치면 우선 적용). 금리는 버팀목 전세 연 2.5~3.5%(수급자·차상위 우대 가능)에서 가정값을 고르세요.</div>
+          <div id="hf_out" style="margin-top:12px"></div>
         </div>
 
         <div id="rt_result_wrap" style="display:none">
@@ -4386,6 +4507,42 @@
 
       <!-- 보증금·주거자금 대출 -->
       <div id="rental-loan" style="display: none">
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title"><span class="icon">💰</span> 내 현금으로 보는 보증금·주거자금 설계 — 어떤 제도를 쓰면 되나</div>
+          <div class="rm-sub" style="margin-bottom:10px">보유 현금과 목표 집(보증금·월세), 내 상황을 넣으면 <strong style="color:var(--text)">제도별로 얼마까지 가능하고, 내가 먼저 낼 돈과 월 부담은 얼마인지</strong> 한눈에 비교하고 <strong style="color:var(--text)">추천 순서</strong>를 알려줍니다.</div>
+          <div class="hs-grid">
+            <div><div class="hs-lbl">보유 현금 (원)</div><input class="hs-in" id="fn_cash" type="number" inputmode="numeric" step="100000" value="3000000" oninput="fn_calc()" /></div>
+            <div><div class="hs-lbl">목표 보증금 (원)</div><input class="hs-in" id="fn_dep" type="number" inputmode="numeric" step="1000000" value="30000000" oninput="fn_calc()" /></div>
+            <div><div class="hs-lbl">목표 월세 (원, 전세면 0)</div><input class="hs-in" id="fn_rent" type="number" inputmode="numeric" step="10000" value="0" oninput="fn_calc()" /></div>
+            <div><div class="hs-lbl">지역</div>
+              <select class="hs-in" id="fn_reg" onchange="fn_calc()"><option value="seoul">서울</option><option value="gyeonggi" selected>경기</option><option value="incheon">인천</option><option value="metro">광역시·세종·창원</option><option value="other">그 외 지역</option></select></div>
+            <div><div class="hs-lbl">가구원 수</div>
+              <select class="hs-in" id="fn_size" onchange="fn_calc()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+            <div><div class="hs-lbl">나이대</div>
+              <select class="hs-in" id="fn_age" onchange="fn_calc()"><option value="adult">만 35세 이상</option><option value="youth">청년 (만 19~34세)</option></select></div>
+            <div><div class="hs-lbl">수급 상태</div>
+              <select class="hs-in" id="fn_st" onchange="fn_calc()"><option value="both">생계급여 + 주거급여 동시 수급</option><option value="lifemed">생계·의료급여 수급</option><option value="house">주거급여만 수급</option><option value="near">차상위·한부모 등 저소득</option><option value="none">해당 없음</option></select></div>
+            <div><div class="hs-lbl">고시원·쪽방 등 3개월 이상 거주</div>
+              <select class="hs-in" id="fn_gosi" onchange="fn_calc()"><option value="no">아니오</option><option value="yes">예</option></select></div>
+          </div>
+          <div id="fn_out" style="margin-top:12px"></div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title"><span class="icon">🗂️</span> 제도별 상세 — 얼마까지 · 누가 · 비용 · 서류 · 내가 할 일</div>
+          <div id="fn_cards"></div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-title"><span class="icon">🧭</span> 현금 구간별 · 상황별 어떤 제도가 맞나</div>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" id="fn_matrix" style="min-width:680px"></table></div>
+        </div>
+
+        <div class="rm-box rm-warn" style="margin-bottom:16px;font-size:11px;line-height:1.8">
+          📚 <strong>근거</strong>: 마이홈포털(버팀목 전세·주거안정월세대출), LH 전세임대·주거취약계층 주거지원 안내, LH 주거급여(임차급여·실제임차료 산정), LH 일반 매입임대 공고문(보증금 완화·무보증금 월세). (확인일: 2026.10.26)<br />
+          ⚠️ <strong>한도·금리·승인은 은행·기금·LH 심사 결과에 따라 달라집니다.</strong> 수급자는 소득이 거의 없어 상환능력 심사에서 한도 축소·거절이 있을 수 있으니 <strong>계약 전 사전 상담</strong>을 꼭 받으세요. 아래 ‘기존 요약’은 이전에 정리한 내용입니다.
+        </div>
+
         <div class="card" style="margin-bottom: 16px">
           <div class="card-title">
             <span class="icon">💰</span> 보증금·주거안정자금 지원 제도
@@ -10764,19 +10921,19 @@
       // ──────────────────────────────────────────
 
       // 기본재산공제액 (가구규모 무관, 지역별 동일)
-      // 출처: 보건복지부 2026년 국민기초생활보장사업안내 165쪽
-      // 2023.1.1 개정 이후 현행 기준
+      // 출처: 보건복지부 기초생활보장 > 조사내용(재산조사, 최종수정 2026.9.23)
+      // 생계·의료·주거·교육급여 기본재산액: 서울 9,900 / 경기 8,000 / 광역·세종·창원 7,700 / 그 외 5,300 (만원)
       const BASIC_DEDUCTION = {
         seoul: 99000000, // 서울: 9,900만원
-        gyeonggi: 68000000, // 경기: 6,800만원
-        metro: 68000000, // 광역·세종·창원: 6,800만원
+        gyeonggi: 80000000, // 경기: 8,000만원
+        metro: 77000000, // 광역·세종·창원: 7,700만원
         other: 53000000, // 그 외 지역: 5,300만원
       };
 
       // 주거용재산 한도액 (이 금액까지 월 1.04% 적용, 초과분은 4.17%)
       const HOUSING_LIMIT = {
         seoul: 172000000, // 서울 1억7,200만원
-        gyeonggi: 172000000, // 경기·인천 (서울과 동일 적용)
+        gyeonggi: 151000000, // 경기 1억5,100만원 (보건복지부 2026 생계급여 한도)
         metro: 146000000, // 광역시·세종·창원 1억4,600만원
         other: 112000000, // 그 외 1억1,200만원
       };
@@ -10832,24 +10989,20 @@
         // 주거용재산 (소유주택 + 전세보증금)
         const residenceTotal = propHouse + propDeposit;
 
-        // 주거용재산 계산
-        let housingIncome = 0;
-        let housingOver = 0;
-        if (residenceTotal > 0) {
-          const withinLimit = Math.min(residenceTotal, houseLimit);
-          housingOver = Math.max(0, residenceTotal - houseLimit);
-          // 기본재산공제 적용 (주거용재산 한도액 이내분에서 공제)
-          const withinAfterDed = Math.max(0, withinLimit - basicDed);
-          housingIncome = withinAfterDed * RATE.housing;
-        }
-
-        // 일반재산 (비거주 부동산 + 기타) — 남은 기본재산공제 적용
-        // 주거용재산에서 기본재산공제를 다 썼으면 일반재산에 공제 없음
+        // 주거용재산 · 기본재산액 · 부채 (부채는 주거용재산 → 일반재산 → 금융재산 순서로 차감: 보건복지부 2026 사업안내)
         const residenceForDed = Math.min(residenceTotal, houseLimit);
+        const housingOver = Math.max(0, residenceTotal - houseLimit);
         const usedDed = Math.min(residenceForDed, basicDed);
         const remainDed = Math.max(0, basicDed - usedDed);
-        const generalTotal = propReal + propOther + housingOver - propDebt;
+        const debtOnHousing = Math.min(propDebt, Math.max(0, residenceForDed - usedDed));
+        const housingNetAmt = Math.max(0, residenceForDed - usedDed - debtOnHousing);
+        const housingIncome = housingNetAmt * RATE.housing;
+        const debtLeft1 = propDebt - debtOnHousing;
+        const generalGross = propReal + propOther + housingOver;
+        const debtOnGeneral = Math.min(debtLeft1, Math.max(0, generalGross - remainDed));
+        const generalTotal = generalGross - debtOnGeneral;
         const generalNet = Math.max(0, generalTotal - remainDed);
+        const debtLeftForFin = debtLeft1 - debtOnGeneral;
         const generalIncome = generalNet * RATE.general;
 
         // 금융재산 미리보기 계산 (propSummaryBox용)
@@ -10861,7 +11014,7 @@
         );
         const netFinancialPreview = Math.max(
           0,
-          propFinancialPreview - financialBasicPreview,
+          propFinancialPreview - financialBasicPreview - debtLeftForFin,
         );
         const financialIncomePreview = netFinancialPreview * RATE.financial;
 
@@ -11179,20 +11332,23 @@
         const residenceWithinLimit = Math.min(residenceTotal, houseLimit);
         const residenceOverLimit = Math.max(0, residenceTotal - houseLimit);
 
-        // 기본재산공제를 주거용재산에 먼저 적용
-        const residenceAfterDed = Math.max(0, residenceWithinLimit - basicDed);
-        const housingIncome = residenceAfterDed * RATE.housing;
-
-        // ② 일반재산 (비거주 부동산 + 기타 + 주거용 한도초과분 - 부채)
-        // 기본재산공제에서 주거용재산이 사용한 만큼 차감 후 잔여분만 일반재산에 적용
+        // 기본재산공제 → 부채 순으로 주거용재산에 먼저 적용 (부채: 주거용재산 → 일반재산 → 금융재산 순서)
         const usedDed = Math.min(residenceWithinLimit, basicDed);
         const remainDed = Math.max(0, basicDed - usedDed);
-        const generalRaw = propReal + propOther + residenceOverLimit - propDebt;
+        const debtOnHousing = Math.min(propDebt, Math.max(0, residenceWithinLimit - usedDed));
+        const residenceAfterDed = Math.max(0, residenceWithinLimit - usedDed - debtOnHousing);
+        const housingIncome = residenceAfterDed * RATE.housing;
+
+        // ② 일반재산 (비거주 부동산 + 기타 + 주거용 한도초과분 - 남은 부채)
+        const debtLeft1 = propDebt - debtOnHousing;
+        const generalGross = propReal + propOther + residenceOverLimit;
+        const debtOnGeneral = Math.min(debtLeft1, Math.max(0, generalGross - remainDed));
+        const generalRaw = generalGross - debtOnGeneral;
         const generalNet = Math.max(0, generalRaw - remainDed);
         const generalIncome = generalNet * RATE.general;
 
-        // ③ 금융재산 (500만원 생활준비금 공제 후 6.26%)
-        const netFinancial = Math.max(0, propFinancial - financialBasic);
+        // ③ 금융재산 (500만원 생활준비금 공제 + 남은 부채 차감 후 6.26%)
+        const netFinancial = Math.max(0, propFinancial - financialBasic - (debtLeft1 - debtOnGeneral));
         const financialIncome = netFinancial * RATE.financial;
 
         // ④ 자동차
@@ -11570,6 +11726,194 @@
 
 
       // ──────────────────────────────────────────
+      // 후보 주택 자금·대출·수급 영향 계산
+      // ──────────────────────────────────────────
+      const HF_REG = {
+        seoul: { n: "서울", prop: "seoul", rk: "metro", cap: 120000000 },
+        gyeonggi: { n: "경기", prop: "gyeonggi", rk: "city", cap: 120000000 },
+        incheon: { n: "인천", prop: "metro", rk: "city", cap: 120000000 },
+        metro: { n: "광역시·세종·창원", prop: "metro", rk: "urban", cap: 80000000 },
+        other: { n: "그 외 지역", prop: "other", rk: "rural", cap: 80000000 },
+      };
+      let hf_cashTouched = false;
+      function hf_touch() { hf_cashTouched = true; }
+      function hf_preset(misc, dep, rent) {
+        document.getElementById("hf_misc").value = misc;
+        document.getElementById("hf_dep").value = dep;
+        document.getElementById("hf_rent").value = rent;
+        hf_calc();
+      }
+      function hf_sync(key, val) {
+        const g = (id) => document.getElementById(id);
+        if (!g("hf_cash")) return;
+        if (key === "size") g("hf_size").value = String(Math.min(val, 6));
+        if (key === "region") g("hf_reg").value = { seoul: "seoul", gyeonggi: "gyeonggi", incheon: "incheon", gwangju: "metro", jeonnam: "other", other: "other" }[val] || "other";
+        if (key === "cash" && !hf_cashTouched) g("hf_cash").value = { c0: 500000, c1: 3000000, c2: 10000000 }[val] || 3000000;
+        hf_calc();
+      }
+      function hf_prop(propCode, housingVal, generalGross, finGross, debt) {
+        const limit = HOUSING_LIMIT[propCode], basic = BASIC_DEDUCTION[propCode];
+        const H = Math.min(housingVal, limit), over = Math.max(0, housingVal - limit);
+        const usedB = Math.min(H, basic), remB = basic - usedB;
+        const dH = Math.min(debt, Math.max(0, H - usedB));
+        const hNet = Math.max(0, H - usedB - dH);
+        const left1 = debt - dH;
+        const gAfter = Math.max(0, generalGross + over - remB);
+        const dG = Math.min(left1, gAfter);
+        const gNet = Math.max(0, gAfter - dG);
+        const left2 = left1 - dG;
+        const fNet = Math.max(0, finGross - 5000000 - left2);
+        const inc = { housing: hNet * RATE.housing, general: gNet * RATE.general, fin: fNet * RATE.financial };
+        return { limit, basic, H, over, hNet, gNet, fNet, inc, total: inc.housing + inc.general + inc.fin };
+      }
+      function hf_calc() {
+        const out = document.getElementById("hf_out");
+        if (!out) return;
+        const g = (id) => Math.max(parseFloat(document.getElementById(id).value) || 0, 0);
+        const C = g("hf_cash"), D = g("hf_dep"), R = g("hf_rent"), M = g("hf_misc"), inc = g("hf_inc"), F2 = g("hf_fin"), G0 = g("hf_gen");
+        const rate = (parseFloat(document.getElementById("hf_rate").value) || 0) / 100;
+        const reg = HF_REG[document.getElementById("hf_reg").value], size = parseInt(document.getElementById("hf_size").value, 10) || 1;
+        const won = cs_won, fm = (n) => (n >= 0 ? "+" : "−") + won(Math.abs(n));
+        const idxNow = cs_idx(new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, "0"));
+        const T = cs_T(idxNow, size);
+
+        // ① 자금
+        const cashForDep = Math.max(C - M, 0);
+        const S = Math.max(D - cashForDep, 0);
+        const contract = Math.round(D * 0.05);
+        const L = Math.min(Math.round(D * 0.7), reg.cap);
+        const isJeonse = R === 0;
+        let loan = 0, loanType = "none", shortAfter = 0;
+        if (S > 0 && isJeonse) { loanType = "jeonse"; loan = Math.min(S, L); shortAfter = Math.max(S - L, 0); }
+        else if (S > 0) { loanType = "wolse"; shortAfter = S; }
+        const ownPay = Math.max(D - loan, 0);
+        const cashLeft = Math.max(C - M - ownPay, 0);
+        const interest = Math.round(loan * rate / 12);
+
+        // ② 주거급여
+        const grade = REGION_GRADE[reg.rk], gi = Math.min(Math.max(size, 1), 6) - 1;
+        const base26 = HOUSING_BASE_2026[grade][gi], base27 = HOUSING_BASE_2027[grade][gi];
+        const actual = Math.round(R + D * 0.04 / 12);
+        const benefit26 = Math.min(actual, base26), benefit27 = Math.min(actual, base27);
+        const selfPay = Math.max(actual - base26, 0);
+        const monthCost = Math.max(R + interest - benefit26, 0);
+
+        // ③ 재산·수급
+        const ev = cs_evalIncome({ type: "general" }, inc);
+        const before = hf_prop(reg.prop, 0, G0, C + F2, 0);
+        const after = hf_prop(reg.prop, D, G0, cashLeft + F2, loan);
+        const recB = Math.round(ev.life + before.total), recA = Math.round(ev.life + after.total), recAm = Math.round(ev.med + after.total);
+        const okA = { life: recA <= T.life, med: recAm <= T.med, house: recA <= T.house, edu: recA <= T.edu };
+        const mk = (b) => (b ? "✅" : "❌");
+
+        // 판정
+        let cls = "rm-ok", head = "";
+        if (shortAfter > 0) { cls = "rm-danger"; head = loanType === "jeonse" ? `❌ 대출로도 보증금이 ${won(shortAfter)} 부족합니다` : `⚠️ 보증금이 ${won(S)} 부족합니다 (보증부 월세는 대출로 메우기 어려울 수 있음)`; }
+        else if (!okA.life) { cls = "rm-warn"; head = "⚠️ 보증금은 마련되지만 계약 후 생계급여 선정기준을 넘습니다"; }
+        else if (selfPay > 0) { cls = "rm-warn"; head = `⚠️ 보증금은 마련되고 수급도 유지되지만, 주거급여 지원 상한을 넘어 월 ${won(selfPay)}은 본인 부담입니다`; }
+        else { head = S > 0 ? `✅ 부족한 보증금 ${won(S)}을 대출 ${won(loan)}로 마련할 수 있고, 계약 후에도 생계급여 자격이 유지됩니다` : "✅ 보유 현금으로 보증금을 낼 수 있고, 계약 후에도 생계급여 자격이 유지됩니다"; }
+
+        const kpi = (l, v, s2, c) => `<div class="cs-k"><div class="l">${l}</div><div class="v"${c ? ` style="color:${c}"` : ""}>${v}</div><div class="s">${s2}</div></div>`;
+        let html = `<div class="rm-box ${cls}" style="font-size:13px"><strong>${head}</strong></div>
+          <div class="cs-kpi">
+            ${kpi("부족한 보증금", won(S), `보증금 ${won(D)} − 낼 수 있는 현금 ${won(cashForDep)}`, S ? "#fb7185" : "#34d399")}
+            ${kpi(loanType === "jeonse" ? "버팀목 대출(추정)" : "대출", loan ? won(loan) : "—", loan ? `한도 ${won(L)} · 월 이자 약 ${won(interest)}` : (S ? "전세가 아니면 보증금 대출 불확실" : "필요 없음"), loan ? "#22d3ee" : "")}
+            ${kpi("월 주거비 실부담", won(monthCost), (R + interest - benefit26) < 0 ? `주거급여(${won(benefit26)})가 월세+이자(${won(R + interest)})보다 월 ${won(benefit26 - R - interest)} 많음` : `월세 ${won(R)} + 이자 ${won(interest)} − 주거급여 ${won(benefit26)}`, "")}
+            ${kpi("계약 후 남는 현금", won(cashLeft), "계약금·잔금·기타비용 지출 후", cashLeft ? "" : "#fb923c")}
+          </div>`;
+
+        // ② 자금 계획표
+        html += `<h4 style="font-size:12px;margin:14px 0 6px">① 자금 계획 — 언제 얼마가 필요한가</h4>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl"><thead><tr><th>시점</th><th>금액</th><th>설명</th></tr></thead><tbody>
+            <tr><td>계약 때</td><td><strong>${won(contract)}</strong></td><td>계약금(통상 보증금의 5%) — <strong>내 현금으로 먼저 지급</strong>${contract > C ? ` <span style="color:#fb7185">· 보유 현금(${won(C)})보다 큽니다</span>` : ""}</td></tr>
+            <tr><td>잔금일</td><td><strong>${won(Math.max(D - contract, 0))}</strong></td><td>${loan ? `대출 ${won(loan)}(임대인에게 직접 입금되는 방식이 일반적) + 내 현금 ${won(Math.max(ownPay - contract, 0))}` : "내 현금으로 지급"}</td></tr>
+            <tr><td>입주 때</td><td><strong>${won(M)}</strong></td><td>이사·중개 등 기타 초기비용</td></tr>
+            <tr><td>매달</td><td><strong>${won(R + interest)}</strong></td><td>월세 ${won(R)} + 대출 이자 약 ${won(interest)}(연 ${(rate * 100).toFixed(1)}%, 이자만 내는 방식 가정)</td></tr>
+            <tr><td>계약 후 남는 현금</td><td><strong>${won(cashLeft)}</strong></td><td>${cashLeft < 300000 ? "<span style='color:#fb7185'>생활비 여유가 거의 없습니다 — 첫 달 월세 이후가 걱정되면 보증금이 더 낮은 집을 보세요</span>" : "생활 예비비"}</td></tr>
+          </tbody></table></div>`;
+
+        // ③ 대출
+        html += `<h4 style="font-size:12px;margin:14px 0 6px">② 대출 — 어떤 상품을 어떻게 쓰나</h4>`;
+        if (S === 0) html += `<div class="rm-box rm-info">현금으로 보증금을 낼 수 있어 <strong>보증금 대출은 필요 없습니다.</strong> 다만 보증금을 내고 나면 남는 현금이 ${won(cashLeft)}이라 생활비를 확인하세요.</div>`;
+        else if (loanType === "jeonse") html += `<div class="rm-box rm-info"><strong>주택도시기금 버팀목 전세자금대출</strong> (전세 계약일 때)<ul class="rm-ul">
+            <li>대상(마이홈 안내): 성년 <strong>무주택 세대주</strong>, 부부합산 연소득 <strong>5천만원 이하</strong>, 순자산 <strong>3.45억원 이하</strong></li>
+            <li>한도: 기본 <strong>8천만원(수도권 1.2억원)</strong>, 보통 임차보증금의 <strong>70% 이내</strong>(기금 안내) → 이 집은 최대 약 <strong>${won(L)}</strong></li>
+            <li>금리: 연 <strong>2.5~3.5%</strong> 범위(소득·보증금에 따라), 수급자·차상위 우대 가능 · 기간 2년, 연장해 최장 10년</li>
+            <li>필요한 대출 <strong>${won(Math.min(S, L))}</strong> ${S <= L ? "→ 한도 안입니다" : `→ 한도를 <strong style="color:#fb7185">${won(S - L)}</strong> 넘습니다 (자력 추가 필요)`}</li>
+            <li><strong>수급자는 소득이 거의 없어 상환능력 심사에서 한도 축소·거절이 있을 수 있습니다.</strong> 계약 전에 수탁은행에서 <strong>사전 한도 상담</strong>을 받으세요.</li></ul></div>`;
+        else html += `<div class="rm-box rm-warn"><strong>보증부 월세는 보증금을 대출로 메우기 어렵습니다.</strong><ul class="rm-ul">
+            <li>버팀목 전세대출은 <strong>전세 계약</strong>이 기본 대상이라, 월세 계약의 보증금 부족분은 은행·기금 상담으로 가능 여부를 먼저 확인해야 합니다.</li>
+            <li><strong>주거안정월세대출</strong>은 <strong>월세</strong>를 돕는 상품입니다(월 60만원 이내·총 1,440만원, 연 1.3%(우대형)~1.8%, 보증금 1억 이하·월세 60만원 이하 주택). 주거급여 수급자는 대출 가능액에서 주거급여 수급액이 제외됩니다.</li>
+            <li>보증금 ${won(S)}을 줄이면 월세가 늘어납니다 — 연 6% 전환 가정 시 월 약 <strong>+${won(Math.round(S * 0.06 / 12))}</strong> (협의·공고별 전환율 상이).</li></ul></div>`;
+        const wlOK = D <= 100000000 && R <= 600000 && R > 0;
+        if (R > 0) { const wl = Math.min(Math.max(R - benefit26, 0), 600000); html += `<div class="rm-box ${wlOK ? "rm-info" : "rm-warn"}" style="margin-top:8px"><strong>월세 대출(참고)</strong>: ${wlOK ? `이 집은 보증금 1억 이하·월세 60만원 이하 요건에 해당합니다. 주거급여 ${won(benefit26)}을 받으면 월세 부담은 약 ${won(Math.max(R - benefit26, 0))}이고, 월세대출은 월 최대 ${won(wl)} 안팎으로 추정됩니다(총 1,440만원 한도).` : "보증금 1억 초과 또는 월세 60만원 초과라 요건에 맞지 않을 수 있습니다."}</div>`; }
+
+        // ④ 주거급여
+        html += `<h4 style="font-size:12px;margin:14px 0 6px">③ 월세는 주거급여로 얼마나 지원되나 (기준임대료 ${reg.n}·${size}인)</h4>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl"><thead><tr><th>항목</th><th>2026년</th><th>2027년(1.1.~)</th></tr></thead><tbody>
+            <tr><td>실제임차료 = 월세 + 보증금×4%÷12</td><td colspan="2"><strong>${won(actual)}</strong> (월세 ${won(R)} + 보증금 환산 ${won(Math.round(D * 0.04 / 12))})</td></tr>
+            <tr><td>기준임대료(지급 상한)</td><td>${won(base26)}</td><td>${won(base27)}${isHousing2027Confirmed(reg.rk, size) ? "" : " <span style='font-size:10px;color:var(--text3)'>(미확정 가구는 2026값 유지)</span>"}</td></tr>
+            <tr><td><strong>주거급여 지원(추정)</strong></td><td><strong>${won(benefit26)}</strong></td><td><strong>${won(benefit27)}</strong></td></tr>
+            <tr><td>기준 초과 본인 부담</td><td>${selfPay ? "<span style='color:#fb7185'>" + won(selfPay) + "</span>" : "없음"}</td><td>${Math.max(actual - base27, 0) ? won(Math.max(actual - base27, 0)) : "없음"}</td></tr>
+          </tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px">※ 주거급여는 <strong>기준임대료를 상한으로 실제임차료를 지원</strong>하며, 보증금도 연 4%를 월세로 환산해 포함합니다(LH 안내). 소득인정액이 생계급여 선정기준을 넘으면 자기부담분이 차감됩니다. <strong>대출 이자는 주거급여로 지원되지 않습니다.</strong></div>`;
+
+        // ⑤ 수급 영향
+        const row = (l, a, b) => `<tr><td>${l}</td><td>${a}</td><td>${b}</td></tr>`;
+        html += `<h4 style="font-size:12px;margin:14px 0 6px">④ 이 집에 들어가면 기초수급 자격은 어떻게 되나 (재산 환산)</h4>
+          <div class="hs-tbl-wrap"><table class="hs-tbl cs-tbl" style="min-width:560px"><thead><tr><th>항목</th><th>계약 전 (현금 보유)</th><th>계약 후 (보증금+대출 반영)</th></tr></thead><tbody>
+            ${row("금융재산 (현금+예금)", won(C + F2), won(cashLeft + F2))}
+            ${row("주거용재산 = 임차보증금", "—", won(D) + (after.over ? ` (한도 ${won(after.limit)} 초과 ${won(after.over)}은 일반재산)` : ""))}
+            ${row("부채 = 대출금 (주거용→일반→금융 순 차감)", "—", won(loan))}
+            ${row("기본재산액 공제 (" + reg.n + ")", "—", "−" + won(after.basic))}
+            ${row("재산의 월 소득환산액", won(Math.round(before.total)), "<strong>" + won(Math.round(after.total)) + "</strong>")}
+            ${row("소득평가액(근로소득 30% 공제)", won(Math.round(ev.life)), won(Math.round(ev.life)))}
+            ${row("<strong>소득인정액</strong>", won(recB), "<strong>" + won(recA) + "</strong>")}
+            ${row("생계급여 선정기준 (32%)", won(T.life), `${mk(okA.life)} ${okA.life ? "충족" : "초과"} (여유 ${fm(T.life - recA)})`)}
+            ${row("의료급여 (40%) · 주거급여 (48%) · 교육급여 (50%)", "—", `${mk(okA.med)} ${mk(okA.house)} ${mk(okA.edu)}`)}
+          </tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px">※ 환산율: 주거용재산 월 1.04%, 일반재산 월 4.17%, 금융재산 월 6.26%(생활준비금 500만원 공제) — 보건복지부 2026. <strong>현금을 정당한 보증금으로 쓰면 환산율이 높은 금융재산이 낮은 주거용재산으로 바뀌어 환산액이 줄 수 있습니다.</strong> 반대로 <strong>재산을 타인에게 넘기는 증여·명의 이전은 문제</strong>가 됩니다.</div>`;
+
+        // ⑥ 진행 과정
+        html += `<h4 style="font-size:12px;margin:14px 0 6px">⑤ 내가 밟게 되는 순서 (${loanType === "jeonse" ? "전세 + 버팀목 대출" : loanType === "wolse" ? "보증부 월세" : "현금 계약"})</h4>`;
+        const steps = [];
+        if (loanType === "jeonse") steps.push(
+          ["자격·한도 사전 확인 (오늘)", `무주택 세대주 · 부부합산 연소득 5천만원 이하 · 순자산 3.45억원 이하 · 연체 등 신용 상태. <strong>수탁은행에서 사전 상담</strong>(수급자 증명서·소득 증빙 지참) — 예상 한도 약 ${won(L)}, 필요 ${won(Math.min(S, L))}.`],
+          ["집 확정 + 계약 조건 정리", `보증금 ${won(D)}. 계약서에 <strong>‘대출이 승인되지 않으면 계약 해제, 계약금 반환’ 특약</strong>을 넣으세요. 등기부등본·선순위 채권 확인은 🛡️ 계약 전 안전 체크(거처·주거 가이드)로.`],
+          ["임대차계약 + 계약금", `계약금 약 ${won(contract)}을 <strong>내 현금</strong>으로 지급(보유 ${won(C)}). 계약서와 영수증이 대출 서류가 됩니다.`],
+          ["대출 신청", "수탁은행 방문 또는 <strong>기금e든든</strong>(온라인). 일반적 서류: 신분증, 임대차계약서·계약금 영수증, 주민등록등본, 소득·수급 증빙(수급자 증명서 등), 가족관계증명서 — <strong>은행 안내에 따름</strong>."],
+          ["심사·승인", "공적자료로 소득·자산 조회, 임대인·주택 확인. 승인 한도가 필요 금액 이상인지 확인 — 부족하면 보증금 낮은 집/유형으로 변경."],
+          ["잔금일 대출 실행", `대출 ${won(loan)}이 임대인에게 입금되고, 내 현금 ${won(Math.max(ownPay - contract, 0))}을 추가 지급합니다. 입주 전에 실행돼야 합니다.`],
+          ["전입신고 + 확정일자", "입주 당일 주민센터(또는 정부24). 보증금 보호와 대출 조건 모두에 필요합니다."],
+          ["수급 담당자에게 신고", `<strong>이사·전입, 재산(보증금 ${won(D)}), 부채(대출 ${won(loan)}) 변동</strong>을 신고하고 <strong>주거급여 임차급여</strong>를 신청·변경합니다(임대차계약서·대출 증빙).`],
+          ["상환 관리", `월 이자 약 ${won(interest)} 연체 금지. 만기(2년) 연장 때 소득·자산 재확인이 있을 수 있습니다.`],
+        );
+        else if (loanType === "wolse") steps.push(
+          ["보증금 조정 협의", `부족액 ${won(S)} — 보증금을 낮추고 월세를 올리는 협의, 또는 <strong>보증금이 낮은 공공임대(매입임대 보증금 완화·무보증금 월세, 주거상향지원 50만원)</strong>로 전환합니다.`],
+          ["월세대출 가능 여부", "보증금 1억 이하·월세 60만원 이하 주택이면 <strong>주거안정월세대출</strong>(월 60만원·총 1,440만원)을 은행에서 상담합니다. 주거급여 수급자는 대출 가능액에서 수급액이 제외됩니다."],
+          ["계약 + 전입·확정일자", "서면 계약서, 계좌이체, 전입신고·확정일자. 계약서 금액 = 실제 이체 금액."],
+          ["수급 담당자에게 신고", "이사·전입, 보증금(재산) 변동 신고와 주거급여 임차급여 신청·변경."],
+        );
+        else steps.push(
+          ["계약 + 계약금", `계약금 약 ${won(contract)} 지급, 서면 계약서.`],
+          ["잔금 + 입주", `잔금 ${won(Math.max(D - contract, 0))}과 기타 비용 ${won(M)} 지급 후 입주. 남는 현금 약 ${won(cashLeft)}.`],
+          ["전입신고 + 확정일자", "입주 당일."],
+          ["수급 담당자에게 신고", "이사·전입, 보증금(재산) 변동 신고와 주거급여 임차급여 신청·변경."],
+        );
+        html += `<ol class="rm-ul" style="padding-left:20px;font-size:12px;line-height:1.85;color:var(--text2)">${steps.map((x, i) => `<li style="margin:6px 0"><strong>${x[0]}</strong><br>${x[1]}</li>`).join("")}</ol>`;
+
+        // ⑦ 대안
+        if (shortAfter > 0 || !okA.life || selfPay > 0) html += `<div class="rm-box rm-warn" style="margin-top:8px"><strong>대안 — 보증금 부담을 낮추는 길</strong><ul class="rm-ul">
+          <li><strong>주거취약계층 주거상향지원</strong>(고시원·쪽방 등 3개월 이상 거주): 보증금 50만원 고정</li>
+          <li><strong>기존주택 매입임대</strong>: 수급자 1순위, 보증금 완화(월세 12개월분) 또는 무보증금 월세(생계+주거급여 동시 수급)</li>
+          <li><strong>기존주택 전세임대</strong>: 보증금 부담 2~5% (1순위 신규계약 2% 선택 가능)</li>
+          <li>월세가 주거급여 기준임대료(${won(base26)}) 이하인 집을 고르면 자기부담이 없습니다.</li></ul>
+          <div class="rm-linkrow"><button class="rm-lk" onclick="rentalTab('notice')">📡 공고 확인 센터</button><button class="rm-lk" onclick="switchMain('calc')">🧮 수급자격 계산기</button></div></div>`;
+        html += `<div style="font-size:11px;color:var(--text3);margin-top:10px;line-height:1.7">📚 근거: 보건복지부 기초생활보장 조사내용(재산조사, 2026.9.23: 기본재산액·주거용 한도·부채·환산율), LH 주거급여 안내(실제임차료=월세+보증금×4%÷12, 기준임대료 상한), 마이홈포털(버팀목 전세·주거안정월세대출). 대출 한도·금리·승인은 <strong>은행·기금 심사 결과</strong>에 따르며 이 계산은 추정입니다.</div>`;
+        out.innerHTML = html;
+      }
+
+      // ──────────────────────────────────────────
       // 공고 확인 센터 · 행복주택
       // ──────────────────────────────────────────
       const URL_LH = "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026";
@@ -11795,6 +12139,253 @@
           <div style="margin-top:8px"><strong>🔎 공고문(PDF)에서 Ctrl+F로 찾을 단어</strong><div class="rm-chips" style="margin-top:4px">${find.map((f) => `<span class="rm-chip on" style="cursor:default">${f}</span>`).join("")}</div></div>`;
       }
 
+
+      // ──────────────────────────────────────────
+      // 계약 체크리스트 · 보증금·주거자금 설계
+      // ──────────────────────────────────────────
+      const SF_GROUPS = [
+        { id: "reg", icon: "📄", t: "① 등기부등본 (인터넷등기소) — 계약 전 + 잔금일 당일 2번", items: [
+          ["표제부: 주소·동호수·건물 종류(다가구/다세대/단독)·전용면적이 계약서와 같다", "건축물대장과 대조합니다. 다가구는 선순위 임차인이 여러 명일 수 있어 선순위 보증금 확인이 필수입니다."],
+          ["갑구: <strong>소유자</strong>가 계약 상대(임대인)와 같다 — 신분증으로 대조", "소유권 이전이 <strong>최근·잦으면</strong> 갭투자·사기 위험 신호입니다. 소유권 이전일과 매매가를 확인하세요."],
+          ["갑구: <strong>신탁등기</strong>가 있는지 확인 — 있으면 <strong>신탁원부(인터넷등기소)</strong>를 발급해 임대 권한을 확인", "신탁부동산은 <strong>수탁자(신탁회사)의 동의 없이 맺은 임대차는 대항력·우선변제권을 얻지 못할 수 있습니다.</strong> 신탁사 명의 계약이거나 수탁자 서면 동의서+신탁원부가 있어야 합니다. 못 받으면 계약하지 마세요."],
+          ["갑구: <strong>압류·가압류·가처분·가등기·경매개시결정</strong>이 없다", "하나라도 있으면 원칙적으로 계약을 중단하세요. 말소 조건부 계약은 전문가 확인이 필요합니다."],
+          ["을구: <strong>근저당 채권최고액 합계</strong>와 전세권·임차권등기를 확인했다", "채권최고액은 보통 대출 원금의 120% 안팎입니다. 합계가 클수록 내 보증금이 후순위로 밀립니다."],
+          ["(보증금 + 선순위 근저당 + 선순위 임차보증금) ÷ 시세를 계산했다 — <strong>70% 이하 권장, 90% 초과면 위험</strong>", "위 🧮 깡통전세 계산기로 확인하세요. HUG 반환보증은 보증금+선순위채권이 주택가격의 90% 이하여야 가입됩니다."],
+          ["<strong>잔금일 당일 등기부를 다시 발급</strong>해 계약 때와 달라진 점(신규 근저당·소유자 변경)이 없다", "계약~잔금 사이에 대출이 생기면 내 보증금이 후순위가 됩니다. 잔금 이체 직전에 확인하세요."],
+        ]},
+        { id: "bld", icon: "🏢", t: "② 건축물대장 (정부24·세움터) — 위반건축물·면적·용도", items: [
+          ["<strong>위반건축물</strong> 표시(불법 증축·용도변경·불법 쪼개기)가 없다", "있으면 이행강제금·철거 위험이 있고, <strong>HUG 전세보증금 반환보증은 위반건축물이면 가입이 안 됩니다(아파트 제외).</strong>"],
+          ["건물 <strong>용도</strong>가 주거용(단독·다가구·다세대·연립·아파트 등)이다", "근린생활시설·업무시설 등을 주택처럼 임대하면 반환보증·대출·보호 범위에 문제가 생길 수 있습니다."],
+          ["<strong>전용면적(㎡)</strong>이 계약서·광고와 같다 — 실평수 = ㎡ × 0.3025", "서비스면적·발코니 확장을 전용면적으로 속이지 않았는지, 방을 쪼개 호수를 늘린 구조가 아닌지 확인합니다."],
+          ["층·호수·가구 수가 현장과 일치한다 (다가구는 가구 수로 선순위 임차인 규모 추정)", "건축물 현황도와 실제 구조를 현장 방문에서 대조하세요."],
+          ["건축물대장 <strong>소유자</strong>가 등기부 소유자와 같다", "다르면 소유권 이전 중이거나 서류가 오래된 것일 수 있어 최신본을 다시 발급하세요."],
+        ]},
+        { id: "fix", icon: "📍", t: "③ 전입신고·확정일자·대항력 — 잔금 직후 즉시", items: [
+          ["입주(잔금) 당일 <strong>전입신고 + 확정일자</strong>를 바로 받는다 (정부24·주민센터·인터넷등기소)", "대항력은 <strong>주택 인도 + 전입신고 다음 날 0시</strong>부터 생기고, 우선변제권은 <strong>대항요건 + 확정일자</strong>를 모두 갖춘 때부터입니다."],
+          ["<strong>등기부 유지 특약</strong>을 계약서에 넣었다 (대항력 취득일 전 근저당·소유권 이전 금지)", "잔금~전입 다음 날 0시 사이에 임대인이 대출을 받으면 후순위가 됩니다. 아래 특약 샘플을 쓰세요."],
+          ["확정일자는 <strong>계약서(월세 포함)</strong>에 받았다 / 임대차계약 신고(보증금 6천만원 초과 또는 월세 30만원 초과)를 했다", "신고하면 확정일자를 받은 것으로 간주됩니다(신고 대상·방법은 정부24·주민센터에서 확인). 신고 기한은 계약 후 30일 이내입니다."],
+          ["이사 후에도 <strong>전입·점유를 유지</strong>한다", "주민등록을 옮기거나 집을 비우면 대항력을 잃을 수 있습니다."],
+          ["<strong>소액임차인 최우선변제</strong> 해당 여부를 확인했다", "아래 표를 보세요. 보증금 전액이 아니라 일부만 보호됩니다."],
+        ]},
+        { id: "tax", icon: "💰", t: "④ 납세증명서·임대인 정보제시 — 국세·지방세 체납 확인", items: [
+          ["임대인에게 <strong>정보제시</strong>를 요구했다 — 선순위 확정일자 부여일·보증금 등 + <strong>국세·지방세 납세증명서</strong>", "주택임대차보호법 제3조의7(2023.4.1 시행)에 따라 임대인은 계약 시 이런 정보를 임차인에게 제시해야 합니다."],
+          ["<strong>국세 납세증명서(홈택스)</strong>와 <strong>지방세 납세증명서(위택스·구청)</strong>를 받았다 — 발급일이 계약·잔금일 가까운 최신본이다", "납세증명서는 발급일 이후의 체납은 반영하지 못하므로 <strong>잔금일 당일 발급본</strong>을 요구하세요(유효기간은 통상 30일 — 발급처 확인)."],
+          ["체납이 있다면 <strong>완납 후 계약</strong>한다 — 당해세(재산세·종부세 등)·법정기일이 빠른 세금은 보증금보다 먼저 배당될 수 있다", "체납 세금은 경매에서 임차보증금보다 앞서 가져갈 수 있어 회수액이 줄어듭니다."],
+          ["<strong>완납 특약</strong>을 넣었다 (잔금일까지 완납 + 잔금일 발급 납세증명서 교부 + 대항력 취득일 전 신규 체납 금지)", "잔금일 현재 체납이 확인되면 계약 해제·보증금 반환이 되도록 문구를 구체적으로 적으세요."],
+          ["계약 후 체납을 알게 되면 <strong>계약 해제·위약금 면제</strong> 가능 여부를 확인했다", "2023.4.1 개정으로 임대인의 체납 은닉에 대한 임차인 보호 규정이 도입됐습니다(법무부). 요건은 법령·전문가로 확인하세요."],
+        ]},
+        { id: "ins", icon: "🛡️", t: "⑤ 전세보증금 반환보증 (HUG·HF·SGI) — 계약 전에 가입 가능한 집인지부터", items: [
+          ["<strong>계약 전에 반환보증 가입이 가능한 집인지</strong> 확인했다 (HUG 안심전세·khug.or.kr)", "가입이 안 되는 집은 구조적으로 위험한 경우가 많습니다. 가입 불가 시 계약 해제 특약을 넣으세요."],
+          ["HUG 요건: 보증금 <strong>수도권 7억원·그 외 5억원 이하</strong>, 계약기간 1년 이상, <strong>보증금+선순위채권 ≤ 주택가격 90%</strong>", "위반건축물·압류·경매 등이 있으면 거절될 수 있습니다(2026 안내)."],
+          ["<strong>가입 마감일</strong>을 달력에 넣었다 — 신규는 잔금일·전입신고일 중 늦은 날부터 <strong>계약기간의 절반이 지나기 전</strong>", "기한을 넘기면 가입할 수 없습니다. 입주하자마자 신청하는 것이 안전합니다."],
+          ["<strong>보증료</strong>를 계산했다 — 보증금 × 요율(주택 유형·부채비율별 연 약 0.1~0.2%대)", "정확한 요율은 HUG 보증료 계산기에서 확인하세요. 수급자는 월세·보증금 부담이 크니 비용도 미리 반영합니다."],
+          ["<strong>가입 불가 시 해제 특약</strong>을 넣었다 (보증보험 가입 불가·거절 시 계약 해제, 계약금 즉시 반환)", "아래 특약 샘플을 쓰세요."],
+          ["대안(HF 전세지킴보증, SGI 전세금보장신용보험)의 한도·요건도 확인했다", "기관별로 가입 한도·주택 요건이 달라 한 곳이 안 되면 다른 곳을 확인합니다."],
+        ]},
+        { id: "day", icon: "✍️", t: "⑥ 계약 당일 사기 방지 — 본인·계좌·중개사·계약서", items: [
+          ["<strong>임대인 본인 확인</strong> — 신분증 원본과 얼굴 대조. 대리인이면 <strong>위임장+인감증명서(임대차 용도)+임대인 본인과 통화</strong>", "대리인은 사기 수법에 자주 쓰입니다. 본인이 나오는 계약이 가장 안전합니다."],
+          ["보증금은 <strong>등기부 소유자(임대인) 본인 명의 계좌</strong>로만 이체 — 이체 전 <strong>1원 송금으로 예금주 확인</strong>", "중개사·대리인·제3자 계좌로 보내면 회수가 어렵습니다."],
+          ["<strong>공인중개사</strong> 등록증·자격증·사무소 등록번호를 확인하고 <strong>중개대상물 확인·설명서 + 공제(보증)증서</strong>를 받았다", "무자격·무등록 중개와 직거래 알선 사칭을 조심하세요."],
+          ["<strong>표준 임대차계약서</strong>에 주소(동·호수)·보증금·계약금·잔금일·계약기간·인적사항이 정확하고 <strong>특약 전부가 서면</strong>에 있다", "구두 약속은 효력이 불분명합니다. 간인·서명 후 사본을 보관하세요."],
+          ["<strong>시세·전세가율</strong>을 실거래가 공개시스템 등으로 직접 확인했다", "시세보다 지나치게 싼 매물, 서두르는 임대인·중개사는 경계 대상입니다."],
+          ["<strong>다가구</strong>는 선순위 임차인 수·보증금 총액·확정일자 부여현황을 확인했다", "임대인에게 정보제시를 요구하세요(임대인 동의 시 확정일자 부여현황 열람 가능)."],
+          ["현장 방문(낮·밤) — 누수·곰팡이·채광·소방설비, 관리비 미납, 실제 점유자·퇴거 시점", "계약금은 보증금의 통상 5~10% 이내로 하고, 해약 시 계약금을 포기·배액 상환하는 규정을 이해하세요."],
+          ["직거래·SNS 매물·선입금 요구·계약금 과다 → <strong>중단</strong>", "계약금을 먼저 보내라고 재촉하면 사기일 가능성이 높습니다."],
+        ]},
+        { id: "grant", icon: "🏠", t: "⑦ 수급자 필수 — 주거급여·재산 신고", items: [
+          ["<strong>계약서 금액 = 실제 이체 금액</strong>이다 (허위·이중 계약서 금지)", "주거급여 임차급여는 임대차계약서와 실제 임차료 지급이 확인돼야 합니다."],
+          ["월세는 <strong>임대인 계좌로 이체</strong>하고 이체 내역을 보관한다 (현금 금지)", "주거급여·분쟁 증빙입니다."],
+          ["<strong>이사·전입, 보증금(재산), 대출(부채) 변동</strong>을 수급 담당자에게 신고하고 주거급여 임차급여를 신청·변경했다", "보증금은 재산에 반영되고 대출은 부채로 차감됩니다. 🧮 계산기·💳 후보 집 계산으로 계약 전 확인하세요."],
+          ["보증금 대출은 <strong>대출금이 임대인에게 직접 입금</strong>되도록 하고 대출 서류를 보관한다", "부채 공제 증빙이 됩니다."],
+        ]},
+        { id: "after", icon: "📆", t: "⑧ 입주 후 · 만기", items: [
+          ["입주 즉시 <strong>보증보험 가입 마감일·임대차 신고 기한·만기일</strong>을 달력에 넣었다", "기한을 넘기면 구제가 어렵습니다."],
+          ["만기 6~2개월 전 <strong>갱신 요구 또는 해지 통보</strong>를 서면(내용증명·문자)으로 한다", "주택임대차보호법상 갱신요구권은 1회, 2년입니다(요건 확인)."],
+          ["보증금을 못 받으면 <strong>이사 전에 임차권등기명령</strong>을 신청한다", "이사부터 가면 대항력·우선변제권을 잃을 수 있습니다."],
+        ]},
+      ];
+      const SF_CLAUSES = [
+        ["등기부 유지 특약", "임대인은 본 계약 체결일부터 임차인이 주택의 인도, 주민등록(전입신고) 및 확정일자를 갖춘 다음 날까지 목적물에 근저당권·가압류·전세권 등 어떠한 권리도 설정하지 않으며 소유권도 이전하지 않는다. 위반 시 본 계약은 해제되고 임대인은 임차인이 지급한 보증금 전액을 즉시 반환하며 계약금 상당액을 위약금으로 지급한다."],
+        ["국세·지방세 완납 특약", "임대인은 잔금일 전까지 모든 국세 및 지방세를 완납하고, 잔금일 당일 발급한 국세·지방세 납세증명서를 임차인에게 교부한다. 대항력 취득일 전 신규 체납이 확인되면 임차인은 계약을 해제할 수 있으며 임대인은 보증금 전액을 즉시 반환한다."],
+        ["전세보증금 반환보증 특약", "임대인은 임차인의 전세보증금반환보증(HUG 등) 가입에 협조한다. 임차인이 보증 가입이 불가하거나 거절된 경우 임차인은 계약을 해제할 수 있고, 임대인은 수령한 계약금 전액을 지체 없이 반환한다."],
+        ["대출 불승인 시 해제 특약", "임차인의 임차보증금 대출이 승인되지 않는 경우 본 계약은 해제되며 임대인은 수령한 계약금 전액을 반환한다."],
+        ["선순위 정보 확인 특약", "임대인은 본 주택의 확정일자 부여현황, 선순위 임차보증금 총액, 국세·지방세 체납이 없음을 확인·고지하였으며, 사실과 다를 경우 임차인은 계약을 해제할 수 있고 임대인은 손해를 배상한다."],
+        ["신탁 부동산 특약 (해당 시)", "본 주택이 신탁재산인 경우 임대인은 수탁자의 서면 동의서와 신탁원부를 계약 시 교부하며, 이를 갖추지 못한 경우 본 계약은 해제되고 임대인은 계약금 전액을 즉시 반환한다."],
+      ];
+      const SF_SMALL = [
+        ["지역", "소액임차인 보증금 기준", "최우선변제금(일부)"],
+        ["서울", "1억 6,500만원 이하", "5,500만원"],
+        ["수도권 과밀억제권역(서울 제외)·세종·용인·화성·김포", "1억 4,500만원 이하", "4,800만원"],
+        ["광역시(군 제외)·안산·광주·파주·이천·평택", "8,500만원 이하", "2,800만원"],
+        ["그 밖의 지역", "7,500만원 이하", "2,500만원"],
+      ];
+      const sf_state = { checks: {} };
+      let sf_inited = false;
+      function sf_init() {
+        if (sf_inited) return;
+        sf_inited = true;
+        document.getElementById("sf_groups").innerHTML = SF_GROUPS.map((g, gi) => `<div class="rm-step ${gi === 0 ? "open" : ""}" id="sf_g_${gi}">
+          <div class="rm-sh" onclick="sf_toggle(${gi})"><div class="rm-num">${gi + 1}</div><div class="rm-st"><b>${g.icon} ${g.t}</b><span id="sf_gs_${gi}">0 / ${g.items.length}</span></div><div class="rm-chev">▾</div></div>
+          <div class="rm-sb">${g.items.map((it, j) => `<label class="rm-ck" id="sf_ck_${gi}_${j}"><input type="checkbox" onchange="sf_check(${gi},${j},this)"><span>${it[0]}<br><span style="font-size:11px;color:var(--text3)">💡 ${it[1]}</span></span></label>`).join("")}</div></div>`).join("");
+        document.getElementById("sf_clauses").innerHTML = SF_CLAUSES.map((c, i) => `<div class="rm-box rm-info" style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>${i + 1}. ${c[0]}</strong><button class="rm-lk" onclick="sf_copy(${i})">📋 복사</button></div><div id="sf_cl_${i}" style="margin-top:6px">${c[1]}</div></div>`).join("");
+        document.getElementById("sf_small").innerHTML = `<thead><tr>${SF_SMALL[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${SF_SMALL.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+        sf_calc();
+        sf_progress();
+      }
+      function sf_toggle(i) { const el = document.getElementById("sf_g_" + i); if (el) el.classList.toggle("open"); }
+      function sf_check(gi, j, input) {
+        sf_state.checks[gi + "_" + j] = input.checked;
+        const lab = document.getElementById(`sf_ck_${gi}_${j}`);
+        if (lab) lab.classList.toggle("done", input.checked);
+        sf_progress();
+      }
+      function sf_progress() {
+        const total = SF_GROUPS.reduce((a, g) => a + g.items.length, 0);
+        const done = Object.values(sf_state.checks).filter(Boolean).length;
+        const t = document.getElementById("sf_prog_txt"), b = document.getElementById("sf_prog_bar");
+        if (t) t.textContent = `${done} / ${total}`;
+        if (b) b.style.width = total ? (done / total) * 100 + "%" : "0%";
+        SF_GROUPS.forEach((g, gi) => {
+          const n = g.items.filter((_, j) => sf_state.checks[gi + "_" + j]).length;
+          const el = document.getElementById("sf_gs_" + gi);
+          if (el) el.textContent = `${n} / ${g.items.length}`;
+        });
+      }
+      function sf_copy(i) {
+        const text = SF_CLAUSES[i][1];
+        const done = () => { const el = document.getElementById("sf_cl_" + i); if (el) { el.style.background = "rgba(52,211,153,.15)"; setTimeout(() => (el.style.background = ""), 800); } };
+        try { navigator.clipboard.writeText(text).then(done, () => window.prompt("복사해서 사용하세요", text)); } catch (e) { window.prompt("복사해서 사용하세요", text); }
+      }
+      function sf_calc() {
+        const out = document.getElementById("sf_out");
+        if (!out) return;
+        const g = (id) => Math.max(parseFloat(document.getElementById(id).value) || 0, 0);
+        const P = g("sf_price"), M = g("sf_mort"), pr = g("sf_prior"), D = g("sf_dep"), bid = Math.min(Math.max(g("sf_bid"), 30), 100) / 100;
+        const cap = document.getElementById("sf_area").value === "cap" ? 700000000 : 500000000;
+        const won = cs_won;
+        if (!P) { out.innerHTML = `<div class="rm-box rm-info">집 시세를 입력하세요.</div>`; return; }
+        const ratio = (M + pr + D) / P;
+        const bidPrice = P * bid;
+        const recover = Math.max(0, Math.min(D, bidPrice - M - pr));
+        let cls = "rm-ok", lab = "🟢 안전권 (70% 이하)";
+        if (ratio > 0.9) { cls = "rm-danger"; lab = "🔴 위험 — 90% 초과 (HUG 반환보증 가입 요건 미충족)"; }
+        else if (ratio > 0.8) { cls = "rm-danger"; lab = "🟠 위험 — 80~90% (반환보증 가입은 가능해도 여유 없음)"; }
+        else if (ratio > 0.7) { cls = "rm-warn"; lab = "🟡 주의 — 70~80%"; }
+        out.innerHTML = `<div class="rm-box ${cls}"><strong>${lab}</strong><br>
+          (선순위 근저당 ${won(M)} + 선순위 보증금 ${won(pr)} + 내 보증금 ${won(D)}) ÷ 시세 ${won(P)} = <strong>${(ratio * 100).toFixed(1)}%</strong>
+          <ul class="rm-ul" style="margin-top:6px">
+            <li>HUG 반환보증: 보증금+선순위채권 ≤ 주택가격 90% — ${ratio <= 0.9 ? "<strong>충족</strong>" : "<strong style='color:#fb7185'>미충족</strong>"} · 보증금 한도(${cap === 700000000 ? "수도권 7억" : "그 외 5억"}) ${D <= cap ? "이내" : "<strong style='color:#fb7185'>초과</strong>"}</li>
+            <li>낙찰가율 ${Math.round(bid * 100)}% 가정 시 낙찰가 ${won(bidPrice)} → <strong>예상 회수액 ${won(recover)}</strong> (보증금의 ${D ? Math.round((recover / D) * 100) : 0}%) <span style="color:var(--text3)">· 세금·경매비용·최우선변제 등은 반영하지 않은 단순 추정</span></li>
+          </ul></div>`;
+      }
+
+      // ── 보증금·주거자금 설계 ──
+      const FN_CARDS = [
+        { t: "주택도시기금 버팀목 전세자금대출 (전세 보증금)", who: "성년 무주택 세대주 · 부부합산 연소득 5천만원 이하 · 순자산 3.45억원 이하 (마이홈 안내). 청년(만 19~34세)은 청년 전용 버팀목이 별도로 있어 한도·금리를 마이홈포털에서 확인",
+          limit: "기본 <strong>8천만원(수도권 1.2억원)</strong>, 보통 임차보증금의 <strong>70% 이내</strong>(기금 안내). 즉 필요한 <strong>내 돈은 보증금의 30% 이상</strong>",
+          cost: "연 <strong>2.5~3.5%</strong>(소득·보증금별) · 수급자·차상위 우대금리 가능 · 대출기간 2년, 연장해 최장 10년 · 보증기관 보증료·인지세 등 부대비용",
+          docs: ["신분증", "주민등록등본(필요 시 초본)", "임대차계약서 사본 + <strong>계약금 영수증</strong>", "소득 증빙(소득이 거의 없으면 수급자증명서·건강보험 자격확인서 등 은행 안내 서류)", "가족관계증명서·혼인관계증명서(해당 시)", "우대금리 신청 시 <strong>수급자(차상위) 증명서</strong>"],
+          steps: ["수탁은행에서 <strong>사전 한도·자격 상담</strong>(수급자는 소득 심사 때문에 필수)", "집 확정 + 계약서에 <strong>대출 불승인 시 계약 해제 특약</strong>", "임대차계약 체결 + 계약금(보통 5%) 지급", "은행 방문 또는 기금e든든으로 <strong>대출 신청</strong>", "심사·승인(소득·자산 공적자료, 임대인·주택 확인)", "잔금일 대출 실행(임대인 계좌로 직접 입금)", "전입신고·확정일자 + <strong>수급 담당자에게 보증금·대출 신고</strong>"] },
+        { t: "주거안정월세자금대출 (월세)", who: "무주택 세대주 — <strong>우대형(주거급여 수급자 등) 또는 일반형(부부합산 연소득 5천만원 이하)</strong>, 보증금 1억원 이하·월세 60만원 이하 주택(마이홈 안내)",
+          limit: "월 <strong>60만원 이내</strong>, 총 <strong>1,440만원</strong>(24개월). <strong>주거급여 수급자는 대출 가능액에서 주거급여 수급액이 제외</strong>됩니다",
+          cost: "우대형 <strong>연 1.3%</strong>, 일반형 연 1.8% · 대출은 월세 지원용이라 <strong>보증금 부족분을 메우는 상품이 아닙니다</strong>",
+          docs: ["신분증", "주민등록등본", "임대차계약서(월세 금액·임대인 계좌 확인)", "소득·수급 증빙(우대형은 <strong>수급자증명서</strong>)", "은행 요청 서류(임대인 계좌 확인서 등)"],
+          steps: ["월세 계약서로 <strong>대출 요건(보증금 1억·월세 60만원 이하)</strong> 확인", "수탁은행 상담·신청(우대형이면 수급자증명서)", "승인 후 <strong>월 단위로 임대인 계좌에 대출금 입금</strong>", "주거급여와 <strong>이중으로 계산되지 않도록</strong> 담당자·은행에 수급 사실 안내", "만기·상환 일정 관리"] },
+        { t: "LH 기존주택 전세임대 (보증금 부담 2~5%)", who: "<strong>생계·의료급여 수급자 1순위</strong>, 한부모 등 · 정기 1순위 모집(2026: 공고 5.21, 접수 6.8~12, 주민등록지 행정복지센터) + 다자녀·청년 수시",
+          limit: "지원한도 <strong>수도권 1.3억 · 광역시 9천만 · 기타 7천만원</strong>(전용 85㎡ 이하). 입주자 부담 = 지원한도 내 전세금의 <strong>5%(1순위 신규계약은 2% 선택 가능)</strong> + 한도 초과분",
+          cost: "월 임대료 = (지원금 − 보증금) × 연 <strong>1.2~2.2%</strong> ÷ 12, 수급자 0.2%p 우대(최저 1.0%) · 2년 단위 재계약",
+          docs: ["신청서(주민센터)", "수급자 증명서", "주민등록등본·가족관계증명서", "금융정보 등 제공동의서", "(해당 시) 한부모·장애인 증빙"],
+          steps: ["모집공고(📡 공고 확인 센터)에서 접수 기간 확인", "주민등록지 행정복지센터 접수", "LH·GH <strong>자격 조회 후 입주대상자 개별 발표</strong>", "대상자가 <strong>집을 직접 물색</strong>(집주인 동의, 전용 85㎡ 이하, 한도 내)", "LH가 <strong>권리분석 후 집주인과 전세계약</strong>", "내가 LH와 임대차계약(보증금 2~5%) → 입주 → 전입·수급 담당자 신고"] },
+        { t: "LH 매입임대 — 보증금 완화 · 무보증금 월세", who: "<strong>수급자·차상위·한부모 1순위</strong> (일반 매입임대 공고). 거주지 요건은 공고마다 다름(인천지역본부 2026: 주민등록 무관, 지역 거주자 우선)",
+          limit: "임대조건 3가지: ① 보증금↔월세 <strong>상호전환</strong> ② <strong>무보증금 월세</strong>(생계+주거급여 동시 수급, 월세가 주거급여 기준임대료 이내) ③ <strong>보증금 완화</strong>(생계·의료 수급자 등: 월세 12개월분)",
+          cost: "공고별 보증금·월세(시세 대비 낮은 수준) — 공고문 ‘임대조건’ 표 확인 · 2년 재계약",
+          docs: ["신분증", "수급자 증명서", "주민등록등본(세대원 전체)", "가족관계증명서", "금융정보 제공동의서", "공고문이 요구하는 추가 서류"],
+          steps: ["📡 공고 확인 센터에서 <strong>접수 중 공고</strong> 확인(마감일·접수처)", "공고문에서 1순위 자격·주택형·임대조건·방문 접수 여부 확인", "<strong>방문 접수 + 주택 열람 후 동·호 지정</strong>(인천본부 안내) 또는 공고가 정한 방식으로 신청", "서류제출·당첨자·예비순번 발표 확인", "계약(보증금 또는 무보증금 월세) → 입주 → 전입·주거급여 변경"] },
+        { t: "주거취약계층 주거상향지원 (고시원·쪽방 3개월 이상)", who: "쪽방·고시원·여인숙·비닐하우스·노숙인시설 등에 <strong>3개월 이상 거주</strong>(신청일 기준 최근 1년 내 합산 가능), 무주택세대구성원",
+          limit: "<strong>임대보증금 50만원 고정</strong>(쪽방·고시원·여인숙·노숙인시설 거주자), 월 임대료는 매입·전세임대 조건과 동일 · 이사비·생필품 지원(지역별)",
+          cost: "월 임대료(매입·전세임대 조건) · 2년 단위 재계약(LH 안내 최장 20년)",
+          docs: ["주민등록등본(주소·전입일 확인)", "거주사실 확인서류(계약서·이체내역·입실확인서)", "수급자 증명서", "금융정보 제공동의서"],
+          steps: ["거주 3개월 도달일 계산(🏘️ 거처·주거 가이드 STEP 3)", "주민센터에 주거상향지원 신청", "시·군·구 자격 인정 → LH·SH 주택 안내", "주택 계약(보증금 50만원) → 이사 후 주거복지센터에서 이사비·생필품 지원 신청"] },
+        { t: "주거급여 임차급여 (월세 지원) — 대출이 아니라 지원금", who: "소득인정액이 기준 중위소득 48% 이하(주거급여 수급권자)이고 임대차 관계·실제 거주가 확인되는 임차가구",
+          limit: "<strong>실제임차료(= 월세 + 보증금×4%÷12)와 기준임대료 중 낮은 금액</strong>. 기준임대료는 급지·가구원수별(🧮 월세 지원 상한 계산 참고)",
+          cost: "지원금(상환 없음) · 소득인정액이 생계급여 선정기준을 넘으면 자기부담분 차감 · 임대차계약서가 없거나 실제 임차료가 0원이면 제외",
+          docs: ["신청서·금융정보 제공동의서", "임대차(이용)계약서 사본", "통장 사본", "신분증"],
+          steps: ["임대차계약 체결(서면·이체 증빙)", "주민센터(또는 복지로)에서 주거급여 임차급여 신청·변경", "LH 주택조사 연락 응대", "결정통지서에서 지급액·시작일 확인"] },
+      ];
+      const FN_MATRIX = [
+        ["내 현금", "전세를 구한다", "보증부 월세를 구한다", "보증금이 거의 없다 / 고시원·쪽방 거주"],
+        ["<strong>100만원 미만</strong>", "버팀목은 계약금(보증금의 5%)·자기부담(30%)이 어려움 → <strong>LH 전세임대(2% 선택)</strong>·매입임대 공고 우선", "<strong>무보증금 월세·보증금 완화 매입임대</strong> + 주거급여", "<strong>주거상향지원(보증금 50만원)</strong>, 긴급복지 주거지원"],
+        ["<strong>100~500만원</strong>", "<strong>전세임대 2%</strong>(수도권 1.3억 한도 기준 약 260만원) 또는 소액 전세(버팀목 70% 대출 → 가능 보증금 ≈ 현금 ÷ 0.3)", "보증금 낮은 월세 + <strong>주거급여</strong>, 월세대출(월 60만원 한도)", "주거상향지원 + 매입임대 병행"],
+        ["<strong>500~2,000만원</strong>", "<strong>버팀목 전세</strong>(보증금 ≈ 1,700~6,600만원 가능) 또는 전세임대 5%", "보증금 500~1,000만원 월세 + 주거급여, 월세대출", "매입임대·전세임대 병행"],
+        ["<strong>2,000만원 이상</strong>", "버팀목 + 자력 병행 — <strong>보증금이 재산으로 반영</strong>되니 🧮 계산기로 수급 자격을 먼저 확인", "월세 + 주거급여(재산 기준 확인)", "—"],
+      ];
+      let fn_inited = false;
+      function fn_init() {
+        if (fn_inited) return;
+        fn_inited = true;
+        document.getElementById("fn_cards").innerHTML = FN_CARDS.map((c, i) => `<div class="rm-step ${i === 0 ? "open" : ""}" id="fn_c_${i}">
+          <div class="rm-sh" onclick="fn_toggle(${i})"><div class="rm-num">${i + 1}</div><div class="rm-st"><b>${c.t}</b><span>👤 ${c.who.replace(/<[^>]+>/g, "").slice(0, 64)}…</span></div><div class="rm-chev">▾</div></div>
+          <div class="rm-sb">
+            <h4>👤 누가 이용하나</h4><div>${c.who}</div>
+            <h4>💵 얼마까지 가능한가</h4><div>${c.limit}</div>
+            <h4>📉 금리·비용</h4><div>${c.cost}</div>
+            <h4>🗂 필요 서류</h4><ul class="rm-ul">${c.docs.map((d) => `<li>${d}</li>`).join("")}</ul>
+            <h4>👣 내가 할 일 (단계별)</h4><ol class="rm-ul" style="padding-left:20px">${c.steps.map((d) => `<li style="margin:4px 0">${d}</li>`).join("")}</ol>
+          </div></div>`).join("");
+        const tbl = (rows) => `<thead><tr>${rows[0].map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>`;
+        document.getElementById("fn_matrix").innerHTML = tbl(FN_MATRIX);
+        fn_calc();
+      }
+      function fn_toggle(i) { const el = document.getElementById("fn_c_" + i); if (el) el.classList.toggle("open"); }
+      function fn_calc() {
+        const out = document.getElementById("fn_out");
+        if (!out) return;
+        const g = (id) => Math.max(parseFloat(document.getElementById(id).value) || 0, 0);
+        const v = (id) => document.getElementById(id).value;
+        const C = g("fn_cash"), D = g("fn_dep"), R = g("fn_rent"), reg = v("fn_reg"), size = parseInt(v("fn_size"), 10) || 1, age = v("fn_age"), st = v("fn_st"), gosi = v("fn_gosi") === "yes";
+        const won = cs_won;
+        const R3 = ["seoul", "gyeonggi", "incheon"].includes(reg);
+        const loanCap = R3 ? 120000000 : 80000000;
+        const jCap = R3 ? 130000000 : reg === "metro" ? 90000000 : 70000000;
+        const rk = { seoul: "metro", gyeonggi: "city", incheon: "city", metro: "urban", other: "rural" }[reg];
+        const base = HOUSING_BASE_2026[REGION_GRADE[rk]][Math.min(size, 6) - 1];
+        const actual = Math.round(R + D * 0.04 / 12);
+        const benefit = ["both", "house", "lifemed"].includes(st) ? Math.min(actual, base) : 0;
+        const rows = [];
+        // 주거상향
+        if (gosi) rows.push({ kind: "now", s: 100, n: "주거취약계층 주거상향지원", ok: "✅", max: "보증금 50만원 고정", own: won(500000), own_ok: C >= 500000, mo: "매입·전세임대 월 임대료", note: "고시원·쪽방 등 3개월 이상 거주 → 주민센터 신청" });
+        // 매입임대
+        const first = st === "both" || st === "lifemed";
+        const mm = st === "both" ? "무보증금 월세(월세 ≤ 주거급여 기준임대료)" : st === "lifemed" ? `보증금 완화(월세 12개월분${R ? " ≈ " + won(R * 12) : ""})` : "보증금↔월세 전환";
+        rows.push({ kind: "notice", s: first ? 90 : 55, n: "LH 매입임대 (수급자 1순위)", ok: first ? "✅ 1순위" : st === "none" ? "❌ 자격 확인" : "⚠️ 순위 확인", max: mm, own: st === "both" ? "0원 가능" : st === "lifemed" && R ? won(R * 12) : "공고별", own_ok: true, mo: R ? won(R) : "공고별", note: "공고 뜨면 즉시 신청(📡 공고 확인 센터)" });
+        // 전세임대
+        if (R === 0 || D > 0) { const base0 = Math.min(D, jCap), own5 = Math.round(base0 * 0.05), own2 = Math.round(base0 * 0.02), extra = Math.max(D - jCap, 0), rt = (st === "both" || st === "lifemed") ? 0.010 : 0.012; const mo = Math.round((base0 - own2) * rt / 12);
+          const ok = (st === "both" || st === "lifemed") ? "✅ 1순위" : st === "none" ? "❌ 자격 확인" : "⚠️ 순위 확인";
+          rows.push({ kind: "notice", s: first ? 80 : 45, n: "LH 기존주택 전세임대", ok, max: `한도 ${won(jCap)} 안에서`, own: `${won(own2 + extra)}(2%)~${won(own5 + extra)}(5%)`, own_ok: C >= own2 + extra, mo: `월 약 ${won(mo)}`, note: "정기 모집(5~6월) + 수시 · 집 직접 물색" }); }
+        // 버팀목
+        if (R === 0) { const loan = Math.min(Math.round(D * 0.7), loanCap), own = D - loan, ok = age === "youth" ? "✅ (청년 전용 별도)" : "✅ 자격 확인"; const mo = Math.round(loan * 0.025 / 12);
+          rows.push({ kind: "now", s: 70, n: "버팀목 전세자금대출", ok, max: `최대 ${won(loan)} (보증금 70%·한도 ${won(loanCap)})`, own: won(own), own_ok: C >= own, mo: `이자 약 ${won(mo)} (연 2.5% 가정)`, note: "수급자는 상환능력 심사 주의 · 계약금 5% 선지급" }); }
+        // 월세대출
+        if (R > 0) { const okReq = D <= 100000000 && R <= 600000; const sup = Math.min(Math.max(R - benefit, 0), 600000);
+          rows.push({ kind: "now", s: 60, n: "주거안정월세자금대출", ok: okReq ? (st === "both" || st === "house" ? "✅ 우대형" : "✅ 일반형") : "❌ 요건 초과", max: `월 최대 60만원·총 1,440만원 (추정 월 ${won(sup)})`, own: `보증금 ${won(D)} 자력`, own_ok: C >= D, mo: `월세 ${won(R)} − 지원`, note: "보증금 부족분 해결용이 아님" }); }
+        // 주거급여
+        rows.push({ kind: "now", s: 50, n: "주거급여 임차급여", ok: ["both", "house", "lifemed"].includes(st) ? "✅ 수급 중" : "⚠️ 자격 확인", max: `${won(benefit)}/월 (상한 ${won(base)})`, own: "—", own_ok: true, mo: actual > base ? `기준 초과 ${won(actual - base)} 본인부담` : "상한 이내", note: "실제임차료 = 월세 + 보증금×4%÷12" });
+        rows.sort((a, b) => b.s - a.s);
+        const okRow = (r) => r.own_ok && !r.ok.startsWith("❌");
+        const bestNow = rows.find((r) => r.kind === "now" && okRow(r) && r.n !== "주거급여 임차급여");
+        const bestNotice = rows.find((r) => r.kind === "notice" && okRow(r));
+        const top = [bestNow, bestNotice, rows.find((r) => r.n === "주거급여 임차급여")].filter(Boolean);
+        const need5 = Math.round(D * 0.05);
+        let head = "";
+        if (gosi) head = "✅ 고시원·쪽방에 3개월 이상 살고 있다면 <strong>주거상향지원(보증금 50만원)</strong>이 가장 빠른 길입니다.";
+        else if (C < need5 && D > 0) head = `⚠️ 보유 현금(${won(C)})이 계약금(보증금 5% = ${won(need5)})보다 적습니다. 대출보다 먼저 <strong>보증금이 낮은 공공 유형(매입임대·전세임대)</strong>을 노리세요.`;
+        else if (bestNow || bestNotice) head = `✅ <strong>즉시 실행(공고 불필요)</strong>: ${bestNow ? "<strong>" + bestNow.n + "</strong>" : "현재 조건에서는 없음 — 보증금 목표를 낮추세요"} · <strong>공고 병행(경쟁·대기)</strong>: ${bestNotice ? "<strong>" + bestNotice.n + "</strong>" : "없음"} · 주거급여는 계약 후 신청합니다.`;
+        else head = "⚠️ 지금 조건에서 바로 쓸 수 있는 제도가 적습니다. 보증금 목표를 낮추거나 공공 유형을 먼저 신청하세요.";
+        out.innerHTML = `<div class="rm-box ${head.startsWith("✅") ? "rm-ok" : "rm-warn"}" style="font-size:13px">${head}</div>
+          <div class="hs-tbl-wrap" style="margin-top:10px"><table class="hs-tbl cs-tbl" style="min-width:760px"><thead><tr><th>제도</th><th>방식</th><th>나에게</th><th>얼마까지</th><th>내가 먼저 낼 돈</th><th>월 부담</th><th>메모</th></tr></thead><tbody>${rows.map((r) => `<tr${top.includes(r) ? " style='background:rgba(52,211,153,.10)'" : ""}><td><strong>${r.n}</strong></td><td>${r.kind === "now" ? "⚡ 즉시" : "📢 공고"}</td><td>${r.ok}</td><td>${r.max}</td><td>${r.own}${r.own_ok ? "" : " <span style='color:#fb7185'>(현금 부족)</span>"}</td><td>${r.mo}</td><td style="font-size:11px">${r.note}</td></tr>`).join("")}</tbody></table></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:6px">초록 배경 = 즉시 실행 1순위 · 공고 병행 1순위 · 주거급여. 전세임대 월 부담은 지원금에 연 1.0%(수급자 우대) 가정, 버팀목 이자는 연 2.5% 가정입니다. 자세한 후보 집 계산은 🧭 내 케이스별 신청 가이드의 💳 계산기를 쓰세요.</div>`;
+      }
+
       // 행복주택
       const HPY_ROWS = [
         ["계층", "자격 요약", "소득 기준", "최대 거주", "수급자 관점"],
@@ -11954,6 +12545,7 @@
         document.getElementById("rt_faq").innerHTML = RT_FAQ.map((f, i) => `<div class="rm-faq" id="rt_faq_${i}"><div class="q" onclick="rt_faqToggle(${i})"><span>Q. ${f[0]}</span><span>▾</span></div><div class="a">${f[1]}</div></div>`).join("");
         rt_renderDocs();
         rt_progress();
+        if (typeof hf_calc === "function") hf_calc();
       }
 
       function rt_renderDocs() {
@@ -11990,6 +12582,7 @@
         rt_state[key] = val;
         btn.parentElement.querySelectorAll(".rm-chip").forEach((c) => c.classList.remove("on"));
         btn.classList.add("on");
+        if (typeof hf_sync === "function") hf_sync(key, val);
         rt_render();
       }
       function rt_flag(key, btn) {
@@ -13498,6 +14091,7 @@
       const RENTAL_TABS = [
         "notice",
         "guide",
+        "safe",
         "happy",
         "overview",
         "permanent",
@@ -13511,6 +14105,8 @@
         if (id === "guide" && typeof rt_init === "function") rt_init();
         if (id === "notice" && typeof no_init === "function") no_init();
         if (id === "happy" && typeof hpy_init === "function") hpy_init();
+        if (id === "safe" && typeof sf_init === "function") sf_init();
+        if (id === "loan" && typeof fn_init === "function") fn_init();
         RENTAL_TABS.forEach((t) => {
           const el = document.getElementById("rental-" + t);
           const btn = document.getElementById("rtab-" + t);
@@ -17112,7 +17708,7 @@
           icon: "🏘️",
           title: "임대주택 안내",
           keywords:
-            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 전국 거주지 무관 보증금 없이 무보증금 월세 인천 부천 일반 매입임대 공고 판독기 지금 열린 공고 마감 D-day 수시공고 정기공고 접수일정 마감일 SH GH iH 광주 전남 공고 확인 알림 경기행복주택 주거급여수급자 계층 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
+            "임대주택 LH 매입임대 전세임대 국민임대 영구임대 행복주택 청약 계약 체크리스트 등기부등본 신탁 건축물대장 위반건축물 확정일자 납세증명서 전세보증금반환보증 HUG 전세사기 특약 깡통전세 최우선변제 보증금 대출 버팀목 월세대출 필요서류 단계 전국 거주지 무관 보증금 없이 무보증금 월세 인천 부천 일반 매입임대 공고 판독기 지금 열린 공고 마감 D-day 수시공고 정기공고 접수일정 마감일 SH GH iH 광주 전남 공고 확인 알림 경기행복주택 주거급여수급자 계층 신청방법 공고 찾기 예비입주자 모집 수급자 1순위 가구원 1인 2인 케이스별 당첨자 조회 예비입주자순위 서류 수급자증명서 주거상향지원 SH GH",
         },
         {
           tab: "workability",
